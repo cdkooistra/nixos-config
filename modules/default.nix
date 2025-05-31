@@ -1,0 +1,3 @@
+{
+    graphics = import ./graphics;
+}
