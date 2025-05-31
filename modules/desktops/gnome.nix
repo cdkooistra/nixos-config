@@ -18,5 +18,15 @@
 
             desktopManager.gnome.enable = true;
         };
+
+        environment.gnome.excludePackages = with pkgs.gnome; [
+            pkgs.gnome-contacts
+            pkgs.gnome-text-editor
+            pkgs.gnome-tour
+            pkgs.gnome-maps
+            pkgs.gnome-weather
+            pkgs.geary
+            pkgs.epiphany
+        ];
     };
 }
