@@ -18,7 +18,12 @@
             desktopManager.gnome.enable = true;
         };
 
-        environment.gnome.excludePackages = with pkgs.gnome; [
+        environment.systemPackages = with pkgs; [
+            gnome-tweaks
+            dconf2nix
+        ];
+
+        environment.gnome.excludePackages = with pkgs; [
             pkgs.gnome-contacts
             pkgs.gnome-text-editor
             pkgs.gnome-tour
@@ -27,10 +32,13 @@
             pkgs.gnome-clocks
             pkgs.gnome-characters
             pkgs.gnome-connections
-            pkgs.gnome-bluetooth # TODO: if desktop -> disable bt, else -> enable bt
+            pkgs.gnome-bluetooth # TODO: if desktop -> disable bt | else -> enable bt
+            pkgs.gnome-user-docs
             pkgs.geary
             pkgs.epiphany
             pkgs.gedit
+            evince
+            yelp
         ];
     };
 }

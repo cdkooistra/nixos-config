@@ -6,8 +6,13 @@
   home.stateVersion = "25.05";
 
   home.packages = [
-    inputs.zen-browser.packages.${pkgs.system}.default  
+    inputs.zen-browser.packages.${pkgs.system}.default
+    pkgs.vscode
+    # pkgs.espanso-wayland
+    pkgs.zsh
   ];
+
+  
 
   programs.git = {
     enable = true;
@@ -15,8 +20,36 @@
     userEmail = "70811244+cdkooistra@users.noreply.github.com";
   };
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
+  # maybe set to separate file
+  dconf = {
+    enable = true; 
+    settings = {
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" ];
+      };
+
+      "custom-keybindings/custom0" = {
+        binding = "<Super>b";
+        command = "zen";
+        name = "Launch Zen";
+      };
+
+      "custom-keybindings/custom1" = {
+        binding = "<Super>c";
+        command = "code";
+        name = "Launch VSCode";
+      };
+
+      "org/gnome/mutter/keybindings" = {
+        switch-monitor = [ ];
+      };
+
+      "org/gnome/desktop/wm/keybindings" = {
+        close = ["<Super>q"];
+      };
+    };
+  };
+
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
@@ -47,7 +80,7 @@
   #  /etc/profiles/per-user/connor/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "code";
   };
 
   # Let Home Manager install and manage itself.
