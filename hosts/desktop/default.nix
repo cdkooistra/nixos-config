@@ -63,9 +63,6 @@ in
   # Configure console keymap
   console.keyMap = "dvorak";
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -97,8 +94,6 @@ in
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-    vscode
-    git
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
