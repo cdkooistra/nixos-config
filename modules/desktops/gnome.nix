@@ -2,8 +2,7 @@
 
 {
     options = {
-        gnome.enable
-            = lib.mkEnableOption "enable GNOME";
+        gnome.enable = lib.mkEnableOption "enable GNOME";
     };
 
     config = lib.mkIf config.gnome.enable {
@@ -25,8 +24,13 @@
             pkgs.gnome-tour
             pkgs.gnome-maps
             pkgs.gnome-weather
+            pkgs.gnome-clocks
+            pkgs.gnome-characters
+            pkgs.gnome-connections
+            pkgs.gnome-bluetooth # TODO: if desktop -> disable bt, else -> enable bt
             pkgs.geary
             pkgs.epiphany
+            pkgs.gedit
         ];
     };
 }
