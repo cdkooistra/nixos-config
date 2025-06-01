@@ -1,22 +1,28 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-    # enable OpenGL
-    hardware.graphics = {
-        enable = true;
-        enable32Bit = true; # 32bit compatibility
+    options = {
+        nvidia.enable = lib.mkEnableOption "enable nvidia drivers";
     };
-
-    services.xserver.videoDrivers = ["nvidia"];
-
-    hardware.nvidia = {
-        modesetting.enable = true;
-        powerManagement = {
-            enable = false;
-            finegrained = false;
+    
+    config = lib.mkIf config.gnome.enable {
+        # enable OpenGL
+        hardware.graphics = {
+            enable = true;
+            enable32Bit = true; # 32bit compatibility
         };
-        open = true;
-        nvidiaSettings = true;
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+        services.xserver.videoDrivers = ["nvidia"];
+
+        hardware.nvidia = {
+            modesetting.enable = true;
+            powerManagement = {
+                enable = false;
+                finegrained = false;
+            };
+            open = true;
+            nvidiaSettings = true;
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
+        };
     };
 }
