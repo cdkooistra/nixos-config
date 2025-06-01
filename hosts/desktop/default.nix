@@ -21,7 +21,6 @@ in
   gnome.enable = true;
   nvidia.enable = true;
 
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -88,13 +87,7 @@ in
     isNormalUser = true;
     description = "Connor K";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
   };
-
-  # Install firefox.
-  programs.firefox.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
