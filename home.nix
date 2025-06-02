@@ -9,10 +9,7 @@
     inputs.zen-browser.packages.${pkgs.system}.default
     pkgs.vscode
     # pkgs.espanso-wayland
-    pkgs.zsh
   ];
-
-  
 
   programs.git = {
     enable = true;

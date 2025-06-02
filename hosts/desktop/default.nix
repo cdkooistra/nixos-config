@@ -21,6 +21,17 @@ in
   gnome.enable = true;
   nvidia.enable = true;
 
+  # enable auto mounting drives
+  fileSystems."/run/media/connor/Games" = {
+    device = "/dev/disk/by-uuid/31b1a084-e5ab-4c46-b129-c8b4c51049d9";
+    fsType = "btrfs";
+  };
+
+  fileSystems."/run/media/connor/Storage" = {
+    device = "/dev/disk/by-uuid/8222BD7522BD6F33";
+    fsType = "ntfs";  
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -86,7 +97,6 @@ in
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
