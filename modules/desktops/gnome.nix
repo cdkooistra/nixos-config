@@ -21,6 +21,7 @@
         environment.systemPackages = with pkgs; [
             gnome-tweaks
             dconf2nix
+            gnomeExtensions.dash-to-panel
         ];
 
         environment.gnome.excludePackages = with pkgs; [
@@ -40,5 +41,7 @@
             evince
             yelp
         ];
+
+        environment.sessionVariables.NIXOS_OZONE_WL = "1";
     };
 }
