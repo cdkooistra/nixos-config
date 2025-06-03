@@ -30,9 +30,20 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {inherit inputs;};
-              home-manager.users.connor = ./home.nix;
+              # home-manager.extraSpecialArgs = {
+              #   inherit inputs;
+              # };
+              home-manager.users.connor = ./home-manager/default.nix;
             }
+            
+            # Make the config available to home-manager
+            ({ config, ... }: {
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                gnomeEnabled = config.gnome.enable;
+              };
+            })
+
           ];
         };
       };
