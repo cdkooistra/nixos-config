@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }:
+{ config, lib, inputs, gnomeEnabled, pkgs, ... }:
 
 {
   home.username = "connor";
@@ -8,44 +8,22 @@
   home.packages = [
     inputs.zen-browser.packages.${pkgs.system}.default
     pkgs.vscode
-    # pkgs.espanso-wayland
+    pkgs.spotify
+    pkgs.discord
+    pkgs.obs-studio
+    pkgs.anytype
   ];
 
+  # to git file
   programs.git = {
     enable = true;
     userName = "Connor Kooistra";
     userEmail = "70811244+cdkooistra@users.noreply.github.com";
   };
 
-  # maybe set to separate file
-  dconf = {
-    enable = true; 
-    settings = {
-      "org/gnome/settings-daemon/plugins/media-keys" = {
-        custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" ];
-      };
-
-      "custom-keybindings/custom0" = {
-        binding = "<Super>b";
-        command = "zen";
-        name = "Launch Zen";
-      };
-
-      "custom-keybindings/custom1" = {
-        binding = "<Super>c";
-        command = "code";
-        name = "Launch VSCode";
-      };
-
-      "org/gnome/mutter/keybindings" = {
-        switch-monitor = [ ];
-      };
-
-      "org/gnome/desktop/wm/keybindings" = {
-        close = ["<Super>q"];
-      };
-    };
-  };
+  imports = if gnomeEnabled 
+  then [ ./dconf.nix ]
+  else [];
 
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
