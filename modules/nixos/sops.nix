@@ -10,4 +10,16 @@
     age
   ];
 
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/connor/.config/sops/age/keys.txt";
+
+    # secrets."syncthing-pw" = {
+    #   owner = "connor";
+    # };
+
+  };
+
+
 }

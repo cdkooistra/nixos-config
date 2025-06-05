@@ -15,11 +15,13 @@ in
       modules.graphics.nvidia
       modules.desktops.gnome
       modules.software.steam
+      modules.software.syncthing
     ];
 
   gnome.enable = true;
   nvidia.enable = true;
   steam.enable = true;
+  syncthing.enable = true;
 
   # enable docker
   virtualisation.docker.enable = true;
