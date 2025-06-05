@@ -18,7 +18,7 @@
   
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:     
+  outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:     
     let
       lib = nixpkgs.lib;
     in {
@@ -29,8 +29,7 @@
           modules = [
             ./hosts/desktop
 
-            home-manager.nixosModules.home-manager 
-            {
+            home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./home-manager/default.nix;
@@ -43,6 +42,8 @@
                 gnomeEnabled = config.gnome.enable;
               };
             })
+
+            sops-nix.nixosModules.sops
 
           ];
         };
