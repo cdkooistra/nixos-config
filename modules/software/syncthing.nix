@@ -28,6 +28,9 @@
 
     };
 
+    # stop creating default sync folder
+    systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
+
     # TODO: figure out how to do this garbage
     # systemd.services.set-syncthing-password = {
     #   description = "Set Syncthing GUI password from sops secret";
