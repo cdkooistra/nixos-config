@@ -11,14 +11,11 @@ in
   imports =
     [
       ./hardware-configuration.nix
-      modules.nixos.locale
+      modules.nixos
       modules.graphics.nvidia
       modules.desktops.gnome
       modules.software.steam
     ];
-
-  # enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   gnome.enable = true;
   nvidia.enable = true;
@@ -83,8 +80,6 @@ in
     description = "Connor K";
     extraGroups = [ "networkmanager" "wheel" "docker"];
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
