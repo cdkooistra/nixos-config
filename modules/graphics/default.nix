@@ -1,3 +1,3 @@
 {
-    nvidia = import ./nvidia.nix;
+  nvidia = import ./nvidia.nix;
 }
