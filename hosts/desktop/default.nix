@@ -21,6 +21,7 @@ in
   gnome.enable = true;
   nvidia.enable = true;
   steam.enable = true;
+  xone.enable = true;
   syncthing.enable = true;
   
   nixos.networking.hostName = "nixos";
