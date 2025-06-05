@@ -1,0 +1,9 @@
+keys:
+  - &desktop age1n235lhdk8zwqnadmwevdrawgsjpukphf30hf95y8fe6putydcexsd56gef
+  # todo: laptop
+creation_rules:
+  - path_regex: secrets/secrets.yaml$
+    key_groups:
+    - age:
+      - *desktop
+      # todo: laptop
