@@ -14,18 +14,19 @@ in
       modules.nixos
       modules.graphics.nvidia
       modules.desktops.gnome
-      modules.software.steam
-      modules.software.syncthing
-      modules.software.proton
+      modules.software
     ];
 
   gnome.enable = true;
   nvidia.enable = true;
-  steam.enable = true;
-  xone.enable = true;
-  syncthing.enable = true;
-  proton.enable = true;
+  
+  # software
+  software.steam.enable = true;
+  software.xone.enable = true;
+  software.syncthing.enable = true;
+  software.proton.enable = true;
 
+  # nixos
   nixos.networking.hostName = "nixos";
 
   # enable docker

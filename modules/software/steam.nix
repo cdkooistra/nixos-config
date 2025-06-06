@@ -1,12 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
-  options = {
+  options.software = {
     steam.enable = lib.mkEnableOption "enable Steam + compatibility layers";
     xone.enable = lib.mkEnableOption "enable xone drivers";
   };
 
-  config = lib.mkIf config.steam.enable (lib.mkMerge [
+  config = lib.mkIf config.software.steam.enable (lib.mkMerge [
     {
       programs.steam = {
         enable = true;
@@ -29,7 +29,7 @@
       ];
     }
 
-    (lib.mkIf config.xone.enable {
+    (lib.mkIf config.software.xone.enable {
       hardware.xone.enable = true;
     })
   ]);
