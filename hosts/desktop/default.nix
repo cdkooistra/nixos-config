@@ -25,6 +25,7 @@ in
   software.xone.enable = true;
   software.syncthing.enable = true;
   software.proton.enable = true;
+  software.remmina.enable = true;
 
   # nixos
   nixos.networking.hostName = "nixos";
