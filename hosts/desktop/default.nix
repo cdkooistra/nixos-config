@@ -16,6 +16,7 @@ in
       modules.desktops.gnome
       modules.software.steam
       modules.software.syncthing
+      modules.software.proton
     ];
 
   gnome.enable = true;
@@ -23,7 +24,8 @@ in
   steam.enable = true;
   xone.enable = true;
   syncthing.enable = true;
-  
+  proton.enable = true;
+
   nixos.networking.hostName = "nixos";
 
   # enable docker
