@@ -19,6 +19,11 @@
     networking = {
       hostName = config.nixos.networking.hostName;
       networkmanager.enable = true;
+      enableIPv6 = false;
+
+      nameservers = [
+        "86.54.11.13" # dns4eu
+      ];
 
     } // lib.mkIf config.nixos.networking.wireless.enable {
       wireless.enable = true;
