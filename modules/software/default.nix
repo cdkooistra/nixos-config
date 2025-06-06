@@ -1,5 +1,7 @@
 {
-  steam = import ./steam.nix;
-  syncthing = import ./syncthing.nix;
-  proton = import ./proton.nix;
+  imports = [
+    ./steam.nix
+    ./syncthing.nix
+    ./proton.nix
+  ];
 }

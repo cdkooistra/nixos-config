@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  options = {
+  options.software = {
     syncthing.enable = lib.mkEnableOption "enable syncthing";
   };
 
-  config = lib.mkIf config.syncthing.enable {
+  config = lib.mkIf config.software.syncthing.enable {
     services.syncthing = {
       enable = true;
       user = "connor";
