@@ -26,12 +26,23 @@ in
   software.syncthing.enable = true;
   software.proton.enable = true;
   software.onlyoffice.enable = true;
+  software.signal.enable = true;
 
   # nixos
   nixos.networking.hostName = "nixos";
 
   # enable docker
-  virtualisation.docker.enable = true;
+  hardware.nvidia-container-toolkit.enable = true;
+  
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings = {
+      features.cdi = true;
+    };
+  };
+  
+  # virtualisation.docker.enableNvidia = true;
+  # enable NVIDIA runtime for Docker
 
   # enable auto mounting drives
   fileSystems."/run/media/connor/Games" = {
