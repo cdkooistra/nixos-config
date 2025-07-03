@@ -1,6 +1,6 @@
 {
   imports = [
-    ./steam.nix
+    ./games.nix
     ./syncthing.nix
     ./proton.nix
     ./onlyoffice.nix
