@@ -21,12 +21,15 @@ in
   nvidia.enable = true;
   
   # software
-  software.steam.enable = true;
-  software.xone.enable = true;
   software.syncthing.enable = true;
   software.proton.enable = true;
   software.onlyoffice.enable = true;
   software.signal.enable = true;
+
+  # gaming related
+  software.steam.enable = true;
+  software.xone.enable = true;
+  software.prism.enable = true;
 
   # nixos
   nixos.networking.hostName = "nixos";
