@@ -5,5 +5,6 @@
     ./proton.nix
     ./onlyoffice.nix
     ./signal.nix
+    ./pinta.nix
   ];
 }
