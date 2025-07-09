@@ -25,6 +25,7 @@ in
   software.proton.enable = true;
   software.onlyoffice.enable = true;
   software.signal.enable = true;
+  software.pinta.enable = true;
 
   # gaming related
   software.steam.enable = true;
