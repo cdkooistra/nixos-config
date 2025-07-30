@@ -6,5 +6,6 @@
     ./onlyoffice.nix
     ./signal.nix
     ./pinta.nix
+    ./docker.nix
   ];
 }
