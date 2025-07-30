@@ -12,40 +12,23 @@ in
     [
       ./hardware-configuration.nix
       modules.nixos
-      modules.graphics.nvidia
+      modules.graphics.amd
       modules.desktops.gnome
       modules.software
     ];
 
   gnome.enable = true;
-  nvidia.enable = true;
+  amd.enable = true;
   
   # software
   software.syncthing.enable = true;
   software.proton.enable = true;
   software.onlyoffice.enable = true;
   software.signal.enable = true;
-  software.pinta.enable = true;
   software.docker.enable = true;
-
-  # gaming related
-  software.steam.enable = true;
-  software.xone.enable = true;
-  software.prism.enable = true;
 
   # nixos
   nixos.networking.hostName = "nixos";
-  
-  # enable auto mounting drives
-  fileSystems."/run/media/connor/Games" = {
-    device = "/dev/disk/by-uuid/31b1a084-e5ab-4c46-b129-c8b4c51049d9";
-    fsType = "btrfs";
-  };
-
-  fileSystems."/run/media/connor/Storage" = {
-    device = "/dev/disk/by-uuid/8222BD7522BD6F33";
-    fsType = "ntfs";  
-  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

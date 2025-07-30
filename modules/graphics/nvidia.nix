@@ -5,13 +5,7 @@
     nvidia.enable = lib.mkEnableOption "enable nvidia drivers";
   };
   
-  config = lib.mkIf config.gnome.enable {
-    # enable OpenGL
-    hardware.graphics = {
-      enable = true;
-      enable32Bit = true; # 32bit compatibility
-    };
-
+  config = lib.mkIf config.nvidia.enable {
     services.xserver.videoDrivers = ["nvidia"];
 
     hardware.nvidia = {
