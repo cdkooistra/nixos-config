@@ -59,13 +59,6 @@ in
     #media-session.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.connor = {
-    isNormalUser = true;
-    description = "Connor K";
-    extraGroups = [ "networkmanager" "wheel" ];
-  };
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
