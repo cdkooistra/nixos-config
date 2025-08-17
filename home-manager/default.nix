@@ -12,6 +12,7 @@
     pkgs.discord
     pkgs.obs-studio
     pkgs.anytype
+    pkgs.espanso
   ];
 
   # to git file
