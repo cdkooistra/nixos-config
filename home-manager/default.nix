@@ -12,7 +12,6 @@
     pkgs.discord
     pkgs.obs-studio
     pkgs.anytype
-    pkgs.espanso-wayland
   ];
 
   # to git file
