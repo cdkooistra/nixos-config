@@ -22,13 +22,10 @@ in
   
   # software
   software.syncthing.enable = true;
-  software.proton.enable = true;
-  software.onlyoffice.enable = true;
-  software.signal.enable = true;
   software.docker.enable = true;
 
   # nixos
-  nixos.networking.hostName = "artemis";
+  nixos.networking.hostName = "hermes";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

@@ -34,7 +34,7 @@ in
   software.prism.enable = true;
 
   # nixos
-  nixos.networking.hostName = "nixos";
+  nixos.networking.hostName = "sisyphus";
   
   # enable auto mounting drives
   fileSystems."/run/media/connor/Games" = {

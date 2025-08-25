@@ -72,6 +72,32 @@
 
           ];
         };
+
+        server = lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {inherit inputs;};
+          modules = [
+            ./hosts/server
+
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.connor = ./home-manager/default.nix;
+            }
+
+            # Make the config available to home-manager
+            ({ config, ... }: {
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                gnomeEnabled = config.gnome.enable;
+              };
+            })
+
+            sops-nix.nixosModules.sops
+
+          ];
+        };
+
       };
     };
 }
