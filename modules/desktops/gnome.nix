@@ -22,6 +22,7 @@
       gnome-tweaks
       dconf2nix
       gnomeExtensions.dash-to-panel
+      gnomeExtensions.pop-shell
     ];
 
     environment.gnome.excludePackages = with pkgs; [

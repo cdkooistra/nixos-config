@@ -1,4 +1,4 @@
-{ config, lib, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   dconf = {
@@ -27,6 +27,7 @@
       "org/gnome/desktop/wm/keybindings" = {
         close = ["<Super>q"];
       };
+
     };
   };
 }
