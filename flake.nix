@@ -1,5 +1,5 @@
 {
-  description = "Nixos config flake";
+  description = "cdkooistra NixOS flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
@@ -15,10 +15,15 @@
     };
 
     sops-nix.url = "github:Mic92/sops-nix";
+
+    nix-snapd = {
+      url = "github:nix-community/nix-snapd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:     
+  outputs = { self, nixpkgs, home-manager, sops-nix, nix-snapd, ... }@inputs:     
     let
       lib = nixpkgs.lib;
     in {
@@ -44,6 +49,10 @@
             })
 
             sops-nix.nixosModules.sops
+            
+            nix-snapd.nixosModules.default {
+              services.snap.enable = true;
+            }
 
           ];
         };
