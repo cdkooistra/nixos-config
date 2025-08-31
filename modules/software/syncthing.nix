@@ -43,9 +43,9 @@ in
       configDir = "/home/connor/.config/syncthing";
 
       settings = {
-        devices =
-          { self = { id = cfg.deviceId; }; }
-          // (lib.mapAttrs (name: id: { inherit id; }) cfg.peers);
+        devices = {
+          ${config.networking.hostName} = { id = cfg.deviceId; };
+        } // (lib.mapAttrs (name: id: { inherit id; }) cfg.peers);
 
         folders = {
           "Documents" = {
