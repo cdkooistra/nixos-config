@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config, devices, lib, pkgs, ... }:
 
 let 
   modules = import ../../modules;
@@ -21,14 +21,24 @@ in
   amd.enable = true;
   
   # software
-  software.syncthing.enable = true;
   software.proton.enable = true;
   software.onlyoffice.enable = true;
   software.signal.enable = true;
   software.docker.enable = true;
 
   # nixos
-  nixos.networking.hostName = "artemis";
+  networking.hostName = "artemis";
+  nixos.networking.wireless = true;
+
+  # syncthing
+  software.syncthing = {
+    enable = true;
+    deviceId = devices.artemis;
+
+    peers = {
+      sisyphus = devices.sisyphus;
+    };  
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

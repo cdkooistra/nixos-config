@@ -25,7 +25,7 @@ in
   software.docker.enable = true;
 
   # nixos
-  nixos.networking.hostName = "hermes";
+  networking.hostName = "hermes";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

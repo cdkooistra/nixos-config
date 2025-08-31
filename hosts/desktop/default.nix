@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config, devices, lib, pkgs, ... }:
 
 let 
   modules = import ../../modules;
@@ -21,7 +21,6 @@ in
   nvidia.enable = true;
   
   # software
-  software.syncthing.enable = true;
   software.proton.enable = true;
   software.onlyoffice.enable = true;
   software.signal.enable = true;
@@ -34,7 +33,16 @@ in
   software.prism.enable = true;
 
   # nixos
-  nixos.networking.hostName = "sisyphus";
+  networking.hostName = "sisyphus";
+  
+  # syncthing
+  software.syncthing = {
+    enable = true;
+    deviceId = devices.sisyphus;
+
+    # automatically include all devices as peers except self
+    peers = lib.removeAttrs devices [ config.networking.hostName ];
+  };
   
   # enable auto mounting drives
   fileSystems."/run/media/connor/Games" = {
