@@ -21,11 +21,17 @@
   outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:     
     let
       lib = nixpkgs.lib;
+
+      # syncthing device IDs
+      devices = {
+        sisyphus = "XGVROJR-NJ7EVPU-4HK6TXO-345J6P4-GQJQAYN-KFNDXXV-OAJQ365-U3K3TQJ";
+        artemis  = "E4TZ7AC-Y3GVSSY-TTRTR5G-5HAZRUK-ICYT2GO-7FDVOL3-5XUFVM7-YH5NMQC";
+      };
     in {
       nixosConfigurations = {
         desktop = lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {inherit inputs;};
+          specialArgs = {inherit inputs devices;};
           modules = [
             ./hosts/desktop
 
@@ -50,7 +56,7 @@
 
         laptop = lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {inherit inputs;};
+          specialArgs = {inherit inputs devices;};
           modules = [
             ./hosts/laptop
 
@@ -75,7 +81,7 @@
 
         server = lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {inherit inputs;};
+          specialArgs = {inherit inputs devices;};
           modules = [
             ./hosts/server
 
