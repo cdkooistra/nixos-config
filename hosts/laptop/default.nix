@@ -28,7 +28,6 @@ in
 
   # nixos
   networking.hostName = "artemis";
-  nixos.networking.wireless = true;
 
   # syncthing
   software.syncthing = {
