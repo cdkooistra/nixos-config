@@ -5,7 +5,11 @@
     enable = true; 
     settings = {
       "org/gnome/settings-daemon/plugins/media-keys" = {
-        custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" ];
+        custom-keybindings = [ 
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" 
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" 
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/" 
+          ];
       };
 
       "custom-keybindings/custom0" = {
@@ -18,6 +22,12 @@
         binding = "<Super>c";
         command = "code";
         name = "Launch VSCode";
+      };
+
+      "custom-keybindings/custom2" = {
+        binding = "<Super>f";
+        command = "nautilus";
+        name = "Launch Files";
       };
 
       "org/gnome/mutter/keybindings" = {
