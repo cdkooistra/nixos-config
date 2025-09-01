@@ -22,11 +22,18 @@
     let
       lib = nixpkgs.lib;
 
+      anytypeAppImage = {
+        version = "0.49.2";
+        url = "https://downloads.sourceforge.net/project/anytype.mirror/v0.49.2/Anytype-0.49.2.AppImage";
+        sha256 = "0jaqn2r2wjyhar4vk5lz4y32pxv7nmdcpas5jq1857hy7jihy3rl";
+      };
+
       # syncthing device IDs
       devices = {
         sisyphus = "XGVROJR-NJ7EVPU-4HK6TXO-345J6P4-GQJQAYN-KFNDXXV-OAJQ365-U3K3TQJ";
         artemis  = "E4TZ7AC-Y3GVSSY-TTRTR5G-5HAZRUK-ICYT2GO-7FDVOL3-5XUFVM7-YH5NMQC";
       };
+
     in {
       nixosConfigurations = {
         desktop = lib.nixosSystem {
@@ -46,6 +53,7 @@
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 gnomeEnabled = config.gnome.enable;
+                anytypeAppImage = anytypeAppImage;
               };
             })
 
@@ -71,6 +79,7 @@
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 gnomeEnabled = config.gnome.enable;
+                anytypeAppImage = anytypeAppImage;
               };
             })
 
@@ -96,6 +105,7 @@
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 gnomeEnabled = config.gnome.enable;
+                anytypeAppImage = anytypeAppImage;
               };
             })
 

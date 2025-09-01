@@ -1,6 +1,16 @@
-{ config, lib, inputs, gnomeEnabled, pkgs, ... }:
+{ config, lib, inputs, gnomeEnabled, anytypeAppImage, pkgs, ... }:
 
 {
+  # AnyType
+  # Fetch the AppImage into ~/Applications
+  home.file."Applications/Anytype-${anytypeAppImage.version}.AppImage" = {
+    source = builtins.fetchurl {
+      url = anytypeAppImage.url;
+      sha256 = anytypeAppImage.sha256;
+    };
+    executable = true;
+  };
+
   home.username = "connor";
   home.homeDirectory = "/home/connor";
   home.stateVersion = "25.05";
@@ -11,7 +21,6 @@
     pkgs.spotify
     pkgs.discord
     pkgs.obs-studio
-    pkgs.anytype
   ];
 
   programs.git = {
