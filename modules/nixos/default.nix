@@ -4,6 +4,7 @@
     ./sops.nix 
     ./networking.nix
     ./user.nix
+    ./appimage.nix
   ];
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
