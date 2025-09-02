@@ -1,23 +1,37 @@
 { config, lib, inputs, gnomeEnabled, anytypeAppImage, pkgs, ... }:
 
 {
-  # Create home dirs
-  home.activation.ensureDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    mkdir -p "${config.home.homeDirectory}/Applications"
-    mkdir -p "${config.home.homeDirectory}/Code"
-  '';
-
   # Add home dirs to sidebar (GNOME)
-  xdg.configFile."gtk-3.0/bookmarks" = {
-    text = ''
-      file://${config.home.homeDirectory}/Applications Applications
-      file://${config.home.homeDirectory}/Code Code
-      file://${config.home.homeDirectory}/Documents Documents
-      file://${config.home.homeDirectory}/Music Music
-      file://${config.home.homeDirectory}/Pictures Pictures
-      file://${config.home.homeDirectory}/Videos Videos
-      file://${config.home.homeDirectory}/Downloads Downloads
-    '';
+  xdg = {
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      extraConfig = {
+        XDG_APPLICATIONS_DIR = "${config.home.homeDirectory}/Applications";
+        XDG_CODE_DIR = "${config.home.homeDirectory}/Code";
+      };
+    };
+
+    configFile."gtk-3.0/bookmarks" = {
+      text = ''
+        file://${config.home.homeDirectory}/Applications Applications
+        file://${config.home.homeDirectory}/Code Code
+        file://${config.home.homeDirectory}/Documents Documents
+        file://${config.home.homeDirectory}/Music Music
+        file://${config.home.homeDirectory}/Pictures Pictures
+        file://${config.home.homeDirectory}/Videos Videos
+        file://${config.home.homeDirectory}/Downloads Downloads
+      '';
+    };
+
+    # desktopEntries = {
+    #   anytype = {
+    #     name = "AnyType";
+    #     exec = "./${config.home.homeDirectory}/Applications/Anytype-${anytypeAppImage.version}.AppImage";
+    #     terminal = false;
+    #   };
+    # };
+
   };
 
   # AnyType
