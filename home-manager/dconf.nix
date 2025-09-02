@@ -38,6 +38,10 @@
         close = ["<Super>q"];
       };
 
+      "org/gnome/desktop/interface" = {
+        icon-theme = "Papirus";
+      };
+
     };
   };
 }

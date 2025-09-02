@@ -23,6 +23,7 @@
       dconf2nix
       gnomeExtensions.dash-to-panel
       gnomeExtensions.pop-shell
+      papirus-icon-theme
     ];
 
     environment.gnome.excludePackages = with pkgs; [
