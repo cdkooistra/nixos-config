@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  options = {
+  options.graphics = {
     amd.enable = lib.mkEnableOption "enable AMD drivers";
   };
 
-  config = lib.mkIf config.amd.enable {
+  config = lib.mkIf config.graphics.amd.enable {
     services.xserver.videoDrivers = ["amdgpu"];
   };
 }

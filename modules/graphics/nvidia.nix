@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  options = {
+  options.graphics = {
     nvidia.enable = lib.mkEnableOption "enable nvidia drivers";
   };
   
-  config = lib.mkIf config.nvidia.enable {
+  config = lib.mkIf config.graphics.nvidia.enable {
     services.xserver.videoDrivers = ["nvidia"];
 
     hardware.nvidia = {
