@@ -1,7 +1,10 @@
 {
-  nvidia = import ./nvidia.nix;
-  amd = import ./amd.nix;
-
+  imports = [
+    ./nvidia.nix
+    ./amd.nix
+    ./displaylink.nix
+  ];
+  
   # enable OpenGL
   hardware.graphics = {
     enable = true;

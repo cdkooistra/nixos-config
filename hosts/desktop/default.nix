@@ -12,37 +12,37 @@ in
     [
       ./hardware-configuration.nix
       modules.nixos
-      modules.graphics.nvidia
+      modules.graphics
       modules.desktops.gnome
       modules.software
     ];
 
   gnome.enable = true;
-  nvidia.enable = true;
+  graphics.nvidia.enable = true;
   
-  # software
-  software.proton.enable = true;
-  software.onlyoffice.enable = true;
-  software.signal.enable = true;
-  software.pinta.enable = true;
-  software.docker.enable = true;
+  software = {
+    proton.enable = true;
+    onlyoffice.enable = true;
+    signal.enable = true;
+    pinta.enable = true;
+    docker.enable = true;
 
-  # gaming related
-  software.steam.enable = true;
-  software.xone.enable = true;
-  software.prism.enable = true;
+    syncthing = {
+      enable = true;
+      deviceId = devices.sisyphus;
+
+      # automatically include all devices as peers except self
+      peers = lib.removeAttrs devices [ config.networking.hostName ];
+    };
+
+    # gaming related
+    steam.enable = true;
+    xone.enable = true;
+    prism.enable = true;
+  };
 
   # nixos
   networking.hostName = "sisyphus";
-  
-  # syncthing
-  software.syncthing = {
-    enable = true;
-    deviceId = devices.sisyphus;
-
-    # automatically include all devices as peers except self
-    peers = lib.removeAttrs devices [ config.networking.hostName ];
-  };
   
   # enable auto mounting drives
   fileSystems."/run/media/connor/Games" = {

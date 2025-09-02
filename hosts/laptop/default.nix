@@ -12,32 +12,36 @@ in
     [
       ./hardware-configuration.nix
       modules.nixos
-      modules.graphics.amd
+      modules.graphics
       modules.desktops.gnome
       modules.software
     ];
 
   gnome.enable = true;
-  amd.enable = true;
-  
-  # software
-  software.proton.enable = true;
-  software.onlyoffice.enable = true;
-  software.signal.enable = true;
-  software.docker.enable = true;
+
+  graphics = {
+    amd.enable = true;
+    displaylink.enable = true;
+  };
+
+  software = {
+    proton.enable = true;
+    onlyoffice.enable = true;
+    signal.enable = true;
+    docker.enable = true;
+
+    syncthing = {
+      enable = true;
+      deviceId = devices.artemis;
+
+      peers = {
+        sisyphus = devices.sisyphus;
+      };  
+    };
+  };
 
   # nixos
   networking.hostName = "artemis";
-
-  # syncthing
-  software.syncthing = {
-    enable = true;
-    deviceId = devices.artemis;
-
-    peers = {
-      sisyphus = devices.sisyphus;
-    };  
-  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
