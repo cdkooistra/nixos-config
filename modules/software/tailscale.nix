@@ -2,7 +2,11 @@
 
 { 
   options.software.tailscale = {
-    enable = lib.mkEnableOption "enable Tailscale";
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable Tailscale";
+    };
   };
 
   config = lib.mkIf config.software.tailscale.enable {
