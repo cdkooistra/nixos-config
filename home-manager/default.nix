@@ -1,4 +1,4 @@
-{ config, lib, inputs, gnomeEnabled, anytypeAppImage, pkgs, ... }:
+{ config, lib, inputs, systemOptions, anytypeAppImage, pkgs, ... }:
 
 {
   # Add home dirs to sidebar (GNOME)
@@ -71,7 +71,7 @@
     enable = true;
   };
   
-  imports = if gnomeEnabled 
+  imports = if systemOptions.gnome.enable
   then [ ./dconf.nix ]
   else [];
 
