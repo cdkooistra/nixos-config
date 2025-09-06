@@ -17,6 +17,9 @@ in
       modules.software
     ];
 
+  # device name
+  networking.hostName = "artemis";
+
   gnome.enable = true;
 
   graphics = {
@@ -39,9 +42,6 @@ in
       };  
     };
   };
-
-  # nixos
-  networking.hostName = "artemis";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

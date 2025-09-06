@@ -17,6 +17,9 @@ in
       modules.software
     ];
 
+  # device name
+  networking.hostName = "sisyphus";
+  
   gnome.enable = true;
   graphics.nvidia.enable = true;
   
@@ -26,6 +29,10 @@ in
     signal.enable = true;
     pinta.enable = true;
     docker.enable = true;
+    
+    # TODO:
+    # 25/09/06 -> tailscale does not work temporarily: https://github.com/tailscale/tailscale/issues/16966
+    # tailscale.enable = true;
 
     syncthing = {
       enable = true;
@@ -41,9 +48,6 @@ in
     prism.enable = true;
   };
 
-  # nixos
-  networking.hostName = "sisyphus";
-  
   # enable auto mounting drives
   fileSystems."/run/media/connor/Games" = {
     device = "/dev/disk/by-uuid/31b1a084-e5ab-4c46-b129-c8b4c51049d9";

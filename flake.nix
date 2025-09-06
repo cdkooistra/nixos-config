@@ -46,6 +46,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./home-manager/default.nix;
+              home-manager.backupFileExtension = "backup";
             }
             
             # Make the config available to home-manager
@@ -72,6 +73,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./home-manager/default.nix;
+              home-manager.backupFileExtension = "backup";
             }
 
             # Make the config available to home-manager
@@ -98,6 +100,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./home-manager/default.nix;
+              home-manager.backupFileExtension = "backup";
             }
 
             # Make the config available to home-manager

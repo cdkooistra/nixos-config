@@ -1,8 +1,8 @@
 { lib, config, pkgs, ... }:
 
 {
-  options = {
-    gnome.enable = lib.mkEnableOption "enable GNOME";
+  options.gnome = {
+    enable = lib.mkEnableOption "enable GNOME";
   };
   
   config = lib.mkIf config.gnome.enable {
@@ -24,24 +24,25 @@
       gnomeExtensions.dash-to-panel
       gnomeExtensions.pop-shell
       papirus-icon-theme
-    ];
+    ]
+    ++ lib.optionals config.software.tailscale.enable [ gnomeExtensions.tailscale-status ];
 
     environment.gnome.excludePackages = with pkgs; [
-      pkgs.gnome-contacts
-      pkgs.gnome-text-editor
-      pkgs.gnome-tour
-      pkgs.gnome-maps
-      pkgs.gnome-weather
-      pkgs.gnome-clocks
-      pkgs.gnome-characters
-      pkgs.gnome-connections
-      pkgs.gnome-bluetooth # TODO: if desktop -> disable bt | else -> enable bt
-      pkgs.gnome-user-docs
-      pkgs.geary
-      pkgs.epiphany
-      pkgs.gedit
+      gnome-contacts
+      gnome-text-editor
+      gnome-tour
+      gnome-maps
+      gnome-weather
+      gnome-clocks
+      gnome-characters
+      gnome-connections
+      gnome-user-docs
+      geary
+      epiphany
+      gedit
       evince
       yelp
-    ];
+    ]
+    ++ lib.optionals (config.networking.hostName != "artemis") [ gnome-bluetooth ];
   };
 }
