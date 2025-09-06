@@ -18,14 +18,24 @@
       desktopManager.gnome.enable = true;
     };
 
-    environment.systemPackages = with pkgs; [
-      gnome-tweaks
-      dconf2nix
-      gnomeExtensions.dash-to-panel
-      gnomeExtensions.pop-shell
-      papirus-icon-theme
-    ]
-    ++ lib.optionals config.software.tailscale.enable [ gnomeExtensions.tailscale-status ];
+    environment.systemPackages = 
+      let 
+        gnomePkgs = with pkgs; [
+          gnome-tweaks
+          dconf2nix
+          papirus-icon-theme
+        ];
+
+        gnomeExts = with pkgs.gnomeExtensions; [
+          pop-shell
+          dash-to-panel
+          appindicator
+          vitals
+        ]
+        ++ lib.optionals config.software.tailscale.enable [ tailscale-status ];
+
+      in
+        gnomePkgs ++ gnomeExts;
 
     environment.gnome.excludePackages = with pkgs; [
       gnome-contacts
