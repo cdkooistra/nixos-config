@@ -7,5 +7,6 @@
     ./signal.nix
     ./pinta.nix
     ./docker.nix
+    ./tailscale.nix
   ];
 }
