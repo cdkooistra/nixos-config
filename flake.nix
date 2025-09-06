@@ -49,11 +49,12 @@
               home-manager.backupFileExtension = "backup";
             }
             
-            # Make the config available to home-manager
             ({ config, ... }: {
               home-manager.extraSpecialArgs = {
                 inherit inputs;
-                gnomeEnabled = config.gnome.enable;
+              
+                # Make the config available to home-manager
+                systemOptions = config;
                 anytypeAppImage = anytypeAppImage;
               };
             })
@@ -80,7 +81,9 @@
             ({ config, ... }: {
               home-manager.extraSpecialArgs = {
                 inherit inputs;
-                gnomeEnabled = config.gnome.enable;
+                
+                # Make the config available to home-manager
+                systemOptions = config;
                 anytypeAppImage = anytypeAppImage;
               };
             })
@@ -103,11 +106,12 @@
               home-manager.backupFileExtension = "backup";
             }
 
-            # Make the config available to home-manager
             ({ config, ... }: {
               home-manager.extraSpecialArgs = {
                 inherit inputs;
-                gnomeEnabled = config.gnome.enable;
+                
+                # Make the config available to home-manager
+                systemOptions = config;
                 anytypeAppImage = anytypeAppImage;
               };
             })

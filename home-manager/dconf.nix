@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ systemOptions, lib, pkgs, inputs, ... }:
 
 {
   dconf = {
