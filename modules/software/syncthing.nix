@@ -5,7 +5,11 @@ let
 in
 {
   options.software.syncthing = {
-    enable = lib.mkEnableOption "enable syncthing";
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable syncthing"; 
+    };
     
     deviceId = lib.mkOption {
       type = lib.types.str;

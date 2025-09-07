@@ -1,8 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.graphics = {
-    amd.enable = lib.mkEnableOption "enable AMD drivers";
+  options.graphics.amd = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable AMD drivers";
+    };
   };
 
   config = lib.mkIf config.graphics.amd.enable {

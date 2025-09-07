@@ -1,8 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.software = {
-    onlyoffice.enable = lib.mkEnableOption "enable Onlyoffice";
+  options.software.onlyoffice = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable Onlyoffice";
+    };
   };
 
   config = lib.mkIf config.software.onlyoffice.enable {
