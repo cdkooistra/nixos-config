@@ -2,7 +2,11 @@
 
 {
   options.gnome = {
-    enable = lib.mkEnableOption "enable GNOME";
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable GNOME";
+    };
   };
   
   config = lib.mkIf config.gnome.enable {

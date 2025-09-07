@@ -1,8 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
-  options = {
-    software.docker.enable = lib.mkEnableOption "enable docker";   
+  options.software.docker = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable docker";
+    };
   };
 
   config = lib.mkIf config.software.docker.enable {

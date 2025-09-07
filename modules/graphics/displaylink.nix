@@ -1,8 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.graphics = {
-    displaylink.enable = lib.mkEnableOption "enable DisplayLink drivers";
+  options.graphics.displaylink = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable DisplayLink drivers";
+    };
   };
 
   config = lib.mkIf config.graphics.displaylink.enable {

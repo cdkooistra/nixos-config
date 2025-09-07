@@ -1,8 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.graphics = {
-    nvidia.enable = lib.mkEnableOption "enable nvidia drivers";
+  options.graphics.nvidia = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable nvidia drivers";
+    };
   };
   
   config = lib.mkIf config.graphics.nvidia.enable {

@@ -2,9 +2,21 @@
 
 {
   options.software = {
-    steam.enable = lib.mkEnableOption "enable Steam + compatibility layers";
-    xone.enable = lib.mkEnableOption "enable xone drivers";
-    prism.enable = lib.mkEnableOption "enable Prism Launcher";
+    steam.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable Steam + compatibility layers";
+    };
+    xone.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable xone drivers";
+    };
+    prism.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "enable Prism Launcher";
+    };
   };
 
   config = lib.mkMerge [
