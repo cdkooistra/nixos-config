@@ -30,9 +30,9 @@ in
     pinta.enable = true;
     docker.enable = true;
     
-    # TODO:
-    # 25/09/06 -> tailscale does not work temporarily: https://github.com/tailscale/tailscale/issues/16966
-    # tailscale.enable = true;
+    tailscale = {
+      enable = true;
+    };
 
     syncthing = {
       enable = true;

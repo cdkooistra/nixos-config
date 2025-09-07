@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, ... }:
+{ config, devices, lib, pkgs, ... }:
 
 let 
   modules = import ../../modules;
@@ -12,20 +12,31 @@ in
     [
       ./hardware-configuration.nix
       modules.nixos
-      modules.graphics.amd
+      modules.graphics
       modules.desktops.gnome
       modules.software
     ];
-
-  gnome.enable = true;
-  amd.enable = true;
-  
-  # software
-  software.syncthing.enable = true;
-  software.docker.enable = true;
-
   # nixos
   networking.hostName = "hermes";
+
+  gnome.enable = true;
+  graphics.amd.enable = true;
+  
+  software = {
+    docker.enable = true;
+    # TODO:
+    # 25/09/06 -> tailscale does not work temporarily: https://github.com/tailscale/tailscale/issues/16966
+    # tailscale.enable = true;
+
+    syncthing = {
+      enable = true;
+
+      deviceId = devices.hermes;
+      
+      # TODO:
+      # how should hermes be peered with other systems? 
+    };
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -63,5 +74,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-
 }
