@@ -32,7 +32,11 @@ in
     onlyoffice.enable = true;
     signal.enable = true;
     docker.enable = true;
-
+    
+    tailscale = {
+      enable = true;
+    };
+    
     syncthing = {
       enable = true;
       deviceId = devices.artemis;
