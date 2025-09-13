@@ -35,6 +35,7 @@
           dash-to-panel
           appindicator
           vitals
+          wallpaper-slideshow
         ]
         ++ lib.optionals config.software.tailscale.enable [ tailscale-status ];
 

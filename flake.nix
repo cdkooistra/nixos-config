@@ -15,10 +15,15 @@
     };
 
     sops-nix.url = "github:Mic92/sops-nix";
+
+    walls = {
+      url = "github:dharmx/walls";
+      flake = false;
+    };
   
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, ... }@inputs:     
+  outputs = { self, nixpkgs, home-manager, sops-nix, walls, ... }@inputs:     
     let
       lib = nixpkgs.lib;
 
@@ -38,7 +43,7 @@
       nixosConfigurations = {
         desktop = lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {inherit inputs devices;};
+          specialArgs = {inherit inputs walls devices;};
           modules = [
             ./hosts/desktop
 
@@ -66,7 +71,7 @@
 
         laptop = lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {inherit inputs devices;};
+          specialArgs = {inherit inputs walls devices;};
           modules = [
             ./hosts/laptop
 
@@ -95,7 +100,7 @@
 
         server = lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {inherit inputs devices;};
+          specialArgs = {inherit inputs walls devices;};
           modules = [
             ./hosts/server
 
