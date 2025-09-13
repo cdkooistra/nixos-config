@@ -24,19 +24,30 @@
       '';
     };
 
-    # desktopEntries = {
-    #   anytype = {
-    #     name = "AnyType";
-    #     exec = "./${config.home.homeDirectory}/Applications/Anytype-${anytypeAppImage.version}.AppImage";
-    #     terminal = false;
-    #   };
-    # };
+    desktopEntries = {
+      anytype = {
+        name = "AnyType";
+        comment = "A secure, local-first workspace";
+        exec = "${config.home.homeDirectory}/Applications/Anytype.AppImage";
+        icon = "anytype";
+        terminal = false;
+        categories = [ "Office" "Utility" ];
+      };
+    };
 
+    # autostart = {
+    #   enable = true;
+
+    #   entries = [
+    #     "${config.home.homeDirectory}/Applications/Anytype.AppImage"
+    #   ];
+    # };
   };
+
 
   # AnyType
   # Fetch the AppImage into ~/Applications
-  home.file."Applications/Anytype-${anytypeAppImage.version}.AppImage" = {
+  home.file."Applications/Anytype.AppImage" = {
     source = builtins.fetchurl {
       url = anytypeAppImage.url;
       sha256 = anytypeAppImage.sha256;
