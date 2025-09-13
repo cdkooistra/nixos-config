@@ -25,6 +25,8 @@ in
   
   software = {
     docker.enable = true;
+
+    rustdesk.enable = true;
     
     tailscale = {
       enable = true;
@@ -41,7 +43,6 @@ in
       
       # TODO:
       # how should hermes be peered with other systems? 
-    };
   };
 
   # Bootloader.

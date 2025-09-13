@@ -30,6 +30,8 @@ in
     pinta.enable = true;
     docker.enable = true;
     
+    rustdesk.enable = true;
+
     tailscale = {
       enable = true;
     };
