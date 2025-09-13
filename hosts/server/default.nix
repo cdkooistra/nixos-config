@@ -37,6 +37,11 @@ in
     #   deviceId = devices.hermes;
     # };
 
+      #deviceId = devices.hermes;
+      
+      # TODO:
+      # how should hermes be peered with other systems? 
+    };
   };
 
   # Bootloader.
