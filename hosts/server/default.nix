@@ -16,6 +16,7 @@ in
       modules.desktops.gnome
       modules.software
     ];
+    
   # nixos
   networking.hostName = "hermes";
 
@@ -29,14 +30,13 @@ in
       enable = true;
     };
 
-    syncthing = {
-      enable = true;
+    # TODO:
+    # how should hermes be peered with other systems? 
+    # syncthing = {
+    #   enable = false;
+    #   deviceId = devices.hermes;
+    # };
 
-      deviceId = devices.hermes;
-      
-      # TODO:
-      # how should hermes be peered with other systems? 
-    };
   };
 
   # Bootloader.
