@@ -1,5 +1,9 @@
-{ config, lib, inputs, systemOptions, anytypeAppImage, pkgs, ... }:
+{ config, lib, inputs, pkgs, systemOptions, anytypeAppImage, walls, ... }:
 
+let
+  wallpapers = inputs.walls;
+  wallpaperSets = [ "abstract" "radium" "monochrome" "apeiros" "minimal" "dreamcore" ];
+in
 {
   # Add home dirs to sidebar (GNOME)
   xdg = {
@@ -53,6 +57,13 @@
       sha256 = anytypeAppImage.sha256;
     };
     executable = true;
+  };
+
+  home.file.".local/share/backgrounds" = {
+    source = pkgs.symlinkJoin {
+      name = "backgrounds";
+      paths = map (folder: "${wallpapers}/${folder}") wallpaperSets;
+    };
   };
 
   home.username = "connor";
