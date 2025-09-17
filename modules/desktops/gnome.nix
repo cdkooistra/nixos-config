@@ -37,8 +37,8 @@
           vitals
           wallpaper-slideshow
         ]
-        ++ lib.optionals config.software.tailscale.enable [ tailscale-status ];
-
+        ++ lib.optionals config.software.tailscale.enable [ tailscale-status ]
+        ++ lib.optionals (config.networking.hostName == "artemis") [ battery-health-charging ];
       in
         gnomePkgs ++ gnomeExts;
 
@@ -58,6 +58,6 @@
       evince
       yelp
     ]
-    ++ lib.optionals (config.networking.hostName != "artemis") [ gnome-bluetooth ];
+    ++ lib.optionals (config.networking.hostName == "artemis") [ gnome-bluetooth ];
   };
 }
