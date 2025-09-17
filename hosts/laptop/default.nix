@@ -37,8 +37,6 @@ in
       enable = true;
     };
     
-    rustdesk.enable = true;
-    
     syncthing = {
       enable = true;
       deviceId = devices.artemis;

@@ -26,8 +26,6 @@ in
   software = {
     docker.enable = true;
 
-    rustdesk.enable = true;
-    
     tailscale = {
       enable = true;
     };
