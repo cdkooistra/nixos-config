@@ -19,12 +19,15 @@ in
 
   # device name
   networking.hostName = "artemis";
-
-  gnome.enable = true;
-
+  
   graphics = {
     amd.enable = true;
     displaylink.enable = true;
+  };
+  
+  gnome = {
+    enable = true;
+    mode = "client";
   };
 
   software = {
