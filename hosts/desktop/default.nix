@@ -20,8 +20,12 @@ in
   # device name
   networking.hostName = "sisyphus";
   
-  gnome.enable = true;
   graphics.nvidia.enable = true;
+  
+  gnome = {
+    enable = true;
+    mode = "client";
+  };
   
   software = {
     proton.enable = true;

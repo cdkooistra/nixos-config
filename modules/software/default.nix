@@ -8,6 +8,5 @@
     ./pinta.nix
     ./docker.nix
     ./tailscale.nix
-    ./rustdesk.nix
   ];
 }

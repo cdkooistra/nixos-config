@@ -20,8 +20,12 @@ in
   # nixos
   networking.hostName = "hermes";
 
-  gnome.enable = true;
   graphics.amd.enable = true;
+  
+  gnome = {
+    enable = true;
+    mode = "server";
+  };
   
   software = {
     docker.enable = true;
@@ -42,6 +46,12 @@ in
       # TODO:
       # how should hermes be peered with other systems? 
   };
+
+  # Disable systemd targets for sleep and hibernation
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

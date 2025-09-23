@@ -44,7 +44,7 @@
 
       "org/gnome/shell/extensions/azwallpaper" = {
         slideshow-directory = "${config.home.homeDirectory}/.local/share/backgrounds";
-        slideshow-slide-duration = "(1, 30, 0)"; # hours, minutes, seconds
+        slideshow-slide-duration = "(1, 0, 0)"; # hours, minutes, seconds
         slideshow-queue-reshuffle-on-complete = true;
         slideshow-pause = false;
       };
