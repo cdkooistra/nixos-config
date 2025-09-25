@@ -7,5 +7,8 @@
     nameservers = [
       "86.54.11.13" # dns4eu
     ];
+
+    firewall.trustedInterfaces = [ "tailscale0" ];
+    
   };
 }
