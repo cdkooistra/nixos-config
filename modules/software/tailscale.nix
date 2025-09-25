@@ -12,6 +12,7 @@
   config = lib.mkIf config.software.tailscale.enable {
     services.tailscale = {
       enable = true;
+      openFirewall = true;
     };
 
   };
