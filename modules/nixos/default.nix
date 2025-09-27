@@ -5,7 +5,6 @@
     ./networking.nix
     ./user.nix
     ./appimage.nix
-    ./ssh.nix
   ];
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
