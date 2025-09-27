@@ -21,7 +21,7 @@
       enable = true;
       openFirewall = true;
 
-      extraUpFlags = lib.mkIf config.software.tailscale.ssh [ "--ssh" ];
+      extraSetFlags = lib.mkIf config.software.tailscale.ssh [ "--ssh" ];
     };
 
   };
