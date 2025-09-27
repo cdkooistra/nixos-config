@@ -26,14 +26,13 @@ in
     enable = true;
     mode = "server";
   };
-
-  nixos.ssh.enable = true;
   
   software = {
     docker.enable = true;
 
     tailscale = {
       enable = true;
+      ssh = true;
     };
 
     # TODO:
