@@ -1,4 +1,4 @@
-{ config, lib, inputs, pkgs, systemOptions, anytypeAppImage, walls, ... }:
+{ config, lib, inputs, pkgs, systemOptions, walls, ... }: #anytypeAppImage
 
 let
   wallpapers = inputs.walls;
@@ -28,16 +28,16 @@ in
       '';
     };
 
-    desktopEntries = {
-      anytype = {
-        name = "AnyType";
-        comment = "A secure, local-first workspace";
-        exec = "${config.home.homeDirectory}/Applications/Anytype.AppImage";
-        icon = "anytype";
-        terminal = false;
-        categories = [ "Office" "Utility" ];
-      };
-    };
+    # desktopEntries = {
+    #   anytype = {
+    #     name = "AnyType";
+    #     comment = "A secure, local-first workspace";
+    #     exec = "${config.home.homeDirectory}/Applications/Anytype.AppImage";
+    #     icon = "anytype";
+    #     terminal = false;
+    #     categories = [ "Office" "Utility" ];
+    #   };
+    # };
 
     # autostart = {
     #   enable = true;
@@ -51,13 +51,13 @@ in
 
   # AnyType
   # Fetch the AppImage into ~/Applications
-  home.file."Applications/Anytype.AppImage" = {
-    source = builtins.fetchurl {
-      url = anytypeAppImage.url;
-      sha256 = anytypeAppImage.sha256;
-    };
-    executable = true;
-  };
+  # home.file."Applications/Anytype.AppImage" = {
+  #   source = builtins.fetchurl {
+  #     url = anytypeAppImage.url;
+  #     sha256 = anytypeAppImage.sha256;
+  #   };
+  #   executable = true;
+  # };
 
   home.file.".local/share/backgrounds" = {
     source = pkgs.symlinkJoin {
@@ -76,6 +76,7 @@ in
     pkgs.spotify
     pkgs.discord
     pkgs.obs-studio
+    pkgs.anytype
   ];
 
   programs.git = {
