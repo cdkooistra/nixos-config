@@ -27,11 +27,11 @@
     let
       lib = nixpkgs.lib;
 
-      anytypeAppImage = {
-        version = "0.49.2";
-        url = "https://downloads.sourceforge.net/project/anytype.mirror/v0.49.2/Anytype-0.49.2.AppImage";
-        sha256 = "0jaqn2r2wjyhar4vk5lz4y32pxv7nmdcpas5jq1857hy7jihy3rl";
-      };
+      # anytypeAppImage = {
+      #   version = "0.50.5";
+      #   url = "https://downloads.sourceforge.net/project/anytype.mirror/v0.50.5/Anytype-0.50.5.AppImage";
+      #   sha256 = "";
+      # };
 
       # syncthing device IDs
       devices = {
@@ -60,7 +60,7 @@
               
                 # Make the config available to home-manager
                 systemOptions = config;
-                anytypeAppImage = anytypeAppImage;
+                # anytypeAppImage = anytypeAppImage;
               };
             })
 
@@ -89,7 +89,7 @@
                 
                 # Make the config available to home-manager
                 systemOptions = config;
-                anytypeAppImage = anytypeAppImage;
+                # # anytypeAppImage = anytypeAppImage;
               };
             })
 
@@ -117,7 +117,7 @@
                 
                 # Make the config available to home-manager
                 systemOptions = config;
-                anytypeAppImage = anytypeAppImage;
+                # # anytypeAppImage = anytypeAppImage;
               };
             })
 
