@@ -8,5 +8,6 @@
     ./pinta.nix
     ./docker.nix
     ./tailscale.nix
+    ./caddy.nix
   ];
 }
