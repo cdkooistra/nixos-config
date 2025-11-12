@@ -12,6 +12,10 @@
           ];
       };
 
+      "org/gnome/desktop/notifications/application/spotify" = {
+        enable = false;
+      };
+
       "custom-keybindings/custom0" = {
         binding = "<Super>b";
         command = "zen";
