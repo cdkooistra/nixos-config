@@ -64,8 +64,14 @@ in
   };
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 4;
+    };
+    efi.canTouchEfiVariables = true;
+    timeout = 10;
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
