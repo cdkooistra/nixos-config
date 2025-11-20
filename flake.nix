@@ -20,10 +20,15 @@
       url = "github:dharmx/walls";
       flake = false;
     };
+
+    flox = {
+      url = "github:flox/flox/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, walls, ... }@inputs:     
+  outputs = { self, nixpkgs, home-manager, sops-nix, walls, flox, ... }@inputs:     
     let
       lib = nixpkgs.lib;
 
@@ -39,11 +44,13 @@
         artemis  = "E4TZ7AC-Y3GVSSY-TTRTR5G-5HAZRUK-ICYT2GO-7FDVOL3-5XUFVM7-YH5NMQC";
       };
 
+      commonSpecialArgs = {inherit inputs walls devices;};
+
     in {
       nixosConfigurations = {
         desktop = lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {inherit inputs walls devices;};
+          specialArgs = commonSpecialArgs;
           modules = [
             ./hosts/desktop
 
@@ -71,7 +78,7 @@
 
         laptop = lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {inherit inputs walls devices;};
+          specialArgs = commonSpecialArgs;
           modules = [
             ./hosts/laptop
 
@@ -100,7 +107,7 @@
 
         server = lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {inherit inputs walls devices;};
+          specialArgs = commonSpecialArgs;
           modules = [
             ./hosts/server
 
