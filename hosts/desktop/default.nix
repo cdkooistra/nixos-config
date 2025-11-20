@@ -33,6 +33,7 @@ in
     signal.enable = true;
     pinta.enable = true;
     docker.enable = true;
+    flox.enable = true;
     
     tailscale = {
       enable = true;

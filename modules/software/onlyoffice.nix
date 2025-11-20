@@ -11,7 +11,7 @@
 
   config = lib.mkIf config.software.onlyoffice.enable {
     environment.systemPackages = [
-      pkgs.onlyoffice-bin
+      pkgs.onlyoffice-desktopeditors
     ];
   };
 
