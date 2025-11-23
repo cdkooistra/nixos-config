@@ -35,8 +35,6 @@ in
       ssh = true;
     };
 
-    caddy.enable = true;
-
     # TODO:
     # how should hermes be peered with other systems? 
     # syncthing = {
