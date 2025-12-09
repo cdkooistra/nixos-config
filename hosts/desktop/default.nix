@@ -35,7 +35,7 @@ in
     docker.enable = true;
     flox.enable = true;
     
-    tailqqqscale = {
+    tailscale = {
       enable = true;
       ssh = true;
     };

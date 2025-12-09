@@ -1,9 +1,5 @@
-{ config, lib, inputs, pkgs, systemOptions, walls, ... }: #anytypeAppImage
+{ config, lib, inputs, pkgs, systemOptions, ... }: #anytypeAppImage
 
-let
-  wallpapers = inputs.walls;
-  wallpaperSets = [ "abstract" "radium" "monochrome" "apeiros" "minimal" "dreamcore" ];
-in
 {
   # Add home dirs to sidebar (GNOME)
   xdg = {
@@ -21,10 +17,10 @@ in
         file://${config.home.homeDirectory}/Applications Applications
         file://${config.home.homeDirectory}/Code Code
         file://${config.home.homeDirectory}/Documents Documents
+        file://${config.home.homeDirectory}/Downloads Downloads
         file://${config.home.homeDirectory}/Music Music
         file://${config.home.homeDirectory}/Pictures Pictures
         file://${config.home.homeDirectory}/Videos Videos
-        file://${config.home.homeDirectory}/Downloads Downloads
       '';
     };
 
@@ -59,13 +55,6 @@ in
   #   executable = true;
   # };
 
-  home.file.".local/share/backgrounds" = {
-    source = pkgs.symlinkJoin {
-      name = "backgrounds";
-      paths = map (folder: "${wallpapers}/${folder}") wallpaperSets;
-    };
-  };
-
   home.username = "connor";
   home.homeDirectory = "/home/connor";
   home.stateVersion = "25.05";
@@ -77,12 +66,17 @@ in
     pkgs.discord
     pkgs.obs-studio
     pkgs.anytype
+    pkgs.slack
   ];
 
   programs.git = {
     enable = true;
-    userName = "Connor Kooistra";
-    userEmail = "70811244+cdkooistra@users.noreply.github.com";
+    settings = {
+      user = {
+        name = "Connor Kooistra";
+        email = "70811244+cdkooistra@users.noreply.github.com";
+      };
+    };
   };
 
   programs.direnv = {
