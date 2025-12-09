@@ -2,7 +2,7 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -16,11 +16,6 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
 
-    walls = {
-      url = "github:dharmx/walls";
-      flake = false;
-    };
-
     flox = {
       url = "github:flox/flox/latest";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,15 +23,9 @@
   
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, walls, flox, ... }@inputs:     
+  outputs = { self, nixpkgs, home-manager, sops-nix, flox, ... }@inputs:     
     let
       lib = nixpkgs.lib;
-
-      # anytypeAppImage = {
-      #   version = "0.50.5";
-      #   url = "https://downloads.sourceforge.net/project/anytype.mirror/v0.50.5/Anytype-0.50.5.AppImage";
-      #   sha256 = "";
-      # };
 
       # syncthing device IDs
       devices = {
@@ -44,7 +33,7 @@
         artemis  = "E4TZ7AC-Y3GVSSY-TTRTR5G-5HAZRUK-ICYT2GO-7FDVOL3-5XUFVM7-YH5NMQC";
       };
 
-      commonSpecialArgs = {inherit inputs walls devices;};
+      commonSpecialArgs = {inherit inputs devices;};
 
     in {
       nixosConfigurations = {
@@ -67,12 +56,10 @@
               
                 # Make the config available to home-manager
                 systemOptions = config;
-                # anytypeAppImage = anytypeAppImage;
               };
             })
 
             sops-nix.nixosModules.sops
-
           ];
         };
 
@@ -96,12 +83,10 @@
                 
                 # Make the config available to home-manager
                 systemOptions = config;
-                # # anytypeAppImage = anytypeAppImage;
               };
             })
 
             sops-nix.nixosModules.sops
-
           ];
         };
 
@@ -124,15 +109,12 @@
                 
                 # Make the config available to home-manager
                 systemOptions = config;
-                # # anytypeAppImage = anytypeAppImage;
               };
             })
 
             sops-nix.nixosModules.sops
-
           ];
         };
-
       };
     };
 }
