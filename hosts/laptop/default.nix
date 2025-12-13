@@ -35,6 +35,8 @@ in
     onlyoffice.enable = true;
     signal.enable = true;
     docker.enable = true;
+    flox.enable = true;
+    espanso.enable = true;
     
     tailscale = {
       enable = true;
