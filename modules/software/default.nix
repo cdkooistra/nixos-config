@@ -9,5 +9,6 @@
     ./docker.nix
     ./tailscale.nix
     ./flox.nix
+    ./espanso.nix
   ];
 }
