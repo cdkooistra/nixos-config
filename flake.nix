@@ -20,22 +20,31 @@
       url = "github:flox/flox/latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  
+
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, flox, ... }@inputs:     
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      sops-nix,
+      flox,
+      ...
+    }@inputs:
     let
       lib = nixpkgs.lib;
 
       # syncthing device IDs
       devices = {
         sisyphus = "XGVROJR-NJ7EVPU-4HK6TXO-345J6P4-GQJQAYN-KFNDXXV-OAJQ365-U3K3TQJ";
-        artemis  = "E4TZ7AC-Y3GVSSY-TTRTR5G-5HAZRUK-ICYT2GO-7FDVOL3-5XUFVM7-YH5NMQC";
+        artemis = "E4TZ7AC-Y3GVSSY-TTRTR5G-5HAZRUK-ICYT2GO-7FDVOL3-5XUFVM7-YH5NMQC";
       };
 
-      commonSpecialArgs = {inherit inputs devices;};
+      commonSpecialArgs = { inherit inputs devices; };
 
-    in {
+    in
+    {
       nixosConfigurations = {
         desktop = lib.nixosSystem {
           system = "x86_64-linux";
@@ -43,21 +52,25 @@
           modules = [
             ./hosts/desktop
 
-            home-manager.nixosModules.home-manager {
+            home-manager.nixosModules.home-manager
+            {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./home-manager/default.nix;
               home-manager.backupFileExtension = "backup";
             }
-            
-            ({ config, ... }: {
-              home-manager.extraSpecialArgs = {
-                inherit inputs;
-              
-                # Make the config available to home-manager
-                systemOptions = config;
-              };
-            })
+
+            (
+              { config, ... }:
+              {
+                home-manager.extraSpecialArgs = {
+                  inherit inputs;
+
+                  # Make the config available to home-manager
+                  systemOptions = config;
+                };
+              }
+            )
 
             sops-nix.nixosModules.sops
           ];
@@ -69,7 +82,8 @@
           modules = [
             ./hosts/laptop
 
-            home-manager.nixosModules.home-manager {
+            home-manager.nixosModules.home-manager
+            {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./home-manager/default.nix;
@@ -77,14 +91,17 @@
             }
 
             # Make the config available to home-manager
-            ({ config, ... }: {
-              home-manager.extraSpecialArgs = {
-                inherit inputs;
-                
-                # Make the config available to home-manager
-                systemOptions = config;
-              };
-            })
+            (
+              { config, ... }:
+              {
+                home-manager.extraSpecialArgs = {
+                  inherit inputs;
+
+                  # Make the config available to home-manager
+                  systemOptions = config;
+                };
+              }
+            )
 
             sops-nix.nixosModules.sops
           ];
@@ -96,21 +113,25 @@
           modules = [
             ./hosts/server
 
-            home-manager.nixosModules.home-manager {
+            home-manager.nixosModules.home-manager
+            {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./home-manager/default.nix;
               home-manager.backupFileExtension = "backup";
             }
 
-            ({ config, ... }: {
-              home-manager.extraSpecialArgs = {
-                inherit inputs;
-                
-                # Make the config available to home-manager
-                systemOptions = config;
-              };
-            })
+            (
+              { config, ... }:
+              {
+                home-manager.extraSpecialArgs = {
+                  inherit inputs;
+
+                  # Make the config available to home-manager
+                  systemOptions = config;
+                };
+              }
+            )
 
             sops-nix.nixosModules.sops
           ];

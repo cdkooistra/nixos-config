@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.graphics.displaylink = {
@@ -24,8 +29,8 @@
     environment.systemPackages = with pkgs; [
       displaylink
     ];
-    
-    services.xserver.videoDrivers = ["displaylink" ];
+
+    services.xserver.videoDrivers = [ "displaylink" ];
 
     systemd.services.dlm.wantedBy = [ "multi-user.target" ];
 

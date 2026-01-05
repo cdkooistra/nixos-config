@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.software = {
@@ -22,24 +27,25 @@
   config = lib.mkMerge [
     (lib.mkIf config.software.steam.enable {
       programs.steam = {
-          enable = true;
-          gamescopeSession.enable = true;
+        enable = true;
+        gamescopeSession.enable = true;
 
-          package = pkgs.steam.override {
-            extraPkgs = pkgs: with pkgs; [
+        package = pkgs.steam.override {
+          extraPkgs =
+            pkgs: with pkgs; [
               gamemode
               gamescope
             ];
-          };
         };
+      };
 
-        programs.gamemode.enable = true;
+      programs.gamemode.enable = true;
 
-        environment.systemPackages = with pkgs; [
-          mangohud
-          lutris
-          bottles
-        ];
+      environment.systemPackages = with pkgs; [
+        mangohud
+        lutris
+        bottles
+      ];
     })
 
     (lib.mkIf config.software.xone.enable {
@@ -51,6 +57,6 @@
         prismlauncher
       ];
     })
-    
+
   ];
 }

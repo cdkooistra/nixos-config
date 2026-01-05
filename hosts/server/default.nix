@@ -2,31 +2,34 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, devices, lib, pkgs, ... }:
-
-let 
-  modules = import ../../modules;
-in 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      modules.nixos
-      modules.graphics
-      modules.desktops.gnome
-      modules.software
-    ];
-    
+  # devices,
+  lib,
+  ...
+}:
+
+let
+  modules = import ../../modules;
+in
+{
+  imports = [
+    ./hardware-configuration.nix
+    modules.nixos
+    modules.graphics
+    modules.desktops.gnome
+    modules.software
+  ];
+
   # nixos
   networking.hostName = "hermes";
 
   graphics.amd.enable = true;
-  
+
   gnome = {
     enable = true;
     mode = "server";
   };
-  
+
   software = {
     docker.enable = true;
 
@@ -36,16 +39,16 @@ in
     };
 
     # TODO:
-    # how should hermes be peered with other systems? 
+    # how should hermes be peered with other systems?
     # syncthing = {
     #   enable = false;
     #   deviceId = devices.hermes;
     # };
 
-      #deviceId = devices.hermes;
-      
-      # TODO:
-      # how should hermes be peered with other systems? 
+    #deviceId = devices.hermes;
+
+    # TODO:
+    # how should hermes be peered with other systems?
   };
 
   # Disable systemd targets for sleep and hibernation

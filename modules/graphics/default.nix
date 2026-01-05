@@ -4,7 +4,7 @@
     ./amd.nix
     ./displaylink.nix
   ];
-  
+
   # enable OpenGL
   hardware.graphics = {
     enable = true;
