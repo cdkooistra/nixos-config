@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   imports = [ 
     ./locale.nix
@@ -15,4 +17,9 @@
   # this helps set up remote vscode server :)
   programs.nix-ld.enable = true;
 
+  # setup lsp and formatter
+  environment.systemPackages = with pkgs; [
+    nixfmt-rfc-style
+    nixd
+  ];
 }
