@@ -1,15 +1,18 @@
-{ systemOptions, lib, config, pkgs, inputs, ... }:
+{
+  config,
+  ...
+}:
 
 {
   dconf = {
-    enable = true; 
+    enable = true;
     settings = {
       "org/gnome/settings-daemon/plugins/media-keys" = {
-        custom-keybindings = [ 
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" 
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" 
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/" 
-          ];
+        custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+        ];
       };
 
       "org/gnome/desktop/notifications/application/spotify" = {
@@ -39,7 +42,7 @@
       };
 
       "org/gnome/desktop/wm/keybindings" = {
-        close = ["<Super>q"];
+        close = [ "<Super>q" ];
       };
 
       "org/gnome/desktop/interface" = {
@@ -52,7 +55,7 @@
         slideshow-queue-reshuffle-on-complete = true;
         slideshow-pause = false;
       };
-      
+
     };
   };
 }

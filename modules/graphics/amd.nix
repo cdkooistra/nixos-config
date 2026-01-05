@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 {
   options.graphics.amd = {
@@ -10,6 +14,6 @@
   };
 
   config = lib.mkIf config.graphics.amd.enable {
-    services.xserver.videoDrivers = ["amdgpu"];
+    services.xserver.videoDrivers = [ "amdgpu" ];
   };
 }

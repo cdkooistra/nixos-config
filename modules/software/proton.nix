@@ -1,11 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.software.proton = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "enable Proton mail + pass"; 
+      description = "enable Proton mail + pass";
     };
   };
 

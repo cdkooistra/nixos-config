@@ -1,4 +1,10 @@
-{ config, lib, inputs, pkgs, systemOptions, ... }: #anytypeAppImage
+{
+  config,
+  inputs,
+  pkgs,
+  systemOptions,
+  ...
+}: # anytypeAppImage
 
 {
   # Add home dirs to sidebar (GNOME)
@@ -44,7 +50,6 @@
     # };
   };
 
-
   # AnyType
   # Fetch the AppImage into ~/Applications
   # home.file."Applications/Anytype.AppImage" = {
@@ -88,10 +93,8 @@
   programs.bash = {
     enable = true;
   };
-  
-  imports = if systemOptions.gnome.enable
-  then [ ./dconf.nix ]
-  else [];
+
+  imports = if systemOptions.gnome.enable then [ ./dconf.nix ] else [ ];
 
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in

@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 {
   options.graphics.nvidia = {
@@ -8,13 +12,13 @@
       description = "enable nvidia drivers";
     };
   };
-  
+
   config = lib.mkIf config.graphics.nvidia.enable {
-    services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {
       modesetting.enable = true;
-      
+
       powerManagement = {
         enable = false;
         finegrained = false;

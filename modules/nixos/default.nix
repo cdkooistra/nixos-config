@@ -1,15 +1,18 @@
 { pkgs, ... }:
 
 {
-  imports = [ 
+  imports = [
     ./locale.nix
-    ./sops.nix 
+    ./sops.nix
     ./networking.nix
     ./user.nix
     ./appimage.nix
   ];
-  
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
   # enable this setting to solve some issues with unpatched dynamic binaries

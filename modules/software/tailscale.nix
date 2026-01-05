@@ -1,6 +1,10 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
-{ 
+{
   options.software.tailscale = {
     enable = lib.mkOption {
       type = lib.types.bool;

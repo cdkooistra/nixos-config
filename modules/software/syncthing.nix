@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.software.syncthing;
@@ -8,15 +13,15 @@ in
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "enable syncthing"; 
+      description = "enable syncthing";
     };
-    
+
     deviceId = lib.mkOption {
       type = lib.types.str;
       default = "";
       description = "Device ID for this Syncthing instance";
     };
-  
+
     peers = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       default = { };
@@ -48,8 +53,11 @@ in
 
       settings = {
         devices = {
-          ${config.networking.hostName} = { id = cfg.deviceId; };
-        } // (lib.mapAttrs (name: id: { inherit id; }) cfg.peers);
+          ${config.networking.hostName} = {
+            id = cfg.deviceId;
+          };
+        }
+        // (lib.mapAttrs (name: id: { inherit id; }) cfg.peers);
 
         folders = {
           "Documents" = {
@@ -66,18 +74,18 @@ in
   };
 }
 
-    # TODO: figure out how to do this garbage
-    # systemd.services.set-syncthing-password = {
-    #   description = "Set Syncthing GUI password from sops secret";
-    #   after = [ "network.target" ];
-    #   before = [ "syncthing.service" ];
-    #   wantedBy = [ "multi-user.target" ];
+# TODO: figure out how to do this garbage
+# systemd.services.set-syncthing-password = {
+#   description = "Set Syncthing GUI password from sops secret";
+#   after = [ "network.target" ];
+#   before = [ "syncthing.service" ];
+#   wantedBy = [ "multi-user.target" ];
 
-    #   serviceConfig = {
-    #     Type = "oneshot";
-    #     User = "connor";
-    #     ExecStart = pkgs.writeShellScript "set-syncthing-pw" ''
-    #       '';
-    #   };
-    #
-    # };
+#   serviceConfig = {
+#     Type = "oneshot";
+#     User = "connor";
+#     ExecStart = pkgs.writeShellScript "set-syncthing-pw" ''
+#       '';
+#   };
+#
+# };

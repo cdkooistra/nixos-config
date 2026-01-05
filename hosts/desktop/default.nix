@@ -2,31 +2,35 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, devices, lib, pkgs, ... }:
-
-let 
-  modules = import ../../modules;
-in 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      modules.nixos
-      modules.graphics
-      modules.desktops.gnome
-      modules.software
-    ];
+  config,
+  devices,
+  lib,
+  ...
+}:
+
+let
+  modules = import ../../modules;
+in
+{
+  imports = [
+    ./hardware-configuration.nix
+    modules.nixos
+    modules.graphics
+    modules.desktops.gnome
+    modules.software
+  ];
 
   # device name
   networking.hostName = "sisyphus";
-  
+
   graphics.nvidia.enable = true;
-  
+
   gnome = {
     enable = true;
     mode = "client";
   };
-  
+
   software = {
     proton.enable = true;
     onlyoffice.enable = true;
@@ -35,7 +39,7 @@ in
     docker.enable = true;
     flox.enable = true;
     espanso.enable = true;
-    
+
     tailscale = {
       enable = true;
       ssh = true;
@@ -63,7 +67,7 @@ in
 
   fileSystems."/run/media/connor/Storage" = {
     device = "/dev/disk/by-uuid/8222BD7522BD6F33";
-    fsType = "ntfs";  
+    fsType = "ntfs";
   };
 
   # Bootloader.

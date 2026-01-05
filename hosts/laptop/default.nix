@@ -2,29 +2,31 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, devices, lib, pkgs, ... }:
-
-let 
-  modules = import ../../modules;
-in 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      modules.nixos
-      modules.graphics
-      modules.desktops.gnome
-      modules.software
-    ];
+  devices,
+  ...
+}:
+
+let
+  modules = import ../../modules;
+in
+{
+  imports = [
+    ./hardware-configuration.nix
+    modules.nixos
+    modules.graphics
+    modules.desktops.gnome
+    modules.software
+  ];
 
   # device name
   networking.hostName = "artemis";
-  
+
   graphics = {
     amd.enable = true;
     displaylink.enable = true;
   };
-  
+
   gnome = {
     enable = true;
     mode = "client";
@@ -37,18 +39,18 @@ in
     docker.enable = true;
     flox.enable = true;
     espanso.enable = true;
-    
+
     tailscale = {
       enable = true;
     };
-    
+
     syncthing = {
       enable = true;
       deviceId = devices.artemis;
 
       peers = {
         sisyphus = devices.sisyphus;
-      };  
+      };
     };
   };
 
@@ -63,11 +65,13 @@ in
   };
 
   # Swapfile
-  swapDevices = [ {
-    device = "/swapfile";
-    size = 8*1024;
-    options = [ "discard" ];
-  } ];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 8 * 1024;
+      options = [ "discard" ];
+    }
+  ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
