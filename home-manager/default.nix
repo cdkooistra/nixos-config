@@ -126,7 +126,7 @@
   #  /etc/profiles/per-user/connor/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "code";
+    EDITOR = "code --wait";
   };
 
   # Let Home Manager install and manage itself.
