@@ -4,23 +4,39 @@ Hi, this is my NixOS Flake + Home Manager configuration.
 
 ## Secrets
 
-To manage secrets, I use [sops-nix](https://github.com/Mic92/sops-nix) together with [age](https://github.com/FiloSottile/age). To have sops-nix encrypt/decrypt with our set ed25519 private key, we generate an age key:
+To manage secrets, I use [agenix](https://github.com/ryantm/agenix) together with [age](https://github.com/FiloSottile/age).
 
-```bash
-mkdir -p ~/.config/sops/age
-$ nix-shell -p ssh-to-age --run "ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt"
+In [secrets/secrets.nix](./secrets/secrets.nix) I map each system and their corresponding public key. This mapping can then be used to determine what secret can be decrypted by which system(s).
+
+To create a secret, first create that secret in the aforementioned `secrets.nix`:
+
+```nix
+  "secret1.age".publicKeys = [ user1 system1 ];
+  "secret2.age".publicKeys = users ++ systems;
 ```
 
-Afterwards, make sure to append the public key to the .sops.yaml file:
+Then to create/edit the secret itself:
 
 ```bash
-nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
+agenix -e secret1.age 
 ```
 
-Now you can set any secrets in ```secrets/secrets.yaml``` using the following command:
+This will open a temporary file and allows you to insert secret content.
 
-```bash
-sops .secrets/secrets.yaml
+Then, inside any NixOS module, we need to register and use that secret as follows:
+
+```nix
+{
+  # register
+  age.secrets.secret1.file = ./secrets/secret1.age;
+
+  # use
+  virtualisation.oci-containers.containers.solidtime = {
+    environmentFiles = [ config.age.secrets.secret1.path ];
+    # age.secrets.<name>.path is the path where the secret is decrypted to. 
+    # Defaults to /run/agenix/<name> (config.age.secretsDir/<name>).
+    # We can only pass along a file with decrypted contents
+    # ...
+  };
+}
 ```
-
-These secrets will now be encrypted when viewed through any other way.
