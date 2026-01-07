@@ -14,7 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops-nix.url = "github:Mic92/sops-nix";
+    agenix.url = "github:ryantm/agenix";
 
     flox = {
       url = "github:flox/flox/latest";
@@ -28,7 +28,7 @@
       self,
       nixpkgs,
       home-manager,
-      sops-nix,
+      agenix,
       flox,
       ...
     }@inputs:
@@ -72,7 +72,7 @@
               }
             )
 
-            sops-nix.nixosModules.sops
+            agenix.nixosModules.default
           ];
         };
 
@@ -103,7 +103,7 @@
               }
             )
 
-            sops-nix.nixosModules.sops
+            agenix.nixosModules.default
           ];
         };
 
@@ -133,7 +133,7 @@
               }
             )
 
-            sops-nix.nixosModules.sops
+            agenix.nixosModules.default
           ];
         };
       };

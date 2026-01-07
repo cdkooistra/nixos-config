@@ -3,7 +3,7 @@
 {
   imports = [
     ./locale.nix
-    ./sops.nix
+    ./age.nix
     ./networking.nix
     ./user.nix
     ./appimage.nix
