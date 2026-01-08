@@ -8,7 +8,6 @@
 
 let
   service = "solidtime";
-  secrets = config.age.secrets."${service}".path;
   cfg = config.services.${service};
 in
 {
@@ -25,13 +24,23 @@ in
       description = "port";
     };
 
+    secretFile = lib.mkOption {
+      type = lib.types.path;
+      description = "path to age-encrypted secrets";
+    };
+
     tailscale = tailscale.options;
   };
 
   config = lib.mkIf cfg.enable {
+    # retrieve age secret
+    age.secrets.${service} = {
+      file = cfg.secretFile;
+    };
+
     # create directories
     systemd.tmpfiles.rules = [
-      "d ${cfg.directory} 0755 root root - -"
+      "d ${cfg.directory} 0755 1000 1000 - -"
       "d ${cfg.directory}/data 0755 1000 1000 - -"
       "d ${cfg.directory}/logs 0755 1000 1000 - -"
       "d ${cfg.directory}/db 0700 999 root - -"
@@ -60,9 +69,11 @@ in
         autoStart = true;
         image = "solidtime/solidtime:0.10";
         user = "1000:1000";
-        networks = [ "solidtime" ];
 
-        environmentFiles = [ secrets ];
+        networks = lib.mkIf (!cfg.tailscale.enable) [ "solidtime" ];
+        extraOptions = lib.mkIf (cfg.tailscale.enable) [ "--network=container:${service}-tailscale" ];
+
+        environmentFiles = [ config.age.secrets.${service}.path ];
         environment = {
           CONTAINER_MODE = "http";
           AUTO_DB_MIGRATE = "true";
@@ -73,24 +84,8 @@ in
           "${cfg.directory}/logs:/var/www/html/storage/logs"
         ];
 
-        ports = [ "${toString cfg.port}:8000" ];
-        dependsOn = [ "solidtime-database" ];
-      };
-
-      solidtime-database = {
-        autoStart = true;
-        image = "postgres:15";
-        networks = [ "solidtime" ];
-
-        environmentFiles = [ secrets ];
-        environment = {
-          POSTGRES_DB = "solidtime";
-          POSTGRES_USER = "solidtime";
-        };
-
-        volumes = [
-          "${cfg.directory}/db:/var/lib/postgresql/data"
-        ];
+        # ports = [ "${toString cfg.port}:8000" ];
+        dependsOn = if cfg.tailscale.enable then [ "solidtime-tailscale" ] else [ "solidtime-database" ];
       };
 
       solidtime-scheduler = {
@@ -99,6 +94,7 @@ in
         user = "1000:1000";
         networks = [ "solidtime" ];
 
+        environmentFiles = [ config.age.secrets.${service}.path ];
         environment = {
           CONTAINER_MODE = "scheduler";
         };
@@ -117,6 +113,7 @@ in
         user = "1000:1000";
         networks = [ "solidtime" ];
 
+        environmentFiles = [ config.age.secrets.${service}.path ];
         environment = {
           CONTAINER_MODE = "worker";
           WORKER_COMMAND = "php /var/www/html/artisan queue:work";
@@ -130,12 +127,33 @@ in
         dependsOn = [ "solidtime-database" ];
       };
 
+      solidtime-database = {
+        autoStart = true;
+        image = "postgres:15";
+        networks = [ "solidtime" ];
+
+        environmentFiles = [ config.age.secrets.${service}.path ];
+
+        volumes = [
+          "${cfg.directory}/db:/var/lib/postgresql/data"
+        ];
+      };
+
+      solidtime-gotenberg = {
+        autoStart = true;
+        image = "gotenberg/gotenberg:8";
+        networks = [ "solidtime" ];
+      };
+
       # create tailscale sidecar
       solidtime-tailscale = lib.mkIf cfg.tailscale.enable (
         tailscale.mkContainer {
           service = "${service}";
           directory = cfg.directory;
-          cfg = cfg.tailscale;
+          networks = [ "solidtime" ];
+          cfg = cfg.tailscale // {
+            envfile = "${service}";
+          };
         }
       );
     };
