@@ -9,6 +9,7 @@
 }:
 
 let
+  tailnet = "tail0e2331";
   modules = import ../../modules;
 in
 {
@@ -18,6 +19,7 @@ in
     modules.graphics
     modules.desktops.gnome
     modules.software
+    modules.services
   ];
 
   # nixos
@@ -49,6 +51,29 @@ in
 
     # TODO:
     # how should hermes be peered with other systems?
+  };
+
+  services = {
+    solidtime = {
+      enable = true;
+      directory = "/srv/solidtime";
+      port = 3500;
+
+      tailscale = {
+        enable = true;
+        hostname = "solidtime";
+        tailnet = tailnet;
+        envfile = "solidtime";
+        serve = {
+          "/" = "http://127.0.0.1:3500";
+        };
+        magicdns = true; # default = true, so can omit
+      };
+
+      age.secrets."solidtime" = {
+        file = ./secrets/solidtime.age;
+      };
+    };
   };
 
   # Disable systemd targets for sleep and hibernation
