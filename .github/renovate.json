@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "schedule": [
+    "before 6am on the 1st day of the month"
+  ],
+  "extends": [
+    "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "modules/services/.*\\.nix$"
+      ],
+      "matchStrings": [
+        "image\\s*=\\s*[\"'](?<depName>[^:]+):(?<currentValue>[^\"']+)[\"']"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchCategories": [
+        "docker"
+      ],
+      "groupName": "Service updates"
+    }
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "assignees": [
+    "cdkooistra"
+  ]
+}
