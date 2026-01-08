@@ -10,7 +10,5 @@ let
   ];
 in
 {
-  # "secret.age".publicKeys = systems; # or [ sisyphus artemis ];
-  # "new_secret.age".publicKeys = [ sisyphus ];
-
+  "solidtime.age".publicKeys = systems;
 }
