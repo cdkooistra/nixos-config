@@ -4,6 +4,8 @@
 
 {
   # devices,
+  config,
+  inputs,
   lib,
   ...
 }:
@@ -20,6 +22,11 @@ in
     modules.desktops.gnome
     modules.software
     modules.services
+  ];
+
+  # age
+  age.identityPaths = [
+    "${config.users.users.connor.home}/.ssh/id_ed25519"
   ];
 
   # nixos
@@ -57,7 +64,10 @@ in
     solidtime = {
       enable = true;
       directory = "/srv/solidtime";
-      port = 3500;
+      port = 8000;
+      # inputs.self = flake input reference
+      # so this means abs path from flake root
+      secretFile = inputs.self + "/secrets/solidtime.age";
 
       tailscale = {
         enable = true;
@@ -65,13 +75,9 @@ in
         tailnet = tailnet;
         envfile = "solidtime";
         serve = {
-          "/" = "http://127.0.0.1:3500";
+          "/" = "http://127.0.0.1:8000";
         };
         magicdns = true; # default = true, so can omit
-      };
-
-      age.secrets."solidtime" = {
-        file = ./secrets/solidtime.age;
       };
     };
   };
