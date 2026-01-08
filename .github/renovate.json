@@ -4,7 +4,8 @@
     "before 6am on the 1st day of the month"
   ],
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":disableDependencyDashboard"
   ],
   "customManagers": [
     {
