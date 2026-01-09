@@ -10,5 +10,12 @@ let
   ];
 in
 {
-  "solidtime.age".publicKeys = systems;
+  "solidtime.age".publicKeys = [
+    sisyphus
+    hermes
+  ];
+  "immich.age".publicKeys = [
+    sisyphus
+    hermes
+  ];
 }

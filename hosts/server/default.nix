@@ -91,6 +91,23 @@ in
         magicdns = true; # default = true, so can omit
       };
     };
+
+    immich = {
+      enable = true;
+      dir = "/srv/immich";
+      dataDir = "/mnt/data/immich";
+      secretFile = inputs.self + "/secrets/immich.age";
+
+      tailscale = {
+        enable = true;
+        hostname = "immich";
+        tailnet = tailnet;
+        # envfile = "immich";
+        serve = {
+          "/" = "http://127.0.0.1:2283";
+        };
+      };
+    };
   };
 
   # Disable systemd targets for sleep and hibernation
