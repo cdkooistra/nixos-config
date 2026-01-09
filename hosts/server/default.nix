@@ -42,6 +42,17 @@ in
   software = {
     docker.enable = true;
 
+    rsync = {
+      enable = true;
+      backups = {
+        immich-data = {
+          src = "/mnt/data/immich";
+          dst = "connor@sisyphus:/run/media/connor/Storage/immich-backup";
+          schedule = "daily";
+        };
+      };
+    };
+
     tailscale = {
       enable = true;
       ssh = true;
