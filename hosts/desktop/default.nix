@@ -40,6 +40,9 @@ in
     flox.enable = true;
     espanso.enable = true;
 
+    # to receive from hermes
+    rsync.enable = true;
+
     tailscale = {
       enable = true;
       ssh = true;
