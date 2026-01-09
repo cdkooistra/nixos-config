@@ -48,7 +48,7 @@ in
         immich-data = {
           src = "/mnt/data/immich";
           dst = "connor@sisyphus:/run/media/connor/Storage/immich-backup";
-          schedule = "daily";
+          schedule = "12:00";
         };
       };
     };
