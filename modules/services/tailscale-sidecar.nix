@@ -66,7 +66,7 @@
       image = "ghcr.io/tailscale/tailscale:v1.90.9";
       autoStart = true;
       hostname = "${cfg.hostname}";
-      networks = networks;
+      networks = lib.optionals (networks != [ ]) networks;
       environment = lib.mkMerge [
         {
           "TS_STATE_DIR" = "/var/lib/tailscale";
