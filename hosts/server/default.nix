@@ -92,7 +92,7 @@ in
       };
     };
 
-    immich = {
+    immich-container = {
       enable = true;
       dir = "/srv/immich";
       dataDir = "/mnt/data/immich";
