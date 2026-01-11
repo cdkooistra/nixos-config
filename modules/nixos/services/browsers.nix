@@ -40,45 +40,68 @@ in
     };
   };
 
-  # if cfg.enabled, then for each instance apply the following config:
   config = lib.mkIf cfg.enable (
-    lib.mkMerge (
-      lib.mapAttrsToList (name: instance: {
+    lib.mkMerge [
+      {
         # retrieve age secret
-        age.secrets."${service}-${name}".file = instance.secretFile;
+        age.secrets = lib.mkMerge (
+          lib.mapAttrsToList (name: instance: {
+            "${service}-${name}".file = instance.secretFile;
+          }) cfg.instances
+        );
+
         # create directories
-        systemd.tmpfiles.rules = [
-          "d ${instance.dir} 0755 1000 1000 - -"
-          "d ${instance.dir}/config 0755 1000 1000 - -"
-        ];
+        systemd.tmpfiles.rules = lib.flatten (
+          lib.mapAttrsToList (name: instance: [
+            "d ${instance.dir} 0755 1000 1000 - -"
+            "d ${instance.dir}/config 0755 1000 1000 - -"
+          ]) cfg.instances
+        );
 
-        virtualisation.oci-containers.containers."${service}-${name}" = {
-          autoStart = true;
-          image = "lscr.io/linuxserver/chromium:latest";
+        # set up containers
+        virtualisation.oci-containers.containers = lib.mkMerge (
+          (lib.mapAttrsToList (name: instance: {
+            "${service}-${name}" = {
+              autoStart = true;
+              image = "lscr.io/linuxserver/chromium:latest";
 
-          extraOptions = [
-            "--device=/dev/dri:/dev/dri"
-            "--group-add=video"
-          ]
-          ++ lib.optionals instance.tailscale.enable [
-            "--network=container:${service}-${name}-tailscale"
-          ];
+              extraOptions = [
+                "--device=/dev/dri:/dev/dri"
+                "--group-add=video"
+              ]
+              ++ lib.optionals instance.tailscale.enable [
+                "--network=container:${service}-${name}-tailscale"
+              ];
 
-          environmentFiles = [ config.age.secrets."${service}-${name}".path ];
-          environment = {
-            PUID = "1000";
-            PGID = "1000";
-            TZ = "Europe/Amsterdam";
-          };
+              environmentFiles = [ config.age.secrets."${service}-${name}".path ];
+              environment = {
+                PUID = "1000";
+                PGID = "1000";
+                TZ = "Europe/Amsterdam";
+              };
 
-          volumes = [
-            "${instance.dir}/config:/config"
-          ];
-        };
+              volumes = [
+                "${instance.dir}/config:/config"
+              ];
 
-        dependsOn = lib.optionals instance.tailscale.enable [ "${service}-${name}-tailscale" ];
-
-      }) cfg.instances
-    )
+              dependsOn = lib.optionals instance.tailscale.enable [ "${service}-${name}-tailscale" ];
+            };
+          }) cfg.instances)
+          ++ (lib.mapAttrsToList (
+            name: instance:
+            lib.optionalAttrs instance.tailscale.enable {
+              "${service}-${name}-tailscale" = tailscale.mkContainer {
+                service = "${service}-${name}";
+                directory = instance.dir;
+                networks = [ ];
+                cfg = instance.tailscale // {
+                  envfile = "${service}-${name}";
+                };
+              };
+            }
+          ) cfg.instances)
+        );
+      }
+    ]
   );
 }
