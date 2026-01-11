@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   config,
   devices,
@@ -10,15 +6,16 @@
 }:
 
 let
-  modules = import ../../modules;
+  modules = import ../../modules/nixos;
 in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.nixos
+    modules.system
     modules.graphics
-    modules.desktops.gnome
+    modules.desktops
     modules.software
+    modules.gaming
   ];
 
   # device name
@@ -26,7 +23,7 @@ in
 
   graphics.nvidia.enable = true;
 
-  gnome = {
+  desktops.gnome = {
     enable = true;
     mode = "client";
   };
@@ -55,11 +52,24 @@ in
       # automatically include all devices as peers except self
       peers = lib.removeAttrs devices [ config.networking.hostName ];
     };
+  };
 
-    # gaming related
-    steam.enable = true;
-    xone.enable = true;
-    prism.enable = true;
+  gaming = {
+    utils = {
+      gamescope.enable = true;
+      gamemode.enable = true;
+      mangohud.enable = true;
+    };
+
+    launchers = {
+      steam.enable = true;
+      prism.enable = true;
+      bottles.enable = true;
+    };
+
+    controllers = {
+      xone.enable = true;
+    };
   };
 
   # enable auto mounting drives

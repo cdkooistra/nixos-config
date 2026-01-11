@@ -1,3 +1,0 @@
-{
-  gnome = import ./gnome.nix;
-}

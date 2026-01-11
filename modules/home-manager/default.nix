@@ -94,7 +94,7 @@
     enable = true;
   };
 
-  imports = if systemOptions.gnome.enable then [ ./dconf.nix ] else [ ];
+  imports = if systemOptions.desktops.gnome.enable then [ ./dconf.nix ] else [ ];
 
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
