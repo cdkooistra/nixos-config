@@ -9,6 +9,7 @@
   imports = [
     ./solidtime.nix
     ./immich.nix
+    ./browsers.nix
   ];
 
   # this imports the tailscale sidecar only for service.nix files defined in this folder
