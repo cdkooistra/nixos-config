@@ -1,21 +1,17 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   devices,
   ...
 }:
 
 let
-  modules = import ../../modules;
+  modules = import ../../modules/nixos;
 in
 {
   imports = [
     ./hardware-configuration.nix
     modules.nixos
     modules.graphics
-    modules.desktops.gnome
+    modules.desktops
     modules.software
   ];
 
@@ -27,7 +23,7 @@ in
     displaylink.enable = true;
   };
 
-  gnome = {
+  desktops.gnome = {
     enable = true;
     mode = "client";
   };

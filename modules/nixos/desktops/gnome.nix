@@ -4,8 +4,11 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.desktops.gnome;
+in
 {
-  options.gnome = {
+  options.desktops.gnome = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -22,7 +25,7 @@
     };
   };
 
-  config = lib.mkIf config.gnome.enable (
+  config = lib.mkIf cfg.enable (
     lib.mkMerge [
       {
         services = {
@@ -35,7 +38,7 @@
               wayland = true;
             };
           }
-          // lib.optionalAttrs (config.gnome.mode == "server") {
+          // lib.optionalAttrs (cfg.mode == "server") {
             autoLogin = {
               enable = true;
               user = "connor";

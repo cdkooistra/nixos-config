@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   # devices,
   config,
@@ -12,14 +8,14 @@
 
 let
   tailnet = "tail0e2331";
-  modules = import ../../modules;
+  modules = import ../../modules/nixos;
 in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.nixos
+    modules.system
     modules.graphics
-    modules.desktops.gnome
+    modules.desktops
     modules.software
     modules.services
   ];
@@ -34,7 +30,7 @@ in
 
   graphics.amd.enable = true;
 
-  gnome = {
+  desktops.gnome = {
     enable = true;
     mode = "server";
   };
@@ -84,11 +80,9 @@ in
         enable = true;
         hostname = "solidtime";
         tailnet = tailnet;
-        envfile = "solidtime";
         serve = {
           "/" = "http://127.0.0.1:8000";
         };
-        magicdns = true; # default = true, so can omit
       };
     };
 
@@ -102,7 +96,6 @@ in
         enable = true;
         hostname = "immich";
         tailnet = tailnet;
-        # envfile = "immich";
         serve = {
           "/" = "http://127.0.0.1:2283";
         };

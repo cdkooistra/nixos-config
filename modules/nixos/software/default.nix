@@ -1,6 +1,6 @@
 {
   imports = [
-    ./games.nix
+    # ./games.nix
     ./syncthing.nix
     ./rsync.nix
     ./proton.nix
