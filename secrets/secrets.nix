@@ -18,4 +18,8 @@ in
     sisyphus
     hermes
   ];
+  "browsers-idleon.age".publicKeys = [
+    sisyphus
+    hermes
+  ];
 }

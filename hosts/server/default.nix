@@ -101,6 +101,26 @@ in
         };
       };
     };
+
+    browsers = {
+      enable = true;
+
+      instances = {
+        idleon = {
+          dir = "/srv/browsers/idleon";
+          secretFile = inputs.self + "/secrets/browsers-idleon.age";
+
+          tailscale = {
+            enable = true;
+            hostname = "idleon";
+            tailnet = tailnet;
+            serve = {
+              "/" = "http://127.0.0.1:3000";
+            };
+          };
+        };
+      };
+    };
   };
 
   # Disable systemd targets for sleep and hibernation
