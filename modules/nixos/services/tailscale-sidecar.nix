@@ -6,7 +6,6 @@
 }:
 
 {
-  # config._module.args.tailscale = {
   options = {
     enable = lib.mkEnableOption "Tailscale Sidecar";
 
@@ -31,7 +30,7 @@
     magicdns = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Set to true when using MagicDNS";
+      description = "enable resolving other Tailnet hostnames";
     };
 
     envfile = lib.mkOption {
@@ -97,7 +96,10 @@
       ];
       extraOptions = [
         "--cap-add=net_admin"
+      ]
+      ++ lib.optionals (networks == [ ]) [
+        "--dns=8.8.8.8"
+        "--dns=1.1.1.1"
       ];
     };
-  # };
 }
