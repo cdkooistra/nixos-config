@@ -90,13 +90,23 @@ in
   };
 
   # Bootloader.
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 4;
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 4;
+        windows = {
+          "11-home" = {
+            title = "Windows 11";
+            efiDeviceHandle = "HD3a65535a1";
+            sortKey = "z_windows";
+          };
+        };
+        consoleMode = "auto";
+      };
+      efi.canTouchEfiVariables = true;
+      timeout = 10;
     };
-    efi.canTouchEfiVariables = true;
-    timeout = 10;
   };
 
   # Configure keymap in X11
