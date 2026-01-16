@@ -21,7 +21,13 @@ in
   # device name
   networking.hostName = "sisyphus";
 
-  graphics.nvidia.enable = true;
+  graphics = {
+    nvidia.enable = true;
+    wayland = {
+      enable = true;
+      xwayland.enable = true;
+    };
+  };
 
   desktops.gnome = {
     enable = true;
@@ -35,7 +41,7 @@ in
     pinta.enable = true;
     docker.enable = true;
     flox.enable = true;
-    espanso.enable = true;
+    espanso.enable = false;
 
     # to receive from hermes
     rsync.enable = true;
@@ -56,7 +62,7 @@ in
 
   gaming = {
     utils = {
-      gamescope.enable = true;
+      gamescope.enable = false; # 20260116 -> gamescope broken
       gamemode.enable = true;
       mangohud.enable = true;
     };
@@ -112,10 +118,6 @@ in
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
   # This value determines the NixOS release from which the default

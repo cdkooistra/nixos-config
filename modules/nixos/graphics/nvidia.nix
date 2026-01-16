@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -20,13 +21,47 @@
       modesetting.enable = true;
 
       powerManagement = {
-        enable = false;
+        enable = true;
         finegrained = false;
       };
 
+      dynamicBoost.enable = true;
       open = true;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
+
+    environment = {
+      systemPackages = with pkgs; [
+        nvidia-vaapi-driver
+      ];
+
+      sessionVariables = {
+        __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        # Required to run the correct GBM backend for nvidia GPUs on wayland
+        GBM_BACKEND = "nvidia-drm";
+        # Hardware cursors are currently broken on wlroots
+        WLR_NO_HARDWARE_CURSORS = "1";
+      };
+    };
+
+    boot = {
+      kernelModules = [
+        "nvidia"
+        "nvidiafb"
+        "nvidia_drm"
+        "nvidia_uvm"
+        "nvidia_modeset"
+      ];
+
+      # Enable DRM kernel mode setting (important for Wayland)
+      kernelParams = [ "nvidia-drm.modeset=1" ];
+
+      # Load modules early in boot process
+      initrd.kernelModules = [
+        "nvidia"
+        "nvidia_drm"
+      ];
     };
   };
 }

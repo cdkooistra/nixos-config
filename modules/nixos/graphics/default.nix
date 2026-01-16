@@ -3,6 +3,7 @@
     ./nvidia.nix
     ./amd.nix
     ./displaylink.nix
+    ./wayland.nix
   ];
 
   # enable OpenGL

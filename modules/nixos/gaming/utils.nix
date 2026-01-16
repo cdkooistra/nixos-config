@@ -19,7 +19,7 @@ in
     (lib.mkIf cfg.gamescope.enable {
       programs.gamescope = {
         enable = true;
-        capSysNice = true;
+        capSysNice = false;
       };
 
     })
@@ -34,8 +34,10 @@ in
     {
       environment.systemPackages =
         with pkgs;
-
-        lib.optional cfg.mangohud.enable mangohud;
+        lib.concatLists [
+          (lib.optional cfg.mangohud.enable mangohud)
+          (lib.optional cfg.gamescope.enable gamescope)
+        ];
     }
   ];
 }
