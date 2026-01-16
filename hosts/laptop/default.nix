@@ -9,7 +9,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.nixos
+    modules.system
     modules.graphics
     modules.desktops
     modules.software
