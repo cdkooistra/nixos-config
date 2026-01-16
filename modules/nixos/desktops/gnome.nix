@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.desktops.gnome;
+  wayland = config.graphics.wayland;
 in
 {
   options.desktops.gnome = {
@@ -29,13 +30,12 @@ in
     lib.mkMerge [
       {
         services = {
-          xserver.enable = true;
           desktopManager.gnome.enable = true;
 
           displayManager = {
             gdm = {
               enable = true;
-              wayland = true;
+              wayland = wayland.enable;
             };
           }
           // lib.optionalAttrs (cfg.mode == "server") {
