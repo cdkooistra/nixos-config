@@ -4,6 +4,31 @@
 }:
 
 {
+  # Add home dirs to sidebar
+  xdg = {
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      extraConfig = {
+        XDG_APPLICATIONS_DIR = "${config.home.homeDirectory}/Applications";
+        XDG_CODE_DIR = "${config.home.homeDirectory}/Code";
+      };
+    };
+
+    configFile."gtk-3.0/bookmarks" = {
+      text = ''
+        file://${config.home.homeDirectory}/Applications Applications
+        file://${config.home.homeDirectory}/Code Code
+        file://${config.home.homeDirectory}/Documents Documents
+        file://${config.home.homeDirectory}/Downloads Downloads
+        file://${config.home.homeDirectory}/Music Music
+        file://${config.home.homeDirectory}/Pictures Pictures
+        file://${config.home.homeDirectory}/Videos Videos
+      '';
+    };
+  };
+
+  # Handle dconfg settings
   dconf = {
     enable = true;
     settings = {
