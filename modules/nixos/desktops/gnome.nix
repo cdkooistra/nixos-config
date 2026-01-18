@@ -10,11 +10,7 @@ let
 in
 {
   options.desktops.gnome = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "enable GNOME";
-    };
+    enable = lib.mkEnableOption "GNOME Desktop Environment";
 
     mode = lib.mkOption {
       type = lib.types.enum [
@@ -46,46 +42,49 @@ in
           };
         };
 
-        environment.systemPackages =
-          let
-            gnomePkgs = with pkgs; [
-              gnome-tweaks
-              dconf2nix
-              papirus-icon-theme
+        environment = {
+          systemPackages =
+            let
+              gnomePkgs = with pkgs; [
+                gnome-tweaks
+                dconf2nix
+                papirus-icon-theme
+              ];
+              gnomeExts =
+                with pkgs.gnomeExtensions;
+                lib.flatten [
+                  pop-shell
+                  dash-to-panel
+                  appindicator
+                  vitals
+                  wallpaper-slideshow
+
+                  (lib.optional config.software.tailscale.enable tailscale-status)
+                  (lib.optional (config.networking.hostName == "artemis") battery-health-charging)
+                ];
+            in
+            gnomePkgs ++ gnomeExts;
+
+          gnome.excludePackages =
+            with pkgs;
+            lib.flatten [
+              gnome-contacts
+              gnome-text-editor
+              gnome-tour
+              gnome-maps
+              gnome-weather
+              gnome-clocks
+              gnome-characters
+              gnome-user-docs
+              geary
+              epiphany
+              gedit
+              evince
+              yelp
+
+              (lib.optional (config.networking.hostName != "artemis") gnome-bluetooth)
             ];
-
-            gnomeExts =
-              with pkgs.gnomeExtensions;
-              [
-                pop-shell
-                dash-to-panel
-                appindicator
-                vitals
-                wallpaper-slideshow
-              ]
-              ++ lib.optionals (config.software.tailscale.enable) [ tailscale-status ]
-              ++ lib.optionals (config.networking.hostName == "artemis") [ battery-health-charging ];
-          in
-          gnomePkgs ++ gnomeExts;
-
-        environment.gnome.excludePackages =
-          with pkgs;
-          [
-            gnome-contacts
-            gnome-text-editor
-            gnome-tour
-            gnome-maps
-            gnome-weather
-            gnome-clocks
-            gnome-characters
-            gnome-user-docs
-            geary
-            epiphany
-            gedit
-            evince
-            yelp
-          ]
-          ++ lib.optionals (config.networking.hostName != "artemis") [ gnome-bluetooth ];
+        };
       }
     ]
   );
