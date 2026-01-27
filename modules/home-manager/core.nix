@@ -17,6 +17,7 @@
       pkgs.obs-studio
       pkgs.anytype
       pkgs.slack
+      pkgs.uv
     ];
     sessionVariables = {
       EDITOR = "code --wait";
