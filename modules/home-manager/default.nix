@@ -8,6 +8,7 @@
   imports = lib.flatten [
     # always import
     ./core.nix
+    ../../../config/ssh.nix
 
     # conditionally import
     (lib.optional systemOptions.desktops.gnome.enable ./desktops/gnome.nix)
