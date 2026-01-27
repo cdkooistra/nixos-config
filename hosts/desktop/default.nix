@@ -18,7 +18,6 @@ in
     modules.gaming
   ];
 
-  # device name
   networking.hostName = "sisyphus";
 
   graphics = {
