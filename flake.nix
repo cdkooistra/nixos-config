@@ -35,13 +35,10 @@
     let
       lib = nixpkgs.lib;
 
-      # syncthing device IDs
-      devices = {
-        sisyphus = "XGVROJR-NJ7EVPU-4HK6TXO-345J6P4-GQJQAYN-KFNDXXV-OAJQ365-U3K3TQJ";
-        artemis = "E4TZ7AC-Y3GVSSY-TTRTR5G-5HAZRUK-ICYT2GO-7FDVOL3-5XUFVM7-YH5NMQC";
+      commonSpecialArgs = {
+        inherit inputs;
+        network = import ../config/network.nix;
       };
-
-      commonSpecialArgs = { inherit inputs devices; };
 
     in
     {

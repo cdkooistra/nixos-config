@@ -1,5 +1,5 @@
 {
-  # devices,
+  network,
   config,
   inputs,
   lib,
@@ -7,7 +7,6 @@
 }:
 
 let
-  tailnet = "tail0e2331";
   modules = import ../../modules/nixos;
 in
 {
@@ -58,10 +57,10 @@ in
     # how should hermes be peered with other systems?
     # syncthing = {
     #   enable = false;
-    #   deviceId = devices.hermes;
+    #   deviceId = network.devices.hermes;
     # };
 
-    #deviceId = devices.hermes;
+    #deviceId = network.devices.hermes;
 
     # TODO:
     # how should hermes be peered with other systems?
@@ -79,7 +78,7 @@ in
       tailscale = {
         enable = true;
         hostname = "solidtime";
-        tailnet = tailnet;
+        tailnet = network.tailnet;
         serve = {
           "/" = "http://127.0.0.1:8000";
         };
@@ -95,7 +94,7 @@ in
       tailscale = {
         enable = true;
         hostname = "immich";
-        tailnet = tailnet;
+        tailnet = network.tailnet;
         serve = {
           "/" = "http://127.0.0.1:2283";
         };
@@ -113,7 +112,7 @@ in
           tailscale = {
             enable = true;
             hostname = "idleon";
-            tailnet = tailnet;
+            tailnet = network.tailnet;
             serve = {
               "/" = "http://127.0.0.1:3000";
             };

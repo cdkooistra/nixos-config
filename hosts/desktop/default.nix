@@ -1,6 +1,6 @@
 {
   config,
-  devices,
+  network,
   lib,
   ...
 }:
@@ -52,10 +52,10 @@ in
 
     syncthing = {
       enable = true;
-      deviceId = devices.sisyphus;
+      deviceId = network.devices.sisyphus;
 
       # automatically include all devices as peers except self
-      peers = lib.removeAttrs devices [ config.networking.hostName ];
+      peers = lib.removeAttrs network.devices [ config.networking.hostName ];
     };
   };
 

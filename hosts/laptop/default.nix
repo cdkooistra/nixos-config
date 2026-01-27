@@ -1,5 +1,5 @@
 {
-  devices,
+  network,
   ...
 }:
 
@@ -42,10 +42,10 @@ in
 
     syncthing = {
       enable = true;
-      deviceId = devices.artemis;
+      deviceId = network.devices.artemis;
 
       peers = {
-        sisyphus = devices.sisyphus;
+        sisyphus = network.devices.sisyphus;
       };
     };
   };
