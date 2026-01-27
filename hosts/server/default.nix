@@ -74,7 +74,7 @@ in
       port = 8000;
       # inputs.self = flake input reference
       # so this means abs path from flake root
-      secretFile = inputs.self + "/secrets/solidtime.age";
+      secretFile = inputs.self + "../secrets/solidtime.age";
 
       tailscale = {
         enable = true;
@@ -90,7 +90,7 @@ in
       enable = true;
       dir = "/srv/immich";
       dataDir = "/mnt/data/immich";
-      secretFile = inputs.self + "/secrets/immich.age";
+      secretFile = inputs.self + "../secrets/immich.age";
 
       tailscale = {
         enable = true;
@@ -108,7 +108,7 @@ in
       instances = {
         idleon = {
           dir = "/srv/browsers/idleon";
-          secretFile = inputs.self + "/secrets/browsers-idleon.age";
+          secretFile = inputs.self + "../secrets/browsers-idleon.age";
 
           tailscale = {
             enable = true;
