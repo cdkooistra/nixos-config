@@ -37,6 +37,7 @@
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
         ];
       };
 
@@ -44,22 +45,28 @@
         enable = false;
       };
 
-      "custom-keybindings/custom0" = {
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
         binding = "<Super>b";
         command = "zen";
         name = "Launch Zen";
       };
 
-      "custom-keybindings/custom1" = {
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
         binding = "<Super>c";
         command = "code";
         name = "Launch VSCode";
       };
 
-      "custom-keybindings/custom2" = {
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
         binding = "<Super>f";
         command = "nautilus";
         name = "Launch Files";
+      };
+
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+        binding = "<Super>t";
+        command = "kgx";
+        name = "Launch Terminal";
       };
 
       "org/gnome/mutter/keybindings" = {
@@ -72,13 +79,6 @@
 
       "org/gnome/desktop/interface" = {
         icon-theme = "Papirus";
-      };
-
-      "org/gnome/shell/extensions/azwallpaper" = {
-        slideshow-directory = "${config.home.homeDirectory}/.local/share/backgrounds";
-        slideshow-slide-duration = "(1, 0, 0)"; # hours, minutes, seconds
-        slideshow-queue-reshuffle-on-complete = true;
-        slideshow-pause = false;
       };
 
     };
