@@ -1,6 +1,7 @@
 {
   config,
   network,
+  hostName,
   lib,
   ...
 }:
@@ -17,8 +18,6 @@ in
     modules.software
     modules.gaming
   ];
-
-  networking.hostName = "sisyphus";
 
   graphics = {
     nvidia.enable = true;

@@ -1,5 +1,6 @@
 {
   network,
+  hostName,
   ...
 }:
 
@@ -14,9 +15,6 @@ in
     modules.desktops
     modules.software
   ];
-
-  # device name
-  networking.hostName = "artemis";
 
   graphics = {
     amd.enable = true;
