@@ -35,19 +35,35 @@
     let
       lib = nixpkgs.lib;
 
-      commonSpecialArgs = {
-        inherit inputs;
-        network = import ../config/network.nix;
-      };
+      mkHost =
+        {
+          name,
+          arch,
+          modules,
+          extraSpecialArgs ? { },
+        }:
+        lib.nixosSystem {
+          system = arch;
+          # common specialArgs for each system
+          specialArgs = lib.recursiveUpdate {
+            inherit inputs;
 
+            # imports
+            network = import ../config/network.nix;
+
+            # vars
+            hostName = name;
+          } extraSpecialArgs;
+          inherit modules;
+        };
     in
     {
       nixosConfigurations = {
-        desktop = lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = commonSpecialArgs;
+        sisyphus = mkHost {
+          name = "sisyphus";
+          arch = "x86_64-linux";
           modules = [
-            ./hosts/desktop
+            ./hosts/sisyphus
 
             home-manager.nixosModules.home-manager
             {
@@ -56,28 +72,26 @@
               home-manager.users.connor = ./modules/home-manager/default.nix;
               home-manager.backupFileExtension = "backup";
             }
-
             (
-              { config, ... }:
+              { config, hostName, ... }:
               {
                 home-manager.extraSpecialArgs = {
-                  inherit inputs;
+                  inherit inputs hostName;
 
                   # Make the config available to home-manager
                   systemOptions = config;
                 };
               }
             )
-
             agenix.nixosModules.default
           ];
         };
 
-        laptop = lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = commonSpecialArgs;
+        artemis = mkHost {
+          name = "artemis";
+          arch = "x86_64-linux";
           modules = [
-            ./hosts/laptop
+            ./hosts/artemis
 
             home-manager.nixosModules.home-manager
             {
@@ -86,29 +100,26 @@
               home-manager.users.connor = ./modules/home-manager/default.nix;
               home-manager.backupFileExtension = "backup";
             }
-
-            # Make the config available to home-manager
             (
-              { config, ... }:
+              { config, hostName, ... }:
               {
                 home-manager.extraSpecialArgs = {
-                  inherit inputs;
+                  inherit inputs hostName;
 
                   # Make the config available to home-manager
                   systemOptions = config;
                 };
               }
             )
-
             agenix.nixosModules.default
           ];
         };
 
-        server = lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = commonSpecialArgs;
+        hermes = mkHost {
+          name = "hermes";
+          arch = "x86_64-linux";
           modules = [
-            ./hosts/server
+            ./hosts/hermes
 
             home-manager.nixosModules.home-manager
             {
@@ -117,19 +128,17 @@
               home-manager.users.connor = ./modules/home-manager/default.nix;
               home-manager.backupFileExtension = "backup";
             }
-
             (
-              { config, ... }:
+              { config, hostName, ... }:
               {
                 home-manager.extraSpecialArgs = {
-                  inherit inputs;
+                  inherit inputs hostName;
 
                   # Make the config available to home-manager
                   systemOptions = config;
                 };
               }
             )
-
             agenix.nixosModules.default
           ];
         };
