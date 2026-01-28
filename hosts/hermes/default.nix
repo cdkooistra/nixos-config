@@ -1,5 +1,6 @@
 {
   network,
+  hostName,
   config,
   inputs,
   lib,
@@ -23,9 +24,6 @@ in
   age.identityPaths = [
     "${config.users.users.connor.home}/.ssh/id_ed25519"
   ];
-
-  # nixos
-  networking.hostName = "hermes";
 
   graphics.amd.enable = true;
 
