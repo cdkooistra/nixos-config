@@ -1,6 +1,6 @@
 {
-  config,
   pkgs,
+  hostName,
   ...
 }:
 
@@ -14,6 +14,7 @@ let
       elif [ -z "$NIXREBUILD_HOST" ]; then
         exit 1
       fi
+
       "$NIXREBUILD_PATH" "$1" "$NIXREBUILD_HOST"
     '')
   ];
@@ -25,7 +26,7 @@ in
   home.file.".nixos-config/.envrc" = {
     text = ''
       export NIXREBUILD_PATH="$(pwd)/public/utils/rebuild.py"
-      export NIXREBUILD_HOST="${config.networking.hostName}"
+      export NIXREBUILD_HOST="${hostName}"
     '';
   };
 }
