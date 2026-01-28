@@ -85,6 +85,7 @@
             )
             agenix.nixosModules.default
           ];
+          # extraSpecialArgs = {};
         };
 
         artemis = mkHost {
