@@ -8,6 +8,9 @@
   imports = lib.flatten [
     # always import
     ./core.nix
+    ./utils.nix
+
+    # config
     ../../../config/ssh.nix
 
     # conditionally import
