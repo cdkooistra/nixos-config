@@ -1,6 +1,5 @@
 {
   network,
-  hostName,
   ...
 }:
 
@@ -19,6 +18,10 @@ in
   graphics = {
     amd.enable = true;
     displaylink.enable = true;
+    wayland = {
+      enable = true;
+      xwayland.enable = true;
+    };
   };
 
   desktops.gnome = {
