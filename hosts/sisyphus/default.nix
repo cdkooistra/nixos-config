@@ -112,9 +112,6 @@ in
     variant = "alt-intl";
   };
 
-  # Configure console keymap
-  console.keyMap = "dvorak";
-
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
