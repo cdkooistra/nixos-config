@@ -1,7 +1,6 @@
 {
   config,
   network,
-  hostName,
   lib,
   ...
 }:

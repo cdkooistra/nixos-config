@@ -1,6 +1,5 @@
 {
   network,
-  hostName,
   config,
   inputs,
   lib,
@@ -25,7 +24,13 @@ in
     "${config.users.users.connor.home}/.ssh/id_ed25519"
   ];
 
-  graphics.amd.enable = true;
+  graphics = {
+    amd.enable = true;
+    wayland = {
+      enable = true;
+      xwayland.enable = true;
+    };
+  };
 
   desktops.gnome = {
     enable = true;
