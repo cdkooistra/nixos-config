@@ -21,12 +21,11 @@
       modesetting.enable = true;
 
       powerManagement = {
-        enable = true;
+        enable = false; # known to cause timeouts
         finegrained = false;
       };
 
-      dynamicBoost.enable = true;
-      open = true;
+      open = false;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
@@ -54,8 +53,12 @@
         "nvidia_modeset"
       ];
 
-      # Enable DRM kernel mode setting (important for Wayland)
-      kernelParams = [ "nvidia-drm.modeset=1" ];
+      kernelParams = [
+        # Enable DRM kernel mode setting (important for Wayland)
+        "nvidia-drm.modeset=1"
+        # Help prevent sleep/wake issues
+        "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      ];
 
       # Load modules early in boot process
       initrd.kernelModules = [
