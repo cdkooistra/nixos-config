@@ -11,11 +11,19 @@ let
     (mkScript "nixrebuild" ''
       if [ -z "$NIXREBUILD_PATH" ]; then
         exit 1
-      elif [ -z "$NIXREBUILD_HOST" ]; then
+      elif [ -z "$NIXOS_HOST" ]; then
         exit 1
       fi
 
-      "$NIXREBUILD_PATH" "$1" "$NIXREBUILD_HOST"
+      "$NIXREBUILD_PATH" "$1" "$NIXOS_HOST"
+    '')
+
+    (mkScript "nixupdate" ''
+      if [ -z "$NIXUPDATE_PATH" ]; then
+        exit 1
+      fi
+
+      "$NIXUPDATE_PATH"
     '')
   ];
 in
@@ -25,8 +33,9 @@ in
   # create .envrc file at ../flake.nix
   home.file.".nixos-config/.envrc" = {
     text = ''
+      export NIXOS_HOST="${hostName}"
       export NIXREBUILD_PATH="$(pwd)/public/utils/rebuild.py"
-      export NIXREBUILD_HOST="${hostName}"
+      export NIXUPDATE_PATH="$(pwd)/public/utils/update.py"
     '';
   };
 }
