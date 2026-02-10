@@ -70,7 +70,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./modules/home-manager/default.nix;
-              home-manager.backupFileExtension = "backup";
+              home-manager.backupFileExtension = null;
             }
             (
               { config, hostName, ... }:
@@ -99,7 +99,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./modules/home-manager/default.nix;
-              home-manager.backupFileExtension = "backup";
+              home-manager.backupFileExtension = null;
             }
             (
               { config, hostName, ... }:
@@ -127,7 +127,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.connor = ./modules/home-manager/default.nix;
-              home-manager.backupFileExtension = "backup";
+              home-manager.backupFileExtension = null;
             }
             (
               { config, hostName, ... }:

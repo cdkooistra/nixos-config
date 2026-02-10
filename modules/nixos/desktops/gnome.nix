@@ -49,6 +49,7 @@ in
                 gnome-tweaks
                 dconf2nix
                 papirus-icon-theme
+                adwaita-icon-theme
               ];
               gnomeExts =
                 with pkgs.gnomeExtensions;
