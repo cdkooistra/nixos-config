@@ -23,6 +23,7 @@ in
         enable = true;
         gamescopeSession.enable = utils.gamescope.enable;
 
+        # this adds these pkgs to the Steam FHS environment
         package = pkgs.steam.override {
           extraPkgs =
             pkgs:

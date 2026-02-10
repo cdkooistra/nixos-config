@@ -31,6 +31,7 @@ in
         # TODO: is this the right place for these?
         vulkan-loader
         vulkan-tools
+        vulkan-validation-layers
       ];
 
       sessionVariables = {
