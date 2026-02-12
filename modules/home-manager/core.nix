@@ -11,13 +11,16 @@
     stateVersion = "25.05";
     packages = [
       inputs.zen-browser.packages.${pkgs.system}.default
-      pkgs.vscode
       pkgs.spotify
       pkgs.discord
       pkgs.obs-studio
       pkgs.anytype
       pkgs.slack
+
+      # dev
+      pkgs.vscode
       pkgs.uv
+      pkgs.devenv
     ];
     sessionVariables = {
       EDITOR = "code --wait";
