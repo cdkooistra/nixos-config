@@ -50,6 +50,7 @@
 
             # imports
             network = import ../config/network.nix;
+            secretsDir = toString ./../secrets;
 
             # vars
             hostName = name;
