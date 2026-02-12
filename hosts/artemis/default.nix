@@ -35,6 +35,7 @@ in
     signal.enable = true;
     docker.enable = true;
     flox.enable = true;
+    devenv.enable = true;
     espanso.enable = true;
 
     tailscale = {

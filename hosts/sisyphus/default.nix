@@ -38,6 +38,7 @@ in
     pinta.enable = true;
     docker.enable = true;
     flox.enable = true;
+    devenv.enable = true;
     espanso.enable = false;
 
     # to receive from hermes
