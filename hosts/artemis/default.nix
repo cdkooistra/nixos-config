@@ -34,7 +34,7 @@ in
     onlyoffice.enable = true;
     signal.enable = true;
     docker.enable = true;
-    flox.enable = true;
+    flox.enable = false;
     devenv.enable = true;
     espanso.enable = true;
 
