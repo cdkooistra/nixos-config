@@ -20,6 +20,7 @@
       # dev
       pkgs.vscode
       pkgs.uv
+      pkgs.python3
     ];
     sessionVariables = {
       EDITOR = "code --wait";
