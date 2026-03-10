@@ -13,6 +13,7 @@ in
     modules.graphics
     modules.desktops
     modules.software
+    modules.services
   ];
 
   graphics = {
