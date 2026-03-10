@@ -105,6 +105,8 @@ in
       };
     };
 
+    stirling.enable = true;
+
     browsers = {
       enable = false;
 
