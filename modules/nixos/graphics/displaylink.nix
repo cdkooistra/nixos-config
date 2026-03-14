@@ -7,11 +7,7 @@
 
 {
   options.graphics.displaylink = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "enable DisplayLink drivers";
-    };
+    enable = lib.mkEnableOption "enable DisplayLink drivers";
   };
 
   config = lib.mkIf config.graphics.displaylink.enable {
@@ -26,13 +22,21 @@
       };
     };
 
+    services.xserver.videoDrivers = [
+      "displaylink"
+      # "modesetting"
+    ];
+
     environment.systemPackages = with pkgs; [
       displaylink
     ];
 
-    services.xserver.videoDrivers = [ "displaylink" ];
-
     systemd.services.dlm.wantedBy = [ "multi-user.target" ];
+
+    # some freaky with mutter (gnome)
+    environment.sessionVariables = {
+      MUTTER_DEBUG_ENABLE_ATOMIC_KMS = "0";
+    };
 
   };
 }
