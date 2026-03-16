@@ -76,11 +76,13 @@
           "TS_SERVE_CONFIG" = "config/serve.json";
         })
       ];
+
       environmentFiles = [
         # each service stores its secret: ${service_name}-env.age
         # the tailscale sidecar obtains TS_AUTHKEY from there
         config.age.secrets."${cfg.envfile}".path
       ];
+
       volumes = [
         "${directory}/tailscale/state:/var/lib/tailscale"
         "${directory}/tailscale/tmp:/tmp"
@@ -94,6 +96,7 @@
           })
         }:/config/serve.json"
       ];
+
       extraOptions = [
         "--cap-add=net_admin"
       ]

@@ -14,7 +14,7 @@ in
   options.services.solidtime = {
     enable = lib.mkEnableOption "Solidtime";
 
-    directory = lib.mkOption {
+    dir = lib.mkOption {
       type = lib.types.str;
       description = "directory to store Solidtime persistent data";
     };
@@ -40,14 +40,14 @@ in
 
     # create directories
     systemd.tmpfiles.rules = [
-      "d ${cfg.directory} 0755 1000 1000 - -"
-      "d ${cfg.directory}/data 0755 1000 1000 - -"
-      "d ${cfg.directory}/logs 0755 1000 1000 - -"
-      "d ${cfg.directory}/db 0700 999 root - -"
+      "d ${cfg.dir} 0755 1000 1000 - -"
+      "d ${cfg.dir}/data 0755 1000 1000 - -"
+      "d ${cfg.dir}/logs 0755 1000 1000 - -"
+      "d ${cfg.dir}/db 0700 999 root - -"
     ]
     ++ lib.optionals cfg.tailscale.enable (
       tailscale.mkDirectories {
-        directory = cfg.directory;
+        directory = cfg.dir;
       }
     );
 
@@ -80,8 +80,8 @@ in
         };
 
         volumes = [
-          "${cfg.directory}/data:/var/www/html/storage/app"
-          "${cfg.directory}/logs:/var/www/html/storage/logs"
+          "${cfg.dir}/data:/var/www/html/storage/app"
+          "${cfg.dir}/logs:/var/www/html/storage/logs"
         ];
 
         # ports = [ "${toString cfg.port}:8000" ];
@@ -100,8 +100,8 @@ in
         };
 
         volumes = [
-          "${cfg.directory}/data:/var/www/html/storage/app"
-          "${cfg.directory}/logs:/var/www/html/storage/logs"
+          "${cfg.dir}/data:/var/www/html/storage/app"
+          "${cfg.dir}/logs:/var/www/html/storage/logs"
         ];
 
         dependsOn = [ "solidtime-database" ];
@@ -120,8 +120,8 @@ in
         };
 
         volumes = [
-          "${cfg.directory}/data:/var/www/html/storage/app"
-          "${cfg.directory}/logs:/var/www/html/storage/logs"
+          "${cfg.dir}/data:/var/www/html/storage/app"
+          "${cfg.dir}/logs:/var/www/html/storage/logs"
         ];
 
         dependsOn = [ "solidtime-database" ];
@@ -135,7 +135,7 @@ in
         environmentFiles = [ config.age.secrets.${service}.path ];
 
         volumes = [
-          "${cfg.directory}/db:/var/lib/postgresql/data"
+          "${cfg.dir}/db:/var/lib/postgresql/data"
         ];
       };
 
@@ -149,7 +149,7 @@ in
       solidtime-tailscale = lib.mkIf cfg.tailscale.enable (
         tailscale.mkContainer {
           service = "${service}";
-          directory = cfg.directory;
+          directory = cfg.dir;
           networks = [ "solidtime" ];
           cfg = cfg.tailscale // {
             envfile = "${service}";
