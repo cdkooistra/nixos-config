@@ -11,7 +11,7 @@ let
   cfg = config.services.${service};
 in
 {
-  options.services.solidtime = {
+  options.services.${service} = {
     enable = lib.mkEnableOption "Solidtime";
 
     dir = lib.mkOption {

@@ -7,10 +7,10 @@
 
 let
   service = "stirling";
-  cfg = config.services.stirling;
+  cfg = config.services.${service};
 in
 {
-  options.services.stirling = {
+  options.services.${service} = {
     enable = lib.mkEnableOption "Stirling PDF";
 
     dir = lib.mkOption {
