@@ -62,7 +62,7 @@
       };
     in
     {
-      image = "ghcr.io/tailscale/tailscale:v1.90.9";
+      image = "ghcr.io/tailscale/tailscale:v1.94.2";
       autoStart = true;
       hostname = "${cfg.hostname}";
       networks = lib.optionals (networks != [ ]) networks;
