@@ -73,7 +73,7 @@ in
   services = {
     solidtime = {
       enable = true;
-      directory = "/srv/solidtime";
+      dir = "/srv/solidtime";
       port = 8000;
       # inputs.self = flake input reference
       # so this means abs path from flake root
@@ -105,7 +105,20 @@ in
       };
     };
 
-    stirling.enable = true;
+    stirling = {
+      enable = true;
+      dir = "/srv/stirling";
+      secretFile = "${secretsDir}/stirling.age";
+
+      tailscale = {
+        enable = true;
+        hostname = "pdf";
+        tailnet = network.tailnet;
+        serve = {
+          "/" = "http://172.17.0.1:8080";
+        };
+      };
+    };
 
     browsers = {
       enable = false;
