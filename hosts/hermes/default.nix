@@ -89,7 +89,7 @@ in
       };
     };
 
-    immich-container = {
+    immich-service = {
       enable = true;
       dir = "/srv/immich";
       dataDir = "/mnt/data/immich";
@@ -100,7 +100,7 @@ in
         hostname = "immich";
         tailnet = network.tailnet;
         serve = {
-          "/" = "http://127.0.0.1:2283";
+          "/" = "http://172.17.0.1:2283";
         };
       };
     };

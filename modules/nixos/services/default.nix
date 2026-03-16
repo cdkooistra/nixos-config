@@ -8,6 +8,7 @@
 {
   imports = [
     ./solidtime.nix
+    ./immich-container.nix
     ./immich.nix
     ./browsers.nix
     ./stirling.nix
