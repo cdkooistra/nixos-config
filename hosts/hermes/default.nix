@@ -73,10 +73,9 @@ in
   services = {
     solidtime = {
       enable = true;
+      version = "0.11.6";
       dir = "/srv/solidtime";
       port = 8000;
-      # inputs.self = flake input reference
-      # so this means abs path from flake root
       secretFile = "${secretsDir}/solidtime.age";
 
       tailscale = {
