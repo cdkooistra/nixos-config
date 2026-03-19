@@ -14,6 +14,12 @@ in
   options.services.${service} = {
     enable = lib.mkEnableOption "Solidtime";
 
+    version = lib.mkOption {
+      type = lib.types.str;
+      description = "version to use for container";
+      default = "latest";
+    };
+
     dir = lib.mkOption {
       type = lib.types.str;
       description = "directory to store Solidtime persistent data";
@@ -67,7 +73,7 @@ in
     virtualisation.oci-containers.containers = {
       solidtime = {
         autoStart = true;
-        image = "solidtime/solidtime:0.11.5";
+        image = "solidtime/solidtime:${cfg.version}";
         user = "1000:1000";
 
         networks = lib.mkIf (!cfg.tailscale.enable) [ "solidtime" ];
@@ -90,7 +96,7 @@ in
 
       solidtime-scheduler = {
         autoStart = true;
-        image = "solidtime/solidtime:0.11.5";
+        image = "solidtime/solidtime:${cfg.version}";
         user = "1000:1000";
         networks = [ "solidtime" ];
 
@@ -109,7 +115,7 @@ in
 
       solidtime-queue = {
         autoStart = true;
-        image = "solidtime/solidtime:0.11.5";
+        image = "solidtime/solidtime:${cfg.version}";
         user = "1000:1000";
         networks = [ "solidtime" ];
 
