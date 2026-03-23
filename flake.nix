@@ -60,6 +60,7 @@
             ./hosts/${name}/hardware-configuration.nix
             modules.system
             modules.graphics
+            modules.gaming
             modules.desktops
             modules.software
             modules.services
