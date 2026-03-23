@@ -10,13 +10,6 @@
     homeDirectory = "/home/connor";
     stateVersion = "25.05";
     packages = [
-      inputs.zen-browser.packages.${pkgs.system}.default
-      pkgs.spotify
-      pkgs.discord
-      pkgs.obs-studio
-      pkgs.anytype
-      pkgs.slack
-
       # dev
       pkgs.vscode
       pkgs.uv

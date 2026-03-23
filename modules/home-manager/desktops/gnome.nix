@@ -55,7 +55,7 @@
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
         binding = "<Super>b";
-        command = "zen";
+        command = "flatpak run app.zen_browser.zen";
         name = "Launch Zen";
       };
 

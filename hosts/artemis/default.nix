@@ -18,7 +18,6 @@ mkHost {
     };
 
     software = {
-      proton.enable = true;
       docker.enable = true;
       devenv.enable = true;
       espanso.enable = true;
@@ -52,8 +51,11 @@ mkHost {
       variant = "alt-intl";
     };
 
+    security = {
+      rtkit.enable = true;
+    };
+
     services.pulseaudio.enable = false;
-    security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -66,7 +68,14 @@ mkHost {
   };
 
   user = {
-    apps.signal.enable = true;
+    apps = {
+      discord.enable = true;
+      proton.enable = true;
+      slack.enable = true;
+      signal.enable = true;
+      spotify.enable = true;
+      zen.enable = true;
+    };
     # desktop = "gnome";
   };
 }
