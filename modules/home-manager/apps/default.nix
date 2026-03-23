@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./signal.nix
+  ];
+}

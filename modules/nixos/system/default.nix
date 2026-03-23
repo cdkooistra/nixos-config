@@ -7,6 +7,7 @@
     ./networking.nix
     ./user.nix
     ./appimage.nix
+    ./flatpak.nix
   ];
 
   nix.settings.experimental-features = [

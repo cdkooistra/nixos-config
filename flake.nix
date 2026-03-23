@@ -21,6 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
   outputs =
@@ -29,6 +30,7 @@
       nixpkgs,
       home-manager,
       agenix,
+      nix-flatpak,
       flox,
       ...
     }@inputs:
@@ -61,6 +63,7 @@
             modules.software
             modules.services
             agenix.nixosModules.default
+            nix-flatpak.nixosModules.nix-flatpak
             system
 
             home-manager.nixosModules.home-manager
@@ -68,9 +71,15 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = null;
-              home-manager.users.connor = ./modules/home-manager/default.nix;
+              home-manager.users.connor = {
+                imports = [
+                  ./modules/home-manager/default.nix
+                  user
+                  nix-flatpak.homeManagerModules.nix-flatpak
+                ];
+              };
               home-manager.extraSpecialArgs = {
-                inherit inputs user;
+                inherit inputs;
                 hostName = name;
               };
             }
