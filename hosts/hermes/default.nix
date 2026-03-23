@@ -44,31 +44,72 @@ mkHost {
     services = {
       solidtime = {
         enable = true;
-        directory = "/srv/solidtime";
+        version = "0.11.6";
+        dir = "/srv/solidtime";
         port = 8000;
         secretFile = "${secretsDir}/solidtime.age";
+
         tailscale = {
           enable = true;
           hostname = "solidtime";
           tailnet = network.tailnet;
-          serve."/" = "http://127.0.0.1:8000";
+          serve = {
+            "/" = "http://127.0.0.1:8000";
+          };
         };
       };
 
-      immich-container = {
+      immich-service = {
         enable = true;
         dir = "/srv/immich";
         dataDir = "/mnt/data/immich";
         secretFile = "${secretsDir}/immich.age";
+
         tailscale = {
           enable = true;
           hostname = "immich";
           tailnet = network.tailnet;
-          serve."/" = "http://127.0.0.1:2283";
+          serve = {
+            "/" = "http://172.17.0.1:2283";
+          };
         };
       };
 
-      browsers.enable = false;
+      stirling = {
+        enable = true;
+        dir = "/srv/stirling";
+        secretFile = "${secretsDir}/stirling.age";
+
+        tailscale = {
+          enable = true;
+          hostname = "pdf";
+          tailnet = network.tailnet;
+          serve = {
+            "/" = "http://172.17.0.1:8080";
+          };
+        };
+      };
+
+      browsers = {
+        enable = false;
+
+        instances = {
+          idleon = {
+            dir = "/srv/browsers/idleon";
+            secretFile = "${secretsDir}/browsers-idleon.age";
+
+            tailscale = {
+              enable = true;
+              hostname = "idleon";
+              tailnet = network.tailnet;
+              serve = {
+                "/" = "http://127.0.0.1:3000";
+              };
+              magicdns = false;
+            };
+          };
+        };
+      };
     };
 
     systemd.targets = {
