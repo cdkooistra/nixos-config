@@ -18,6 +18,7 @@ mkHost {
     };
 
     software = {
+      proton.enable = true;
       docker.enable = true;
       devenv.enable = true;
       espanso.enable = true;
@@ -65,6 +66,7 @@ mkHost {
   };
 
   user = {
-    desktop = "gnome";
+    apps.signal.enable = true;
+    # desktop = "gnome";
   };
 }

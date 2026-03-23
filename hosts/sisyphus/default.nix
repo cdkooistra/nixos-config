@@ -104,6 +104,6 @@ mkHost {
   };
 
   user = {
-    desktop = "gnome";
+    # desktop = "gnome";
   };
 }
