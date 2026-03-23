@@ -44,16 +44,12 @@
           arch,
           system ? { },
           user ? { },
-          # modules,
-          # extraSpecialArgs ? { },
         }:
         lib.nixosSystem {
           system = arch;
-          # common specialArgs for each system
           specialArgs = {
             inherit inputs network;
 
-            # vars
             hostName = name;
           };
           modules = [
@@ -83,35 +79,6 @@
     in
     {
       nixosConfigurations = {
-        # sisyphus = mkHost {
-        #   name = "sisyphus";
-        #   arch = "x86_64-linux";
-        #   modules = [
-        #     ./hosts/sisyphus
-
-        #     home-manager.nixosModules.home-manager
-        #     {
-        #       home-manager.useGlobalPkgs = true;
-        #       home-manager.useUserPackages = true;
-        #       home-manager.users.connor = ./modules/home-manager/default.nix;
-        #       home-manager.backupFileExtension = null;
-        #     }
-        #     (
-        #       { config, hostName, ... }:
-        #       {
-        #         home-manager.extraSpecialArgs = {
-        #           inherit inputs hostName;
-
-        #           # Make the config available to home-manager
-        #           systemOptions = config;
-        #         };
-        #       }
-        #     )
-        #     agenix.nixosModules.default
-        #   ];
-        #   # extraSpecialArgs = {};
-        # };
-
         sisyphus = import ./hosts/sisyphus {
           inherit
             mkHost
@@ -129,61 +96,6 @@
             secretsDir
             ;
         };
-        # artemis = mkHost {
-        #   name = "artemis";
-        #   arch = "x86_64-linux";
-        #   modules = [
-        #     ./hosts/artemis
-
-        #     home-manager.nixosModules.home-manager
-        #     {
-        #       home-manager.useGlobalPkgs = true;
-        #       home-manager.useUserPackages = true;
-        #       home-manager.users.connor = ./modules/home-manager/default.nix;
-        #       home-manager.backupFileExtension = null;
-        #     }
-        #     (
-        #       { config, hostName, ... }:
-        #       {
-        #         home-manager.extraSpecialArgs = {
-        #           inherit inputs hostName;
-
-        #           # Make the config available to home-manager
-        #           systemOptions = config;
-        #         };
-        #       }
-        #     )
-        #     agenix.nixosModules.default
-        #   ];
-        # };
-
-        # hermes = mkHost {
-        #   name = "hermes";
-        #   arch = "x86_64-linux";
-        #   modules = [
-        #     ./hosts/hermes
-
-        #     home-manager.nixosModules.home-manager
-        #     {
-        #       home-manager.useGlobalPkgs = true;
-        #       home-manager.useUserPackages = true;
-        #       home-manager.users.connor = ./modules/home-manager/default.nix;
-        #       home-manager.backupFileExtension = null;
-        #     }
-        #     (
-        #       { config, hostName, ... }:
-        #       {
-        #         home-manager.extraSpecialArgs = {
-        #           inherit inputs hostName;
-
-        #           # Make the config available to home-manager
-        #           systemOptions = config;
-        #         };
-        #       }
-        #     )
-        #     agenix.nixosModules.default
-        #   ];
-        # };
       };
     };
 }
