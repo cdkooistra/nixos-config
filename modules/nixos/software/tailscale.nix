@@ -25,7 +25,8 @@
       enable = true;
       openFirewall = true;
 
-      extraSetFlags = lib.mkIf config.software.tailscale.ssh [ "--ssh" ];
+      # todo, make an option for operator?
+      extraSetFlags = [ "--operator=connor" ] ++ lib.optional config.software.tailscale.ssh "--ssh";
     };
 
   };
