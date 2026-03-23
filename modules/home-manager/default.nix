@@ -1,6 +1,7 @@
 {
   lib,
-  systemOptions,
+  # systemOptions,
+  user,
   ...
 }:
 
@@ -14,7 +15,8 @@
     ../../../config/ssh.nix
 
     # conditionally import
-    (lib.optional systemOptions.desktops.gnome.enable ./desktops/gnome.nix)
+    (lib.optional (user.desktop or null == "gnome") ./desktops/gnome.nix)
+    # (lib.optional systemOptions.desktops.gnome.enable ./desktops/gnome.nix)
     # (lib.optional systemOptions.desktops.cosmic.enable ./desktops/cosmic.nix)
   ];
 }
