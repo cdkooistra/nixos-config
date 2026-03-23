@@ -8,8 +8,10 @@ mkHost {
     graphics = {
       amd.enable = true;
       displaylink.enable = true;
-      wayland.enable = true;
-      wayland.xwayland.enable = true;
+      wayland = {
+        enable = true;
+        xwayland.enable = true;
+      };
     };
 
     desktops.gnome = {
@@ -70,12 +72,12 @@ mkHost {
   user = {
     apps = {
       discord.enable = true;
+      onlyoffice.enable = true;
       proton.enable = true;
       slack.enable = true;
       signal.enable = true;
       spotify.enable = true;
       zen.enable = true;
     };
-    # desktop = "gnome";
   };
 }

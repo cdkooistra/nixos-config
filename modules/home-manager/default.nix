@@ -1,30 +1,52 @@
 {
-  lib,
-  # systemOptions,
-  # user,
+  pkgs,
   ...
 }:
 
 {
-  # imports = lib.flatten [
-  #   # always import
-  #   ./core.nix
-  #   ./utils.nix
-
-  #   # config
-  #   ../../../config/ssh.nix
-
-  #   # conditionally import
-  #   # (lib.optional (user.desktop or null == "gnome") ./desktops/gnome.nix)
-  #   # (lib.optional systemOptions.desktops.gnome.enable ./desktops/gnome.nix)
-  #   # (lib.optional systemOptions.desktops.cosmic.enable ./desktops/cosmic.nix)
-  # ];
-
   imports = [
-    ./core.nix
+    ./apps
+    ./desktops
+    ./dev.nix
     ./utils.nix
     ../../../config/ssh.nix
-    ./apps
-    ./desktops/gnome.nix
   ];
+
+  # default user settings
+  home = {
+    username = "connor";
+    homeDirectory = "/home/connor";
+    stateVersion = "25.05";
+    packages = with pkgs; [ vscode ];
+    sessionVariables = {
+      EDITOR = "code --wait";
+    };
+  };
+
+  programs = {
+    # home-manager cli
+    # this allows for rebuilding only hm config
+    # instead of entire system config
+    home-manager.enable = true;
+
+    git = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Connor Kooistra";
+          email = "70811244+cdkooistra@users.noreply.github.com";
+        };
+      };
+    };
+
+    direnv = {
+      enable = true;
+      silent = true;
+      nix-direnv.enable = true;
+    };
+
+    bash = {
+      enable = true;
+    };
+  };
 }
