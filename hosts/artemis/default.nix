@@ -1,105 +1,70 @@
-{
-  network,
-  ...
-}:
+{ mkHost, network, ... }:
 
-let
-  modules = import ../../modules/nixos;
-in
-{
-  imports = [
-    ./hardware-configuration.nix
-    modules.system
-    modules.graphics
-    modules.desktops
-    modules.software
-    modules.services
-  ];
+mkHost {
+  name = "artemis";
+  arch = "x86_64-linux";
 
-  graphics = {
-    amd.enable = true;
-    displaylink.enable = true;
-    wayland = {
-      enable = true;
-      xwayland.enable = true;
-    };
-  };
-
-  desktops.gnome = {
-    enable = true;
-    mode = "client";
-  };
-
-  software = {
-    proton.enable = true;
-    onlyoffice.enable = true;
-    signal.enable = true;
-    docker.enable = true;
-    flox.enable = false;
-    devenv.enable = true;
-    espanso.enable = true;
-
-    tailscale = {
-      enable = true;
+  system = {
+    graphics = {
+      amd.enable = true;
+      displaylink.enable = true;
+      wayland.enable = true;
+      wayland.xwayland.enable = true;
     };
 
-    syncthing = {
+    desktops.gnome = {
       enable = true;
-      deviceId = network.devices.artemis;
+      mode = "client";
+    };
 
-      peers = {
-        sisyphus = network.devices.sisyphus;
+    software = {
+      docker.enable = true;
+      devenv.enable = true;
+      espanso.enable = true;
+      tailscale.enable = true;
+      syncthing = {
+        enable = true;
+        deviceId = network.devices.artemis;
+        peers.sisyphus = network.devices.sisyphus;
       };
     };
-  };
 
-  # Bootloader.
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 4;
+    boot.loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 4;
+      };
+      efi.canTouchEfiVariables = true;
+      timeout = 4;
     };
-    efi.canTouchEfiVariables = true;
-    timeout = 4;
+
+    swapDevices = [
+      {
+        device = "/swapfile";
+        size = 8 * 1024;
+        options = [ "discard" ];
+      }
+    ];
+
+    services.xserver.xkb = {
+      layout = "us";
+      variant = "alt-intl";
+    };
+
+    services.pulseaudio.enable = false;
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
+
+    system.stateVersion = "25.05";
   };
 
-  # Swapfile
-  swapDevices = [
-    {
-      device = "/swapfile";
-      size = 8 * 1024;
-      options = [ "discard" ];
-    }
-  ];
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "alt-intl";
+  user = {
+    desktop = "gnome";
   };
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
-
 }

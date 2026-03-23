@@ -1,136 +1,109 @@
 {
-  config,
+  mkHost,
   network,
   lib,
   ...
 }:
 
-let
-  modules = import ../../modules/nixos;
-in
-{
-  imports = [
-    ./hardware-configuration.nix
-    modules.system
-    modules.graphics
-    modules.desktops
-    modules.software
-    modules.gaming
-  ];
+mkHost {
+  name = "sisyphus";
+  arch = "x86_64-linux";
 
-  graphics = {
-    nvidia.enable = true;
-    wayland = {
+  system = {
+    graphics = {
+      nvidia.enable = true;
+      wayland.enable = true;
+      wayland.xwayland.enable = true;
+    };
+
+    desktops.gnome = {
       enable = true;
-      xwayland.enable = true;
-    };
-  };
-
-  desktops.gnome = {
-    enable = true;
-    mode = "client";
-  };
-
-  software = {
-    proton.enable = true;
-    onlyoffice.enable = true;
-    signal.enable = true;
-    pinta.enable = true;
-    docker.enable = true;
-    flox.enable = true;
-    devenv.enable = true;
-    espanso.enable = false;
-
-    # to receive from hermes
-    rsync.enable = true;
-
-    tailscale = {
-      enable = true;
-      ssh = true;
+      mode = "client";
     };
 
-    syncthing = {
-      enable = true;
-      deviceId = network.devices.sisyphus;
-
-      # automatically include all devices as peers except self
-      peers = lib.removeAttrs network.devices [ config.networking.hostName ];
-    };
-  };
-
-  gaming = {
-    utils = {
-      gamescope.enable = false; # 20260116 -> gamescope broken
-      gamemode.enable = true;
-      mangohud.enable = true;
-    };
-
-    launchers = {
-      steam.enable = true;
-      prism.enable = true;
-      bottles.enable = true;
-    };
-
-    controllers = {
-      xone.enable = true;
-    };
-  };
-
-  # enable auto mounting drives
-  fileSystems."/run/media/connor/Games" = {
-    device = "/dev/disk/by-uuid/31b1a084-e5ab-4c46-b129-c8b4c51049d9";
-    fsType = "btrfs";
-  };
-
-  fileSystems."/run/media/connor/Storage" = {
-    device = "/dev/disk/by-uuid/8222BD7522BD6F33";
-    fsType = "ntfs";
-  };
-
-  # Bootloader.
-  boot = {
-    loader = {
-      systemd-boot = {
+    software = {
+      proton.enable = true;
+      onlyoffice.enable = true;
+      signal.enable = true;
+      pinta.enable = true;
+      docker.enable = true;
+      flox.enable = true;
+      devenv.enable = true;
+      espanso.enable = false;
+      rsync.enable = true;
+      tailscale = {
         enable = true;
-        configurationLimit = 4;
-        windows = {
-          "11-home" = {
+        ssh = true;
+      };
+      syncthing = {
+        enable = true;
+        deviceId = network.devices.sisyphus;
+        peers = lib.removeAttrs network.devices [ "sisyphus" ];
+      };
+    };
+
+    gaming = {
+      utils = {
+        gamescope.enable = false;
+        gamemode.enable = true;
+        mangohud.enable = true;
+      };
+      launchers = {
+        steam.enable = true;
+        prism.enable = true;
+        bottles.enable = true;
+      };
+      controllers = {
+        xone.enable = true;
+      };
+    };
+
+    fileSystems."/run/media/connor/Games" = {
+      device = "/dev/disk/by-uuid/31b1a084-e5ab-4c46-b129-c8b4c51049d9";
+      fsType = "btrfs";
+    };
+
+    fileSystems."/run/media/connor/Storage" = {
+      device = "/dev/disk/by-uuid/8222BD7522BD6F33";
+      fsType = "ntfs";
+    };
+
+    boot = {
+      loader = {
+        systemd-boot = {
+          enable = true;
+          configurationLimit = 4;
+          windows."11-home" = {
             title = "Windows 11";
             efiDeviceHandle = "HD3a65535a1";
             sortKey = "z_windows";
           };
+          consoleMode = "auto";
         };
-        consoleMode = "auto";
+        efi.canTouchEfiVariables = true;
+        timeout = 10;
       };
-      efi.canTouchEfiVariables = true;
-      timeout = 10;
     };
+
+    services.xserver.xkb = {
+      layout = "us";
+      variant = "alt-intl";
+    };
+
+    services.pulseaudio.enable = false;
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
+
+    system.stateVersion = "25.05";
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "alt-intl";
+  user = {
+    desktop = "gnome";
   };
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    jack.enable = true;
-  };
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
-
 }

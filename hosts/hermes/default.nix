@@ -1,50 +1,39 @@
 {
+  mkHost,
   network,
   secretsDir,
-  config,
-  inputs,
-  lib,
   ...
 }:
 
-let
-  modules = import ../../modules/nixos;
-in
-{
-  imports = [
-    ./hardware-configuration.nix
-    modules.system
-    modules.graphics
-    modules.desktops
-    modules.software
-    modules.services
-  ];
+mkHost {
+  name = "hermes";
+  arch = "x86_64-linux";
 
-  # age
-  age.identityPaths = [
-    "${config.users.users.connor.home}/.ssh/id_ed25519"
-  ];
+  system = {
+    age.identityPaths = [
+      "/home/connor/.ssh/id_ed25519"
+    ];
 
-  graphics = {
-    amd.enable = true;
-    wayland = {
-      enable = true;
-      xwayland.enable = true;
+    graphics = {
+      amd.enable = true;
+      wayland.enable = true;
+      wayland.xwayland.enable = true;
     };
-  };
 
-  desktops.gnome = {
-    enable = true;
-    mode = "server";
-  };
-
-  software = {
-    docker.enable = true;
-
-    rsync = {
+    desktops.gnome = {
       enable = true;
-      backups = {
-        immich-data = {
+      mode = "server";
+    };
+
+    software = {
+      docker.enable = true;
+      tailscale = {
+        enable = true;
+        ssh = true;
+      };
+      rsync = {
+        enable = true;
+        backups.immich-data = {
           src = "/mnt/data/immich";
           dst = "connor@sisyphus:/run/media/connor/Storage/immich-backup";
           schedule = "12:00";
@@ -52,112 +41,54 @@ in
       };
     };
 
-    tailscale = {
-      enable = true;
-      ssh = true;
+    services = {
+      solidtime = {
+        enable = true;
+        directory = "/srv/solidtime";
+        port = 8000;
+        secretFile = "${secretsDir}/solidtime.age";
+        tailscale = {
+          enable = true;
+          hostname = "solidtime";
+          tailnet = network.tailnet;
+          serve."/" = "http://127.0.0.1:8000";
+        };
+      };
+
+      immich-container = {
+        enable = true;
+        dir = "/srv/immich";
+        dataDir = "/mnt/data/immich";
+        secretFile = "${secretsDir}/immich.age";
+        tailscale = {
+          enable = true;
+          hostname = "immich";
+          tailnet = network.tailnet;
+          serve."/" = "http://127.0.0.1:2283";
+        };
+      };
+
+      browsers.enable = false;
     };
 
-    # TODO:
-    # how should hermes be peered with other systems?
-    # syncthing = {
-    #   enable = false;
-    #   deviceId = network.devices.hermes;
-    # };
+    systemd.targets = {
+      sleep.enable = false;
+      suspend.enable = false;
+      hibernate.enable = false;
+      hybrid-sleep.enable = false;
+    };
 
-    #deviceId = network.devices.hermes;
+    boot.loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
 
-    # TODO:
-    # how should hermes be peered with other systems?
+    hardware.enableAllFirmware = true;
+
+    system.stateVersion = "25.05";
   };
 
-  services = {
-    solidtime = {
-      enable = true;
-      version = "0.11.6";
-      dir = "/srv/solidtime";
-      port = 8000;
-      secretFile = "${secretsDir}/solidtime.age";
-
-      tailscale = {
-        enable = true;
-        hostname = "solidtime";
-        tailnet = network.tailnet;
-        serve = {
-          "/" = "http://127.0.0.1:8000";
-        };
-      };
-    };
-
-    immich-service = {
-      enable = true;
-      dir = "/srv/immich";
-      dataDir = "/mnt/data/immich";
-      secretFile = "${secretsDir}/immich.age";
-
-      tailscale = {
-        enable = true;
-        hostname = "immich";
-        tailnet = network.tailnet;
-        serve = {
-          "/" = "http://172.17.0.1:2283";
-        };
-      };
-    };
-
-    stirling = {
-      enable = true;
-      dir = "/srv/stirling";
-      secretFile = "${secretsDir}/stirling.age";
-
-      tailscale = {
-        enable = true;
-        hostname = "pdf";
-        tailnet = network.tailnet;
-        serve = {
-          "/" = "http://172.17.0.1:8080";
-        };
-      };
-    };
-
-    browsers = {
-      enable = false;
-
-      instances = {
-        idleon = {
-          dir = "/srv/browsers/idleon";
-          secretFile = "${secretsDir}/browsers-idleon.age";
-
-          tailscale = {
-            enable = true;
-            hostname = "idleon";
-            tailnet = network.tailnet;
-            serve = {
-              "/" = "http://127.0.0.1:3000";
-            };
-            magicdns = false;
-          };
-        };
-      };
-    };
+  user = {
+    desktop = "gnome";
   };
-
-  # Disable systemd targets for sleep and hibernation
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  hardware.enableAllFirmware = lib.mkDefault true;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
 }
