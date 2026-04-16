@@ -7,4 +7,9 @@
       "wheel"
     ];
   };
+
+  nix.settings.trusted-users = [
+    "root"
+    "connor"
+  ];
 }
