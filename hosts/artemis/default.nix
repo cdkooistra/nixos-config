@@ -19,6 +19,13 @@ mkHost {
       mode = "client";
     };
 
+    gaming = {
+      launchers = {
+        bottles.enable = true;
+        steam.enable = true;
+      };
+    };
+
     software = {
       docker.enable = true;
       devenv.enable = true;
@@ -29,6 +36,7 @@ mkHost {
         deviceId = network.devices.artemis;
         peers.sisyphus = network.devices.sisyphus;
       };
+
     };
 
     boot.loader = {

@@ -11,10 +11,7 @@
 
     agenix.url = "github:ryantm/agenix";
 
-    flox = {
-      url = "github:flox/flox/latest";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # flox.url = "github:flox/flox/latest";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
@@ -26,7 +23,7 @@
       home-manager,
       agenix,
       nix-flatpak,
-      flox,
+      # flox,
       ...
     }@inputs:
     let
