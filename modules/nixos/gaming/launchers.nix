@@ -43,7 +43,10 @@ in
             steam-run
             steamcmd
           ])
-          (lib.optional cfg.prism.enable prismlauncher)
+          (lib.optionals cfg.prism.enable [
+            prismlauncher
+            openjdk25
+          ])
           (lib.optional cfg.bottles.enable bottles)
           (lib.optional cfg.lutris.enable lutris)
         ];
