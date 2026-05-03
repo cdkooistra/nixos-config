@@ -36,6 +36,7 @@
           name = "Connor Kooistra";
           email = "70811244+cdkooistra@users.noreply.github.com";
         };
+        pull.rebase = false;
       };
     };
 

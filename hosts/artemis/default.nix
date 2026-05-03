@@ -22,14 +22,15 @@ mkHost {
     gaming = {
       launchers = {
         bottles.enable = true;
+        prism.enable = true;
         steam.enable = true;
       };
     };
 
     software = {
       docker.enable = true;
-      devenv.enable = true;
       espanso.enable = true;
+      devenv.enable = true;
       tailscale.enable = true;
       syncthing = {
         enable = true;
@@ -80,6 +81,7 @@ mkHost {
   user = {
     apps = {
       discord.enable = true;
+      # espanso.enable = true;
       onlyoffice.enable = true;
       proton.enable = true;
       slack.enable = true;
