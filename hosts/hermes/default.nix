@@ -90,6 +90,22 @@ mkHost {
         };
       };
 
+      forgejo-service = {
+        enable = true;
+        port = 8090;
+        dir = "/srv/forgejo";
+        secretFile = "${secretsDir}/forgejo.age";
+
+        tailscale = {
+          enable = true;
+          hostname = "git";
+          tailnet = network.tailnet;
+          serve = {
+            "/" = "http://172.17.0.1:8090";
+          };
+        };
+      };
+
       browsers = {
         enable = false;
 
