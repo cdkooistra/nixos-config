@@ -27,7 +27,6 @@ mkHost {
       signal.enable = true;
       pinta.enable = true;
       docker.enable = true;
-      flox.enable = true;
       devenv.enable = true;
       espanso.enable = false;
       rsync.enable = true;
