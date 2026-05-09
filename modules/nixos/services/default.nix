@@ -8,7 +8,6 @@
 {
   imports = [
     ./solidtime.nix
-    ./immich-container.nix
     ./immich.nix
     ./forgejo.nix
     ./browsers.nix
