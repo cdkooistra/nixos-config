@@ -81,7 +81,6 @@ mkHost {
   user = {
     apps = {
       discord.enable = true;
-      # espanso.enable = true;
       onlyoffice.enable = true;
       proton.enable = true;
       slack.enable = true;

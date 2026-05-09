@@ -12,8 +12,10 @@ mkHost {
   system = {
     graphics = {
       nvidia.enable = true;
-      wayland.enable = true;
-      wayland.xwayland.enable = true;
+      wayland = {
+        enable = true;
+        xwayland.enable = true;
+      };
     };
 
     desktops.gnome = {
@@ -22,13 +24,9 @@ mkHost {
     };
 
     software = {
-      proton.enable = true;
-      onlyoffice.enable = true;
-      signal.enable = true;
-      pinta.enable = true;
       docker.enable = true;
       devenv.enable = true;
-      espanso.enable = false;
+      espanso.enable = true;
       rsync.enable = true;
       tailscale = {
         enable = true;
@@ -57,14 +55,15 @@ mkHost {
       };
     };
 
-    fileSystems."/run/media/connor/Games" = {
-      device = "/dev/disk/by-uuid/31b1a084-e5ab-4c46-b129-c8b4c51049d9";
-      fsType = "btrfs";
-    };
-
-    fileSystems."/run/media/connor/Storage" = {
-      device = "/dev/disk/by-uuid/8222BD7522BD6F33";
-      fsType = "ntfs";
+    fileSystems = {
+      "/run/media/connor/Games" = {
+        device = "/dev/disk/by-uuid/31b1a084-e5ab-4c46-b129-c8b4c51049d9";
+        fsType = "btrfs";
+      };
+      "/run/media/connor/Storage" = {
+        device = "/dev/disk/by-uuid/8222BD7522BD6F33";
+        fsType = "ntfs";
+      };
     };
 
     boot = {
@@ -103,6 +102,14 @@ mkHost {
   };
 
   user = {
-    # desktop = "gnome";
+    apps = {
+      discord.enable = true;
+      onlyoffice.enable = true;
+      pinta.enable = true;
+      proton.enable = true;
+      signal.enable = true;
+      spotify.enable = true;
+      zen.enable = true;
+    };
   };
 }
