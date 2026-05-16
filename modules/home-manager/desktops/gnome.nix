@@ -91,4 +91,17 @@
 
     };
   };
+
+  # set up official Tailscale system tray (needs AppIndicator)
+  systemd.user.services = {
+    tailscale-systray = {
+      Unit.Description = "Tailscale systray";
+      Unit.After = [ "graphical-session.target" ];
+      Install.WantedBy = [ "graphical-session.target" ];
+      Service = {
+        ExecStart = "${pkgs.tailscale}/bin/tailscale systray";
+        Restart = "on-failure";
+      };
+    };
+  };
 }
