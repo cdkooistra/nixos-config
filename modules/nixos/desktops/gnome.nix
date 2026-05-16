@@ -58,9 +58,6 @@ in
                   dash-to-panel
                   appindicator
                   vitals
-                  # TODO: gnomeExtensions.tailscale-gnome-qs when its added
-
-                  (lib.optional config.software.tailscale.enable tailscale-status)
                   (lib.optional (config.networking.hostName == "artemis") battery-health-charging)
                 ];
             in
