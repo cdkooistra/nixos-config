@@ -19,14 +19,6 @@ mkHost {
       mode = "client";
     };
 
-    gaming = {
-      launchers = {
-        bottles.enable = true;
-        prism.enable = true;
-        steam.enable = true;
-      };
-    };
-
     software = {
       docker.enable = true;
       espanso.enable = true;
