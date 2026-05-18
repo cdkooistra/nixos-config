@@ -19,6 +19,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       agenix,
       nix-flatpak,
@@ -29,6 +30,12 @@
       modules = import ./modules/nixos;
       network = import ../config/network.nix;
       secretsDir = toString ./../secrets;
+
+      # In case we want to, we can override packages from nixpkgs-unstable here using this code snippet.
+      # Some examples: tailscale, devenv, etc.
+      unstableOverlay = final: prev: {
+        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+      };
 
       mkHost =
         {
@@ -55,6 +62,11 @@
             agenix.nixosModules.default
             nix-flatpak.nixosModules.nix-flatpak
             system
+
+            # Activate unstable overlay for all hosts.
+            {
+              nixpkgs.overlays = [ unstableOverlay ];
+            }
 
             home-manager.nixosModules.home-manager
             {
