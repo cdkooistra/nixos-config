@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 
@@ -26,11 +25,10 @@
     services.tailscale = {
       enable = true;
       openFirewall = true;
-      package = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.tailscale;
+      package = pkgs.unstable.tailscale;
 
       # todo, make an option for operator?
       extraSetFlags = [ "--operator=connor" ] ++ lib.optional config.software.tailscale.ssh "--ssh";
     };
-
   };
 }
