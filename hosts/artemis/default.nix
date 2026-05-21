@@ -73,6 +73,7 @@ mkHost {
   user = {
     apps = {
       discord.enable = true;
+      obsidian.enable = true;
       onlyoffice.enable = true;
       proton.enable = true;
       slack.enable = true;

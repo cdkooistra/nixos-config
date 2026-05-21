@@ -2,6 +2,7 @@
   imports = [
     ./discord.nix
     ./espanso.nix
+    ./obsidian.nix
     ./onlyoffice.nix
     ./pinta.nix
     ./proton.nix
