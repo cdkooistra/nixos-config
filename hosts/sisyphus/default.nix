@@ -104,6 +104,7 @@ mkHost {
   user = {
     apps = {
       discord.enable = true;
+      obsidian.enable = true;
       onlyoffice.enable = true;
       pinta.enable = true;
       proton.enable = true;
