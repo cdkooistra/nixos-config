@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
 
@@ -18,9 +19,10 @@
       enable = true;
       createDirectories = true;
       extraConfig = {
-        XDG_APPLICATIONS_DIR = "${config.home.homeDirectory}/Applications";
-        XDG_CODE_DIR = "${config.home.homeDirectory}/Code";
+        APPLICATIONS = "${config.home.homeDirectory}/Applications";
+        CODE = "${config.home.homeDirectory}/Code";
       };
+      setSessionVariables = false;
     };
 
     configFile."gtk-3.0/bookmarks" = {
@@ -40,6 +42,19 @@
   dconf = {
     enable = true;
     settings = {
+      "org/gnome/desktop/input-sources" = {
+        sources = [
+          (lib.hm.gvariant.mkTuple [
+            "xkb"
+            "us+euro"
+          ])
+          (lib.hm.gvariant.mkTuple [
+            "xkb"
+            "us+alt-intl"
+          ])
+        ];
+      };
+
       "org/gnome/settings-daemon/plugins/media-keys" = {
         custom-keybindings = [
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"

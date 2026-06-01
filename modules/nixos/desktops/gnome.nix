@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.desktops.gnome;
-  wayland = config.graphics.wayland;
 in
 {
   options.desktops.gnome = {
@@ -31,7 +30,6 @@ in
           displayManager = {
             gdm = {
               enable = true;
-              wayland = wayland.enable;
             };
           }
           // lib.optionalAttrs (cfg.mode == "server") {
@@ -54,7 +52,7 @@ in
               gnomeExts =
                 with pkgs.gnomeExtensions;
                 lib.flatten [
-                  pop-shell
+                  tiling-shell
                   dash-to-panel
                   appindicator
                   vitals

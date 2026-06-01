@@ -26,7 +26,7 @@ mkHost {
     software = {
       docker.enable = true;
       devenv.enable = true;
-      espanso.enable = true;
+      espanso.enable = false;
       rsync.enable = true;
       tailscale = {
         enable = true;
@@ -83,11 +83,6 @@ mkHost {
       };
     };
 
-    services.xserver.xkb = {
-      layout = "us";
-      variant = "alt-intl";
-    };
-
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
@@ -104,6 +99,7 @@ mkHost {
   user = {
     apps = {
       discord.enable = true;
+      espanso.enable = false;
       obsidian.enable = true;
       onlyoffice.enable = true;
       pinta.enable = true;

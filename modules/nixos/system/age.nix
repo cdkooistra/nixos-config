@@ -7,6 +7,6 @@
 
   environment.systemPackages = with pkgs; [
     age
-    inputs.agenix.packages.${pkgs.system}.agenix
+    inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.agenix
   ];
 }
