@@ -23,8 +23,24 @@ in
           show_notifications = false;
           keyboard_layout = {
             layout = "us";
-            variant = "intl";
+            variant = "";
           };
+        };
+      };
+
+      matches = {
+        base = {
+          matches = [
+            {
+              trigger = ":example";
+              replace = "your replacement text";
+            }
+            {
+              trigger = ":now";
+              replace = "It's {{currentdate}} {{currenttime}}";
+            }
+
+          ];
         };
       };
     };

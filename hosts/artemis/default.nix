@@ -49,11 +49,6 @@ mkHost {
       }
     ];
 
-    services.xserver.xkb = {
-      layout = "us";
-      variant = "alt-intl";
-    };
-
     security = {
       rtkit.enable = true;
     };
