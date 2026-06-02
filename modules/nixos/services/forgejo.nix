@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   tailscale,
   ...
 }:
@@ -36,7 +37,7 @@ in
   config = lib.mkIf cfg.enable {
     services.forgejo = {
       enable = true;
-      lfs.enable = true;
+      package = pkgs.forgejo;
       database.type = "postgres";
       settings = {
         server = {
