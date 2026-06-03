@@ -44,7 +44,7 @@ mkHost {
     services = {
       solidtime = {
         enable = true;
-        version = "0.11.6";
+        version = "0.13.0";
         dir = "/srv/solidtime";
         port = 8000;
         secretFile = "${secretsDir}/solidtime.age";
@@ -143,9 +143,5 @@ mkHost {
     hardware.enableAllFirmware = true;
 
     system.stateVersion = "25.05";
-  };
-
-  user = {
-    # desktop = "gnome";
   };
 }
