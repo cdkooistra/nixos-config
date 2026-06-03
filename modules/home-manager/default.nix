@@ -8,6 +8,7 @@
     ./apps
     ./desktops
     ./dev.nix
+    ./zed.nix
     ./utils.nix
     ../../../config/ssh.nix
   ];
@@ -18,9 +19,9 @@
     homeDirectory = "/home/connor";
     stateVersion = "25.05";
     packages = with pkgs; [ vscode ];
-    sessionVariables = {
-      EDITOR = "code --wait";
-    };
+    # sessionVariables = {
+    #   EDITOR = "code --wait";
+    # };
   };
 
   programs = {
