@@ -6,11 +6,6 @@
       silent = true;
       nix-direnv.enable = true;
     };
-
-    zed-editor = {
-      enable = true;
-      package = pkgs.zed-editor;
-    };
   };
 
   home = {
