@@ -76,8 +76,8 @@
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
         binding = "<Super>c";
-        command = "code";
-        name = "Launch VSCode";
+        command = "zeditor";
+        name = "Launch Zed";
       };
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
