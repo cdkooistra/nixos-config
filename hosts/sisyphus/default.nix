@@ -1,3 +1,7 @@
+#
+# Sisyphus, condemned to roll a boulder uphill for eternity, my main workstation where the grind never stops.
+#
+
 {
   mkHost,
   network,

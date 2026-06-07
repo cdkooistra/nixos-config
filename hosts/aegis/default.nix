@@ -1,3 +1,7 @@
+#
+# Aegis, the shield of Zeus, guards the network at the edge.
+#
+
 { mkHost, network, ... }:
 
 mkHost {
