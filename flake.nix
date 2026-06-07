@@ -90,14 +90,7 @@
     in
     {
       nixosConfigurations = {
-        sisyphus = import ./hosts/sisyphus {
-          inherit
-            mkHost
-            network
-            inputs
-            lib
-            ;
-        };
+        aegis = import ./hosts/aegis { inherit mkHost network inputs; };
         artemis = import ./hosts/artemis { inherit mkHost network inputs; };
         hermes = import ./hosts/hermes {
           inherit
@@ -107,6 +100,7 @@
             secretsDir
             ;
         };
+        sisyphus = import ./hosts/sisyphus { inherit mkHost network inputs; };
       };
     };
 }
