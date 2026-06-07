@@ -1,3 +1,7 @@
+#
+# Artemis, goddess of the hunt, thin and mobile workstation for productivity and development.
+#
+
 { mkHost, network, ... }:
 
 mkHost {

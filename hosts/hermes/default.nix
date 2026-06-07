@@ -1,3 +1,7 @@
+#
+# Hermes, the messenger of the gods, manages primarily services to use across my network.
+#
+
 {
   mkHost,
   network,
