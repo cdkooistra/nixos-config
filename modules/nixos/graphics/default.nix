@@ -1,6 +1,7 @@
 {
   imports = [
     ./nvidia.nix
+    ./intel.nix
     ./amd.nix
     ./displaylink.nix
     ./wayland.nix

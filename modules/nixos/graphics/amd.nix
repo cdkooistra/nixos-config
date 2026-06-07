@@ -4,16 +4,15 @@
   ...
 }:
 
+let
+  cfg = config.graphics.amd;
+in
 {
   options.graphics.amd = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "enable AMD drivers";
-    };
+    enable = lib.mkEnableOption "enable AMD drivers";
   };
 
-  config = lib.mkIf config.graphics.amd.enable {
+  config = lib.mkIf cfg.enable {
     services.xserver.videoDrivers = [ "amdgpu" ];
   };
 }

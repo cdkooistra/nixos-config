@@ -24,10 +24,6 @@ in
         wayland-utils
         wl-clipboard
 
-        libdecor
-        gtk3
-        cairo
-
         # TODO: is this the right place for these?
         vulkan-loader
         vulkan-tools
