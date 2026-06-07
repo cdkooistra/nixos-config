@@ -100,7 +100,15 @@
             secretsDir
             ;
         };
-        sisyphus = import ./hosts/sisyphus { inherit mkHost network inputs; };
+        sisyphus = import ./hosts/sisyphus {
+          inherit
+            mkHost
+            network
+            inputs
+            lib
+            secretsDir
+            ;
+        };
       };
     };
 }
