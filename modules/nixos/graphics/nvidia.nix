@@ -5,16 +5,15 @@
   ...
 }:
 
+let
+  cfg = config.graphics.nvidia;
+in
 {
   options.graphics.nvidia = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "enable nvidia drivers";
-    };
+    enable = lib.mkEnableOption "enable NVIDIA drivers";
   };
 
-  config = lib.mkIf config.graphics.nvidia.enable {
+  config = lib.mkIf cfg.enable {
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.nvidia = {

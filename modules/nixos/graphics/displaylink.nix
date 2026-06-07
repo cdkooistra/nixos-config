@@ -5,12 +5,15 @@
   ...
 }:
 
+let
+  cfg = config.graphics.displaylink;
+in
 {
   options.graphics.displaylink = {
     enable = lib.mkEnableOption "enable DisplayLink drivers";
   };
 
-  config = lib.mkIf config.graphics.displaylink.enable {
+  config = lib.mkIf cfg.enable {
     # apparently Displaylink for Wayland needs evdi module set like this
     boot = {
       extraModulePackages = [ config.boot.kernelPackages.evdi ];
@@ -24,7 +27,6 @@
 
     services.xserver.videoDrivers = [
       "displaylink"
-      # "modesetting"
     ];
 
     environment.systemPackages = with pkgs; [
@@ -37,6 +39,5 @@
     environment.sessionVariables = {
       MUTTER_DEBUG_ENABLE_ATOMIC_KMS = "0";
     };
-
   };
 }
