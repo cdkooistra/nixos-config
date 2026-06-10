@@ -13,6 +13,7 @@ in
     gamescope.enable = lib.mkEnableOption "enable gamescope";
     gamemode.enable = lib.mkEnableOption "enable gamemode";
     mangohud.enable = lib.mkEnableOption "enable MangoHUD";
+    protonup.enable = lib.mkEnableOption "enable Protonup QT";
   };
 
   config = lib.mkMerge [
@@ -37,6 +38,7 @@ in
         lib.concatLists [
           (lib.optional cfg.mangohud.enable mangohud)
           (lib.optional cfg.gamescope.enable gamescope)
+          (lib.optional cfg.protonup.enable protonup-qt)
         ];
     }
   ];

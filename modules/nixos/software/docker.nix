@@ -14,7 +14,7 @@
   };
 
   config = lib.mkIf config.software.docker.enable {
-    hardware.nvidia-container-toolkit.enable = config.nvidia.enable or false;
+    hardware.nvidia-container-toolkit.enable = config.graphics.nvidia.enable or false;
 
     virtualisation = {
       oci-containers.backend = "docker";
