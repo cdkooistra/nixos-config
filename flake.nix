@@ -91,7 +91,14 @@
     {
       nixosConfigurations = {
         aegis = import ./hosts/aegis { inherit mkHost network inputs; };
-        artemis = import ./hosts/artemis { inherit mkHost network inputs; };
+        artemis = import ./hosts/artemis {
+          inherit
+            mkHost
+            network
+            inputs
+            secretsDir
+            ;
+        };
         hermes = import ./hosts/hermes {
           inherit
             mkHost
