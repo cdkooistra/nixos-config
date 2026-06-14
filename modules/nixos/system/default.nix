@@ -6,8 +6,8 @@
     ./age.nix
     ./networking.nix
     ./user.nix
-    ./appimage.nix
-    ./flatpak.nix
+    ./appformats.nix
+    ./ssh.nix
   ];
 
   nix.settings.experimental-features = [

@@ -54,13 +54,14 @@ in
       package = pkgs.unstable.tailscale;
 
       # todo, make an option for operator?
-      extraSetFlags = [ "--operator=connor" ];
-
-      # configure tags
-      extraUpFlags = lib.concatLists [
+      extraSetFlags = lib.concatLists [
+        [ "--operator=connor" ]
         (lib.optional cfg.ssh "--ssh")
-        (lib.optional (cfg.tags != [ ]) "--advertise-tags=${lib.concatStringsSep "," cfg.tags}")
       ];
+
+      extraUpFlags = lib.optional (
+        cfg.tags != [ ]
+      ) "--advertise-tags=${lib.concatStringsSep "," cfg.tags}";
 
       # configure auth
       authKeyFile = lib.mkIf cfg.auth.enable config.age.secrets.tailscale.path;

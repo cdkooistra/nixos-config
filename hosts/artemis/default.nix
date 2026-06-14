@@ -5,7 +5,7 @@
 {
   mkHost,
   network,
-  secretsDir,
+  secrets,
   ...
 }:
 
@@ -14,9 +14,12 @@ mkHost {
   arch = "x86_64-linux";
 
   system = {
-    age.identityPaths = [
-      "/home/connor/.ssh/id_ed25519"
-    ];
+    age = {
+      identityPaths = [
+        "/home/connor/.ssh/id_ed25519"
+      ];
+      secrets.passwd.file = "${secrets}/passwd.age";
+    };
 
     graphics = {
       amd.enable = true;
@@ -41,7 +44,7 @@ mkHost {
 
         auth = {
           enable = true;
-          file = "${secretsDir}/tailscale.age";
+          file = "${secrets}/tailscale.age";
           params = {
             preauthorized = true;
             ephemeral = false;
@@ -70,6 +73,13 @@ mkHost {
         peers.sisyphus = network.devices.sisyphus;
       };
 
+    };
+
+    system = {
+      appformats = {
+        appimage.enable = true;
+        flatpak.enable = true;
+      };
     };
 
     boot.loader = {

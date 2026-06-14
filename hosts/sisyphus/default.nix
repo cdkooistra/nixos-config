@@ -5,7 +5,7 @@
   mkHost,
   network,
   lib,
-  secretsDir,
+  secrets,
   ...
 }:
 
@@ -14,9 +14,12 @@ mkHost {
   arch = "x86_64-linux";
 
   system = {
-    age.identityPaths = [
-      "/home/connor/.ssh/id_ed25519"
-    ];
+    age = {
+      identityPaths = [
+        "/home/connor/.ssh/id_ed25519"
+      ];
+      secrets.passwd.file = "${secrets}/passwd.age";
+    };
 
     graphics = {
       nvidia.enable = true;
@@ -43,7 +46,7 @@ mkHost {
 
         auth = {
           enable = true;
-          file = "${secretsDir}/tailscale.age";
+          file = "${secrets}/tailscale.age";
           params = {
             preauthorized = true;
             ephemeral = false;
@@ -81,7 +84,7 @@ mkHost {
         instances = {
           idleon = {
             dir = "/srv/browsers/idleon";
-            secretFile = "${secretsDir}/browsers-idleon.age";
+            secretFile = "${secrets}/browsers-idleon.age";
             port = 5800;
           };
         };
@@ -102,6 +105,17 @@ mkHost {
       };
       controllers = {
         xone.enable = true;
+      };
+    };
+
+    system = {
+      openssh = {
+        enable = true;
+        allowTailscale = true;
+      };
+      appformats = {
+        appimage.enable = true;
+        flatpak.enable = true;
       };
     };
 

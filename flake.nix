@@ -4,15 +4,16 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     agenix.url = "github:ryantm/agenix";
-
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    disko = {
+      url = "github:nix-community/disko/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -23,13 +24,14 @@
       home-manager,
       agenix,
       nix-flatpak,
+      disko,
       ...
     }@inputs:
     let
       lib = nixpkgs.lib;
       modules = import ./modules/nixos;
       network = import ../config/network.nix;
-      secretsDir = toString ./../secrets;
+      secrets = ./../secrets;
 
       # In case we want to, we can override packages from nixpkgs-unstable here using this code snippet.
       # Some examples: tailscale, devenv, etc.
@@ -47,12 +49,13 @@
         lib.nixosSystem {
           system = arch;
           specialArgs = {
-            inherit inputs network;
+            inherit inputs network secrets;
 
             hostName = name;
           };
           modules = [
             ./hosts/${name}/hardware-configuration.nix
+            ./hosts/${name}/disk.nix
             modules.system
             modules.graphics
             modules.gaming
@@ -60,6 +63,7 @@
             modules.software
             modules.services
             agenix.nixosModules.default
+            disko.nixosModules.disko
             nix-flatpak.nixosModules.nix-flatpak
             system
 
@@ -90,13 +94,20 @@
     in
     {
       nixosConfigurations = {
-        aegis = import ./hosts/aegis { inherit mkHost network inputs; };
+        aegis = import ./hosts/aegis {
+          inherit
+            mkHost
+            network
+            inputs
+            secrets
+            ;
+        };
         artemis = import ./hosts/artemis {
           inherit
             mkHost
             network
             inputs
-            secretsDir
+            secrets
             ;
         };
         hermes = import ./hosts/hermes {
@@ -104,7 +115,7 @@
             mkHost
             network
             inputs
-            secretsDir
+            secrets
             ;
         };
         sisyphus = import ./hosts/sisyphus {
@@ -113,7 +124,7 @@
             network
             inputs
             lib
-            secretsDir
+            secrets
             ;
         };
       };

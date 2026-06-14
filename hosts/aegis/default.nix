@@ -2,25 +2,57 @@
 # Aegis, the shield of Zeus, guards the network at the edge.
 #
 
-{ mkHost, network, ... }:
+{
+  mkHost,
+  network,
+  secrets,
+  ...
+}:
 
 mkHost {
   name = "aegis";
   arch = "x86_64-linux";
 
   system = {
+    age = {
+      identityPaths = [
+        "/home/connor/.ssh/id_ed25519"
+      ];
+      secrets.passwd.file = "${secrets}/passwd.age";
+    };
+
     # debatable, because this system does not need GUI/graphic compute
     graphics.intel.enable = true;
 
     software = {
+      docker.enable = true;
       tailscale = {
         enable = true;
         ssh = true;
 
         serve = {
-          enable = true;
+          enable = false;
           # TODO: services = { };
         };
+
+        auth = {
+          enable = true;
+          file = "${secrets}/tailscale.age";
+          params = {
+            preauthorized = true;
+            ephemeral = false;
+          };
+        };
+
+        tags = [ "tag:server" ];
+      };
+    };
+
+    system = {
+      openssh = {
+        enable = true;
+        allowTailscale = true;
+        allowLan = true;
       };
     };
 
@@ -38,6 +70,6 @@ mkHost {
 
     hardware.enableAllFirmware = true;
 
-    system.stateVersion = "26.05"; # TODO: this should probably be 26.05
+    system.stateVersion = "26.05";
   };
 }

@@ -5,7 +5,7 @@
 {
   mkHost,
   network,
-  secretsDir,
+  secrets,
   ...
 }:
 
@@ -14,9 +14,12 @@ mkHost {
   arch = "x86_64-linux";
 
   system = {
-    age.identityPaths = [
-      "/home/connor/.ssh/id_ed25519"
-    ];
+    age = {
+      identityPaths = [
+        "/home/connor/.ssh/id_ed25519"
+      ];
+      secrets.passwd.file = "${secrets}/passwd.age";
+    };
 
     graphics = {
       amd.enable = true;
@@ -38,7 +41,7 @@ mkHost {
 
         auth = {
           enable = true;
-          file = "${secretsDir}/tailscale.age";
+          file = "${secrets}/tailscale.age";
           params = {
             preauthorized = true;
             ephemeral = false;
@@ -78,7 +81,7 @@ mkHost {
         version = "0.13.0";
         dir = "/srv/solidtime";
         port = 8000;
-        secretFile = "${secretsDir}/solidtime.age";
+        secretFile = "${secrets}/solidtime.age";
 
         tailscale = {
           enable = true;
@@ -94,7 +97,7 @@ mkHost {
         enable = true;
         dir = "/srv/immich";
         dataDir = "/mnt/data/immich";
-        secretFile = "${secretsDir}/immich.age";
+        secretFile = "${secrets}/immich.age";
 
         tailscale = {
           enable = true;
@@ -109,7 +112,7 @@ mkHost {
       stirling = {
         enable = true;
         dir = "/srv/stirling";
-        secretFile = "${secretsDir}/stirling.age";
+        secretFile = "${secrets}/stirling.age";
 
         tailscale = {
           enable = true;
@@ -125,7 +128,7 @@ mkHost {
         enable = true;
         port = 8090;
         dir = "/srv/forgejo";
-        secretFile = "${secretsDir}/forgejo.age";
+        secretFile = "${secrets}/forgejo.age";
 
         tailscale = {
           enable = true;
@@ -143,7 +146,7 @@ mkHost {
         instances = {
           idleon = {
             dir = "/srv/browsers/idleon";
-            secretFile = "${secretsDir}/browsers-idleon.age";
+            secretFile = "${secrets}/browsers-idleon.age";
 
             tailscale = {
               enable = true;
@@ -156,6 +159,13 @@ mkHost {
             };
           };
         };
+      };
+    };
+
+    system = {
+      openssh = {
+        enable = true;
+        allowTailscale = true;
       };
     };
 

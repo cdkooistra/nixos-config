@@ -15,7 +15,7 @@ flowchart LR
     D --> E{changes in subtree?}
     E -->|yes| F[GitHub Action extracts subtree changes]
     E -->|no| G[no action needed]
-    F --> H[push subtree to public repo]    
+    F --> H[push subtree to public repo]
 ```
 
 ## Secrets
@@ -34,7 +34,7 @@ To create a secret, first create that secret in the aforementioned `secrets.nix`
 Then to create/edit the secret itself:
 
 ```bash
-agenix -e secret1.age 
+agenix -e secret1.age
 ```
 
 This will open a temporary file and allows you to insert secret content.
@@ -49,10 +49,53 @@ Then, inside any NixOS module, we need to register and use that secret as follow
   # use
   virtualisation.oci-containers.containers.solidtime = {
     environmentFiles = [ config.age.secrets.secret1.path ];
-    # age.secrets.<name>.path is the path where the secret is decrypted to. 
-    # Defaults to /run/agenix/<name> (config.age.secretsDir/<name>).
+    # age.secrets.<name>.path is the path where the secret is decrypted to.
+    # Defaults to /run/agenix/<name> (config.age.secrets/<name>).
     # We can only pass along a file with decrypted contents
     # ...
   };
 }
+```
+
+## Add new machines
+
+To add a new machine I use [nixos-anywhere](https://github.com/nix-community/nixos-anywhere).
+This tool allows for declarative installation of the NixOS image.
+
+To do this there are a few prerequisites:
+
+1. `flake.nix` configured with actions that need to be performed
+2. `disk.nix` which details the file system for target machine
+3. `hardware-configuration.nix` which contains quirks and necessary hardware settings for target machine (tip: `nixos-generate-config --no-filesystems` on target machine)
+4. Target machine reachable via SSH (e.g. NixOS minimal ISO boot via USB)
+
+So, the installation steps:
+
+```bash
+# 1. boot ISO, set temp passwd
+passwd nixos
+ip a
+
+# 2. generate hardware config
+ssh nixos@<machine-(lan)-ip>
+    nixos-generate-config --no-filesystems # copy over to e.g. ./hosts/<hostname>/hardware-configuration.nix
+
+# 3. pre-generate user SSH key
+# NOTE: the dir structure is very important as it declares where the key is stored
+mkdir -p /tmp/new-key/home/connor/.ssh && ssh-keygen -t ed25519 -f /tmp/new-key/home/connor/.ssh/id_ed25519 -N "" -C "connor@<hostname>"
+
+# 4. add public key to secrets nixos and (re)encrypt passwd.age
+mkpasswd -m sha-512
+agenix -e passwd.age
+
+# 5. write host config if you didnt already (default.nix, disk.nix, flake.nix)
+
+# 6. make sure everything new is version controlled so flake picks them up
+git add *
+
+# 7. install
+nix run github:nix-community/nixos-anywhere -- \
+  --flake ./<flake-dir>#<hostname> \
+  --extra-files /tmp/new-key \
+  nixos@<ip>
 ```
