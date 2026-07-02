@@ -42,9 +42,8 @@ mkHost {
             preauthorized = true;
             ephemeral = false;
           };
+          tags = [ "tag:server" ];
         };
-
-        tags = [ "tag:server" ];
       };
     };
 

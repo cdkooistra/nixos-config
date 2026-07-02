@@ -43,31 +43,6 @@ mkHost {
       tailscale = {
         enable = true;
         ssh = true;
-
-        auth = {
-          enable = true;
-          file = "${secrets}/tailscale.age";
-          params = {
-            preauthorized = true;
-            ephemeral = false;
-          };
-        };
-
-        serve = {
-          enable = true;
-          services = {
-            # set up some basic server using: python3 -m http.server 8080
-            example-web-server = {
-              endpoints = {
-                # service endpoint with port 443 linked to local endpoint with port 8080
-                "tcp:443" = "http://localhost:8080";
-              };
-              advertised = true; # this is the default case, understand now, remove later
-            };
-          };
-        };
-
-        tags = [ "tag:workstation" ];
       };
 
       syncthing = {

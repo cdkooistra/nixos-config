@@ -25,6 +25,11 @@ in
         default = { };
         description = "Extra parameters to pass after auth key, always check with https://search.nixos.org/options?channel=unstable&query=services.tailscale#show=option%253Aservices.tailscale.authKeyParameters";
       };
+      tags = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [ ];
+        description = "During OAuth, define tags to use for advertising system, e.g. [ \"tag:server\" ]";
+      };
     };
 
     serve = {
@@ -34,12 +39,6 @@ in
         default = { };
         description = "Services to configure for Tailscale Serve";
       };
-    };
-
-    tags = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-      description = "Tags to advertise, e.g. [ \"tag:server\" ]";
     };
   };
 
@@ -59,6 +58,7 @@ in
         (lib.optional cfg.ssh "--ssh")
       ];
 
+      # extraUpFlags is only specified when auth key is defined
       extraUpFlags = lib.optional (
         cfg.tags != [ ]
       ) "--advertise-tags=${lib.concatStringsSep "," cfg.tags}";

@@ -46,6 +46,7 @@ mkHost {
             preauthorized = true;
             ephemeral = false;
           };
+          tags = [ "tag:server" ];
         };
 
         serve = {
@@ -61,8 +62,6 @@ mkHost {
           #   };
           # };
         };
-
-        tags = [ "tag:server" ];
       };
 
       rsync = {

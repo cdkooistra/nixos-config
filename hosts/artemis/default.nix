@@ -39,34 +39,7 @@ mkHost {
       docker.enable = true;
       espanso.enable = true;
       devenv.enable = true;
-      tailscale = {
-        enable = true;
-
-        auth = {
-          enable = true;
-          file = "${secrets}/tailscale.age";
-          params = {
-            preauthorized = true;
-            ephemeral = false;
-          };
-        };
-        tags = [ "tag:laptop" ];
-
-        serve = {
-          enable = false;
-          # services = {
-          #   # set up some basic server using: python3 -m http.server 8080
-          #   example-web-server = {
-          #     endpoints = {
-          #       # service endpoint with port 443 linked to local endpoint with port 8080
-          #       "tcp:443" = "http://localhost:8080";
-          #     };
-          #     advertised = true; # this is the default case, understand now, remove later
-          #   };
-          # };
-        };
-
-      };
+      tailscale.enable = true;
       syncthing = {
         enable = true;
         deviceId = network.devices.artemis;
