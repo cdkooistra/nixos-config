@@ -60,8 +60,8 @@ in
 
       # extraUpFlags is only specified when auth key is defined
       extraUpFlags = lib.optional (
-        cfg.tags != [ ]
-      ) "--advertise-tags=${lib.concatStringsSep "," cfg.tags}";
+        cfg.auth.tags != [ ]
+      ) "--advertise-tags=${lib.concatStringsSep "," cfg.auth.tags}";
 
       # configure auth
       authKeyFile = lib.mkIf cfg.auth.enable config.age.secrets.tailscale.path;
