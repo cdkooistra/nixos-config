@@ -48,6 +48,10 @@ mkHost {
       };
     };
 
+    services = {
+      pihole.enable = true;
+    };
+
     system = {
       openssh = {
         enable = true;
