@@ -18,9 +18,12 @@ in
       pihole-ftl = {
         enable = true;
         settings = {
-          dns.upstreams = [
-            "86.54.11.13" # dns4eu
-          ];
+          dns = {
+            upstreams = [
+              "86.54.11.13" # dns4eu
+            ];
+            listeningMode = "ALL";
+          };
         };
         lists = [
           {
@@ -34,6 +37,20 @@ in
       pihole-web = {
         enable = true;
         ports = [ "443" ];
+      };
+    };
+
+    # Restrict who can actually reach port 53
+    networking.firewall = {
+      interfaces = {
+        "tailscale0" = {
+          allowedTCPPorts = [ 53 ];
+          allowedUDPPorts = [ 53 ];
+        };
+        "enp1s0" = {
+          allowedTCPPorts = [ 53 ];
+          allowedUDPPorts = [ 53 ];
+        };
       };
     };
   };
