@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   programs = {
     direnv = {
@@ -12,6 +12,7 @@
     packages = with pkgs; [
       python3
       uv
+      inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
 }
