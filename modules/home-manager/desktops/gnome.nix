@@ -90,7 +90,7 @@
 
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
           binding = "<Super>t";
-          command = "kgx";
+          command = "alacritty";
           name = "Launch Terminal";
         };
 

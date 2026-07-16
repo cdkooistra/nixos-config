@@ -36,7 +36,6 @@ mkHost {
 
     software = {
       docker.enable = true;
-      devenv.enable = true;
       espanso.enable = false;
       rsync.enable = true;
 
@@ -84,6 +83,7 @@ mkHost {
     };
 
     system = {
+      dev.enable = true;
       openssh = {
         enable = true;
         allowTailscale = true;

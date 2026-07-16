@@ -151,8 +151,8 @@
       buffer_font_size = 15;
       theme = {
         mode = "system";
-        light = "Ayu Light";
-        dark = "Ayu Dark";
+        light = "One Light";
+        dark = "One Dark";
       };
       format_on_save = "on";
       languages = {

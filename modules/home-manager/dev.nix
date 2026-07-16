@@ -1,18 +1,28 @@
-{ pkgs, inputs, ... }:
 {
-  programs = {
-    direnv = {
-      enable = true;
-      silent = true;
-      nix-direnv.enable = true;
-    };
-  };
+  lib,
+  pkgs,
+  inputs,
+  osConfig,
+  ...
+}:
 
-  home = {
-    packages = with pkgs; [
-      python3
-      uv
-      inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
-    ];
+{
+  config = lib.mkIf osConfig.system.dev.enable {
+    programs = {
+      direnv = {
+        enable = true;
+        silent = true;
+        nix-direnv.enable = true;
+      };
+    };
+
+    home = {
+      packages = with pkgs; [
+        devenv
+        python3
+        uv
+        inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
+      ];
+    };
   };
 }

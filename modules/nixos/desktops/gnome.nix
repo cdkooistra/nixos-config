@@ -77,6 +77,8 @@ in
               gedit
               evince
               yelp
+              gnome-console
+              xterm
 
               (lib.optional (config.networking.hostName != "artemis") gnome-bluetooth)
             ];

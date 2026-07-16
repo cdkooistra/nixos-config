@@ -2,12 +2,13 @@
 
 {
   imports = [
-    ./locale.nix
     ./age.nix
-    ./networking.nix
-    ./user.nix
     ./appformats.nix
+    ./dev.nix
+    ./locale.nix
+    ./networking.nix
     ./ssh.nix
+    ./user.nix
   ];
 
   nix.settings.experimental-features = [

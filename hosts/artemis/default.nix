@@ -38,17 +38,16 @@ mkHost {
     software = {
       docker.enable = true;
       espanso.enable = true;
-      devenv.enable = true;
       tailscale.enable = true;
       syncthing = {
         enable = true;
         deviceId = network.devices.artemis;
         peers.sisyphus = network.devices.sisyphus;
       };
-
     };
 
     system = {
+      dev.enable = true;
       appformats = {
         appimage.enable = true;
         flatpak.enable = true;
@@ -94,7 +93,6 @@ mkHost {
       obsidian.enable = true;
       onlyoffice.enable = true;
       proton.enable = true;
-      slack.enable = true;
       signal.enable = true;
       spotify.enable = true;
       zen.enable = true;
