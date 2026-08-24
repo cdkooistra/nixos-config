@@ -20,7 +20,10 @@ in
         settings = {
           dns = {
             upstreams = [
-              "86.54.11.13" # dns4eu
+              "9.9.9.11"
+              "149.112.112.11"
+              "2620:fe::11"
+              "2620:fe::fe:11"
             ];
             listeningMode = "ALL";
           };
