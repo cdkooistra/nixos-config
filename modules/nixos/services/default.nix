@@ -13,6 +13,7 @@
     ./browsers.nix
     ./stirling.nix
     ./pihole.nix
+    ./hackernews.nix
     ./homepage.nix
   ];
 
