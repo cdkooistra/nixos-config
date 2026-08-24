@@ -3,6 +3,7 @@
   lib,
   pkgs,
   tailscale,
+  network,
   ...
 }:
 
@@ -83,6 +84,8 @@ in
         environment = {
           CONTAINER_MODE = "http";
           AUTO_DB_MIGRATE = "true";
+          TRUSTED_HOSTS = "${service}.${network.tailnet}.ts.net";
+          APP_URL = "https://${service}.${network.tailnet}.ts.net";
         };
 
         volumes = [
