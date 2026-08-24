@@ -6,6 +6,7 @@
   network,
   lib,
   secrets,
+  pkgs,
   ...
 }:
 
@@ -89,7 +90,10 @@ mkHost {
         allowTailscale = true;
       };
       appformats = {
-        appimage.enable = true;
+        appimage = {
+          enable = true;
+          extraPkgs = with pkgs; [ icu ];
+        };
         flatpak.enable = true;
       };
     };
