@@ -140,6 +140,22 @@ mkHost {
         };
       };
 
+      homepage = {
+        enable = true;
+        port = 8100;
+        dir = "/srv/homepage";
+        secretFile = "${secrets}/homepage.age";
+
+        tailscale = {
+          enable = true;
+          hostname = "home";
+          tailnet = network.tailnet;
+          serve = {
+            "/" = "http://172.17.0.1:8100";
+          };
+        };
+      };
+
       browsers = {
         enable = false;
 
