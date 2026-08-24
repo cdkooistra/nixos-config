@@ -86,6 +86,7 @@ mkHost {
           enable = true;
           hostname = "solidtime";
           tailnet = network.tailnet;
+          magicdns = false;
           serve = {
             "/" = "http://127.0.0.1:8000";
           };
