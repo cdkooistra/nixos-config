@@ -14,6 +14,12 @@
       description = "what to call this Tailscale node";
     };
 
+    version = lib.mkOption {
+      type = lib.types.str;
+      description = "version for container";
+      default = "latest";
+    };
+
     serve = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       default = { };
@@ -62,7 +68,7 @@
       };
     in
     {
-      image = "ghcr.io/tailscale/tailscale:v1.94.2";
+      image = "ghcr.io/tailscale/tailscale:${cfg.version}";
       autoStart = true;
       hostname = "${cfg.hostname}";
       networks = lib.optionals (networks != [ ]) networks;

@@ -36,6 +36,7 @@ in
   config = lib.mkIf cfg.enable {
     services.immich = {
       enable = true;
+      package = pkgs.unstable.immich;
       host = "0.0.0.0";
       port = 2283;
       mediaLocation = cfg.dataDir;
