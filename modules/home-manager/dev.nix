@@ -19,7 +19,6 @@
     home = {
       packages = with pkgs; [
         devenv
-        python3
         uv
         inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];

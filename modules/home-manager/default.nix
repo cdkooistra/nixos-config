@@ -18,10 +18,10 @@
     username = "connor";
     homeDirectory = "/home/connor";
     stateVersion = "25.05";
-    packages = with pkgs; [ vscode ];
-    # sessionVariables = {
-    #   EDITOR = "code --wait";
-    # };
+    packages = with pkgs; [
+      python3
+      vscode
+    ];
   };
 
   programs = {
