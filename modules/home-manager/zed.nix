@@ -118,7 +118,7 @@
     userSettings = {
       cli_default_open_behavior = "new_window";
       edit_predictions = {
-        mode = "eager";
+        mode = "subtle";
         provider = "zed";
       };
       project_panel = {
