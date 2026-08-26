@@ -18,7 +18,7 @@
 
     home = {
       packages = with pkgs; [
-        devenv
+        unstable.devenv
         uv
         inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];

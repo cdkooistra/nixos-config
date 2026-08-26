@@ -94,7 +94,10 @@ in
         ];
 
         # ports = [ "${toString cfg.port}:8000" ];
-        dependsOn = [ "solidtime-database" ] ++ (if cfg.tailscale.enable then [ "solidtime-tailscale" ] else []);
+        dependsOn = [
+          "solidtime-database"
+        ]
+        ++ (if cfg.tailscale.enable then [ "solidtime-tailscale" ] else [ ]);
       };
 
       solidtime-scheduler = {
