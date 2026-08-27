@@ -47,7 +47,7 @@ in
             prismlauncher
             openjdk25
           ])
-          (lib.optional cfg.bottles.enable bottles)
+          (lib.optional cfg.bottles.enable unstable.bottles)
           (lib.optional cfg.lutris.enable lutris)
         ];
     }

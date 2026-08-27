@@ -22,9 +22,11 @@
   # this helps set up remote vscode server :)
   programs.nix-ld.enable = true;
 
-  # setup lsp and formatter
   environment.systemPackages = with pkgs; [
+    # setup lsp and formatter
     nixfmt
     nixd
+    # quick nixpkgs search
+    nix-search-cli
   ];
 }
