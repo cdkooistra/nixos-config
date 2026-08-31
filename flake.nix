@@ -122,6 +122,7 @@
             inputs
             secrets
             ;
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
         };
         sisyphus = import ./hosts/sisyphus {
           inherit

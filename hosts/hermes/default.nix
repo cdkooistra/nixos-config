@@ -6,6 +6,7 @@
   mkHost,
   network,
   secrets,
+  pkgs,
   ...
 }:
 
@@ -95,7 +96,7 @@ mkHost {
             ];
             backupPrepareCommand = ''
               mkdir -p /run/restic-dumps
-              runuser -u immich -- pg_dump immich > /run/restic-dumps/immich.sql
+              ${pkgs.util-linux}/bin/runuser -u immich -- ${pkgs.postgresql_16}/bin/pg_dump immich > /run/restic-dumps/immich.sql
             '';
             backupCleanupCommand = ''
               rm -f /run/restic-dumps/immich.sql
@@ -107,7 +108,7 @@ mkHost {
             paths = [ "/run/restic-dumps/solidtime.sql" ];
             backupPrepareCommand = ''
               mkdir -p /run/restic-dumps
-              docker exec solidtime-database sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > /run/restic-dumps/solidtime.sql
+              ${pkgs.docker}/bin/docker exec solidtime-database sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > /run/restic-dumps/solidtime.sql
             '';
             backupCleanupCommand = ''
               rm -f /run/restic-dumps/solidtime.sql
