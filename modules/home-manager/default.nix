@@ -21,6 +21,8 @@
     packages = with pkgs; [
       python3
       vscode
+      # for viewing peripherals
+      unstable.cyme
     ];
   };
 
