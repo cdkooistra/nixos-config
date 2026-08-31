@@ -56,6 +56,13 @@ in
             units = "metric";
           };
         }
+        {
+          resources = {
+            label = "Storage";
+            disk = "/mnt/data";
+            units = "metric";
+          };
+        }
       ];
 
       services = [

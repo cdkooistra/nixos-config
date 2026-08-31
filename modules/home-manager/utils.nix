@@ -7,23 +7,16 @@
 let
   mkScript = name: text: pkgs.writeShellScriptBin name text;
 
+  rebuildScript = ../../utils/rebuild.py;
+  updateScript = ../../utils/update.py;
+
   scripts = [
     (mkScript "nixrebuild" ''
-      if [ -z "$NIXREBUILD_PATH" ]; then
-        exit 1
-      elif [ -z "$NIXOS_HOST" ]; then
-        exit 1
-      fi
-
-      "$NIXREBUILD_PATH" "$1" "$NIXOS_HOST"
+      exec ${pkgs.python3}/bin/python ${rebuildScript} "$1" "${hostName}"
     '')
 
     (mkScript "nixupdate" ''
-      if [ -z "$NIXUPDATE_PATH" ]; then
-        exit 1
-      fi
-
-      "$NIXUPDATE_PATH"
+      exec ${pkgs.python3}/bin/python ${updateScript}
     '')
   ];
 in
