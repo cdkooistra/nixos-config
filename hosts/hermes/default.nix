@@ -81,9 +81,9 @@ mkHost {
         repositories.sisyphus = {
           url = "sftp:connor@sisyphus:/run/media/connor/Storage/restic-backups";
           passwordFile = "${secrets}/backup-repos.age";
-          # backup jobs run as root
+          # backup jobs run as root (specify known_hosts, otherwise this errs)
           extraOptions = [
-            "sftp.command='ssh connor@sisyphus -i /home/connor/.ssh/id_ed25519 -s sftp'"
+            "sftp.command='ssh connor@sisyphus -i /home/connor/.ssh/id_ed25519 -o UserKnownHostsFile=/home/connor/.ssh/known_hosts -s sftp'"
           ];
         };
 
