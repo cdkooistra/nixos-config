@@ -43,6 +43,15 @@ in
               default = null;
               description = "path to an age-encrypted env file with backend credentials, if the backend needs one";
             };
+
+            extraOptions = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [ ];
+              description = "extra restic `--option`/`-o` flags, e.g. to override the sftp connection command since backup jobs run as root";
+              example = [
+                "sftp.command='ssh connor@sisyphus -i /home/connor/.ssh/id_ed25519 -s sftp'"
+              ];
+            };
           };
         }
       );
@@ -155,7 +164,8 @@ in
 
             paths = job.backup.paths;
             exclude = job.backup.exclude;
-            tags = job.backup.tags;
+            extraOptions = repo.extraOptions;
+            extraBackupArgs = map (tag: "--tag=${tag}") job.backup.tags;
 
             backupPrepareCommand = job.backup.backupPrepareCommand;
             backupCleanupCommand = job.backup.backupCleanupCommand;

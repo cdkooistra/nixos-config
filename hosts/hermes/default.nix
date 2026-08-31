@@ -64,12 +64,55 @@ mkHost {
         };
       };
 
-      rsync = {
+      # superseded by restic below
+      # rsync = {
+      #   enable = true;
+      #   backups.immich-data = {
+      #     src = "/mnt/data/immich";
+      #     dst = "connor@sisyphus:/run/media/connor/Storage/immich-backup";
+      #     schedule = "12:00";
+      #   };
+      # };
+
+      restic = {
         enable = true;
-        backups.immich-data = {
-          src = "/mnt/data/immich";
-          dst = "connor@sisyphus:/run/media/connor/Storage/immich-backup";
-          schedule = "12:00";
+
+        repositories.sisyphus = {
+          url = "sftp:connor@sisyphus:/run/media/connor/Storage/restic-backups";
+          passwordFile = "${secrets}/backup-repos.age";
+          # backup jobs run as root
+          extraOptions = [
+            "sftp.command='ssh connor@sisyphus -i /home/connor/.ssh/id_ed25519 -s sftp'"
+          ];
+        };
+
+        backups = {
+          immich = {
+            repositories = [ "sisyphus" ];
+            paths = [
+              "/mnt/data/immich"
+              "/run/restic-dumps/immich.sql"
+            ];
+            backupPrepareCommand = ''
+              mkdir -p /run/restic-dumps
+              runuser -u immich -- pg_dump immich > /run/restic-dumps/immich.sql
+            '';
+            backupCleanupCommand = ''
+              rm -f /run/restic-dumps/immich.sql
+            '';
+          };
+
+          solidtime = {
+            repositories = [ "sisyphus" ];
+            paths = [ "/run/restic-dumps/solidtime.sql" ];
+            backupPrepareCommand = ''
+              mkdir -p /run/restic-dumps
+              docker exec solidtime-database sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > /run/restic-dumps/solidtime.sql
+            '';
+            backupCleanupCommand = ''
+              rm -f /run/restic-dumps/solidtime.sql
+            '';
+          };
         };
       };
     };
