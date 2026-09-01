@@ -90,6 +90,7 @@ mkHost {
         backups = {
           immich = {
             repositories = [ "sisyphus" ];
+            schedule = "18:00";
             paths = [
               "/mnt/data/immich"
               "/run/restic-dumps/immich.sql"
@@ -105,6 +106,7 @@ mkHost {
 
           solidtime = {
             repositories = [ "sisyphus" ];
+            schedule = "18:00";
             paths = [ "/run/restic-dumps/solidtime.sql" ];
             backupPrepareCommand = ''
               mkdir -p /run/restic-dumps

@@ -101,6 +101,18 @@ in
               description = "systemd OnCalendar schedule";
             };
 
+            limitUploadKb = lib.mkOption {
+              type = lib.types.nullOr lib.types.int;
+              default = null;
+              description = "cap upload bandwidth to this many KiB/s (restic `--limit-upload`)";
+            };
+
+            limitDownloadKb = lib.mkOption {
+              type = lib.types.nullOr lib.types.int;
+              default = null;
+              description = "cap download bandwidth to this many KiB/s (restic `--limit-download`)";
+            };
+
             keep = {
               daily = lib.mkOption {
                 type = lib.types.int;
@@ -165,7 +177,14 @@ in
             paths = job.backup.paths;
             exclude = job.backup.exclude;
             extraOptions = repo.extraOptions;
-            extraBackupArgs = map (tag: "--tag=${tag}") job.backup.tags;
+            extraBackupArgs =
+              map (tag: "--tag=${tag}") job.backup.tags
+              ++ lib.optional (
+                job.backup.limitUploadKb != null
+              ) "--limit-upload=${toString job.backup.limitUploadKb}"
+              ++ lib.optional (
+                job.backup.limitDownloadKb != null
+              ) "--limit-download=${toString job.backup.limitDownloadKb}";
 
             backupPrepareCommand = job.backup.backupPrepareCommand;
             backupCleanupCommand = job.backup.backupCleanupCommand;
