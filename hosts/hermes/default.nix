@@ -90,7 +90,7 @@ mkHost {
         backups = {
           immich = {
             repositories = [ "sisyphus" ];
-            schedule = "18:00";
+            schedule = "18:30";
             paths = [
               "/mnt/data/immich"
               "/run/restic-dumps/immich.sql"
