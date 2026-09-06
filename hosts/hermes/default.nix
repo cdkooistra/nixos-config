@@ -65,31 +65,31 @@ mkHost {
         };
       };
 
-      # superseded by restic below
-      # rsync = {
-      #   enable = true;
-      #   backups.immich-data = {
-      #     src = "/mnt/data/immich";
-      #     dst = "connor@sisyphus:/run/media/connor/Storage/immich-backup";
-      #     schedule = "12:00";
-      #   };
-      # };
-
       restic = {
         enable = true;
 
-        repositories.sisyphus = {
-          url = "sftp:connor@sisyphus:/run/media/connor/Storage/restic-backups";
-          passwordFile = "${secrets}/backup-repos.age";
-          # backup jobs run as root (specify known_hosts, otherwise this errs)
-          extraOptions = [
-            "sftp.command='ssh connor@sisyphus -i /home/connor/.ssh/id_ed25519 -o UserKnownHostsFile=/home/connor/.ssh/known_hosts -s sftp'"
-          ];
+        repositories = {
+          sisyphus = {
+            url = "sftp:connor@sisyphus:/run/media/connor/Storage/restic-backups";
+            passwordFile = "${secrets}/backup-repos.age";
+            # backup jobs run as root (specify known_hosts, otherwise this errs)
+            extraOptions = [
+              "sftp.command='ssh connor@sisyphus -i /home/connor/.ssh/id_ed25519 -o UserKnownHostsFile=/home/connor/.ssh/known_hosts -s sftp'"
+            ];
+          };
+          s3 = {
+            url = "s3:${network.s3.endpoint}/${network.s3.bucket}/restic";
+            passwordFile = "${secrets}/backup-repos.age";
+            environmentFile = "${secrets}/s3.age";
+          };
         };
 
         backups = {
           immich = {
-            repositories = [ "sisyphus" ];
+            repositories = [
+              "sisyphus"
+              "s3"
+            ];
             schedule = "18:30";
             paths = [
               "/mnt/data/immich"
@@ -105,7 +105,10 @@ mkHost {
           };
 
           solidtime = {
-            repositories = [ "sisyphus" ];
+            repositories = [
+              "sisyphus"
+              "s3"
+            ];
             schedule = "18:00";
             paths = [ "/run/restic-dumps/solidtime.sql" ];
             backupPrepareCommand = ''
