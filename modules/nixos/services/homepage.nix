@@ -80,6 +80,12 @@ in
                 icon = "solidtime.png";
               };
             }
+            {
+              S3 = {
+                href = "${network.s3.dashboard}";
+                icon = "amazon-s3.png";
+              };
+            }
           ];
         }
         {
