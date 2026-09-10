@@ -44,6 +44,15 @@ in
       allowedHosts = "home.${network.tailnet}.ts.net";
       package = pkgs.unstable.homepage-dashboard;
 
+      settings = {
+        layout = {
+          Services = {
+            style = "row";
+            columns = 3;
+          };
+        };
+      };
+
       widgets = [
         {
           resources = {
@@ -71,19 +80,19 @@ in
             {
               Immich = {
                 href = "https://immich.${network.tailnet}.ts.net";
-                icon = "immich.png";
+                icon = "immich.svg";
               };
             }
             {
               Solidtime = {
                 href = "https://solidtime.${network.tailnet}.ts.net";
-                icon = "solidtime.png";
+                icon = "solidtime.svg";
               };
             }
             {
               S3 = {
                 href = "${network.s3.dashboard}";
-                icon = "amazon-s3.png";
+                icon = "sh-amazon-s3.svg";
               };
             }
           ];
@@ -92,7 +101,7 @@ in
           Feeds = [
             {
               "Hacker News" = {
-                icon = "hacker-news.png";
+                icon = "hacker-news.svg";
                 href = "https://news.ycombinator.com/";
                 widget = {
                   type = "customapi";
