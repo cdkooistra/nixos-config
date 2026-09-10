@@ -38,7 +38,7 @@ in
         lib.concatLists [
           (lib.optional cfg.mangohud.enable mangohud)
           (lib.optional cfg.gamescope.enable gamescope)
-          (lib.optional cfg.protonup.enable protonup-qt)
+          (lib.optional cfg.protonup.enable unstable.protonup-qt)
         ];
     }
   ];
