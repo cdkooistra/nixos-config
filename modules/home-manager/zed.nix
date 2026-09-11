@@ -112,6 +112,12 @@
           "alt-shift-down" = "editor::AddSelectionBelow";
         };
       }
+      {
+        context = "!Terminal";
+        unbind = {
+          "ctrl-shift-c" = "collab_panel::ToggleFocus";
+        };
+      }
     ];
 
     mutableUserSettings = true;
