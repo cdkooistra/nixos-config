@@ -37,7 +37,7 @@ mkHost {
 
     software = {
       docker.enable = true;
-      espanso.enable = false;
+      espanso.enable = true;
       rsync.enable = true;
 
       tailscale = {

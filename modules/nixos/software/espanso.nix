@@ -15,19 +15,13 @@
   };
 
   config = lib.mkIf config.software.espanso.enable {
-    security.wrappers.espanso = {
-      source = "${pkgs.espanso-wayland}/bin/espanso";
-      capabilities = "cap_dac_override+p";
-      owner = "root";
-      group = "root";
+    services.espanso = {
+      enable = true;
+      package = pkgs.unstable.espanso-wayland;
     };
-    # services.espanso = {
-    #   enable = true;
-    #   package = pkgs.espanso-wayland;
-    # };
 
-    # environment.systemPackages = with pkgs; [
-    #   espanso-wayland
-    # ];
+    environment.systemPackages = with pkgs; [
+      unstable.espanso-wayland
+    ];
   };
 }
