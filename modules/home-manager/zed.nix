@@ -118,6 +118,11 @@
           "ctrl-shift-c" = "collab_panel::ToggleFocus";
         };
       }
+      {
+        unbind = {
+          "ctrl-q" = "zed::Quit";
+        };
+      }
     ];
 
     mutableUserSettings = true;
