@@ -95,6 +95,12 @@ in
                 icon = "sh-amazon-s3.svg";
               };
             }
+            {
+              TV = {
+                href = "${network.tv.dashboard}";
+                icon = "channels-dvr.svg";
+              };
+            }
           ];
         }
         {
