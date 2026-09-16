@@ -126,7 +126,6 @@ mkHost {
     services = {
       solidtime = {
         enable = true;
-        version = "0.19.1";
         dir = "/srv/solidtime";
         port = 8000;
         secretFile = "${secrets}/solidtime.age";
