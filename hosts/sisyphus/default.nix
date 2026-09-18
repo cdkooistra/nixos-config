@@ -54,7 +54,7 @@ mkHost {
 
     services = {
       browsers = {
-        enable = true;
+        enable = false;
 
         instances = {
           idleon = {
@@ -128,33 +128,6 @@ mkHost {
         };
         efi.canTouchEfiVariables = true;
         timeout = 10;
-      };
-    };
-
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-
-      extraConfig.pipewire = {
-        "99-gaming-latency" = {
-          "context.properties" = {
-            "default.clock.rate" = 48000;
-            "default.clock.allowed-rates" = [
-              44100
-              48000
-            ];
-            # Door min en max gelijk te zetten, kan Proton de buffer niet meer verlagen naar 256
-            "default.clock.quantum" = 512;
-            "default.clock.min-quantum" = 512;
-            "default.clock.max-quantum" = 512;
-            "stream.properties" = {
-              "resample.quality" = 4; # Verlaagt de CPU overhead voor resampling
-            };
-          };
-        };
       };
     };
 

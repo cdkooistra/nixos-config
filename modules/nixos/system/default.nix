@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./audio.nix
     ./age.nix
     ./appformats.nix
     ./dev.nix
@@ -19,7 +20,6 @@
 
   # enable this setting to solve some issues with unpatched dynamic binaries
   # by doing some workaround for the dynamic linker
-  # this helps set up remote vscode server :)
   programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
