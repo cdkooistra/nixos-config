@@ -204,6 +204,20 @@ mkHost {
         };
       };
 
+      opengym = {
+        enable = true;
+        dir = "/srv/opengym";
+        port = 8110;
+        secretFile = "${secrets}/opengym.age";
+        tailscale = {
+          enable = true;
+          hostname = "opengym";
+          tailnet = network.tailnet;
+          magicdns = false;
+          serve."/" = "http://127.0.0.1:80";
+        };
+      };
+
       browsers = {
         enable = false;
 

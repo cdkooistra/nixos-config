@@ -15,6 +15,7 @@
     ./pihole.nix
     ./hackernews.nix
     ./homepage.nix
+    ./opengym.nix
   ];
 
   # this imports the tailscale sidecar only for service.nix files defined in this folder
