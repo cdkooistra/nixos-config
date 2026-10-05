@@ -35,6 +35,12 @@ in
             enabled = true;
             description = "hagezi blocklist";
           }
+          {
+            url = "https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/refs/heads/master/youtubelist.txt";
+            type = "block";
+            enabled = true;
+            description = "youtube ad blocklist";
+          }
         ];
       };
       pihole-web = {
