@@ -41,7 +41,10 @@
       # In case we want to, we can override packages from nixpkgs-unstable here using this code snippet.
       # Some examples: tailscale, devenv, etc.
       unstableOverlay = final: prev: {
-        unstable = nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system};
+        unstable = import nixpkgs-unstable {
+          system = prev.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        };
       };
 
       mkHost =

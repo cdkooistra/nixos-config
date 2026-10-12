@@ -6,6 +6,7 @@
     ./onlyoffice.nix
     ./pinta.nix
     ./proton.nix
+    ./rustconn.nix
     ./slack.nix
     ./signal.nix
     ./spotify.nix
