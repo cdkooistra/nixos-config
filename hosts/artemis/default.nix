@@ -85,6 +85,7 @@ mkHost {
       obsidian.enable = true;
       onlyoffice.enable = true;
       proton.enable = true;
+      rustconn.enable = true;
       signal.enable = true;
       spotify.enable = true;
       zen.enable = true;
