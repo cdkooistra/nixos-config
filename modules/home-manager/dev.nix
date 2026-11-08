@@ -24,6 +24,8 @@
         unstable.devenv
         uv
         inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
+        inputs.pi.packages.${pkgs.stdenv.hostPlatform.system}.default
+        claude-code
       ];
     };
   };
