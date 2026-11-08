@@ -107,10 +107,22 @@ mkHost {
       "/run/media/connor/Games" = {
         device = "/dev/disk/by-uuid/31b1a084-e5ab-4c46-b129-c8b4c51049d9";
         fsType = "btrfs";
+        options = [ "nofail" ];
+      };
+      # save disk space on main disk by offloading code to the secondary disk :)
+      "/home/connor/Code" = {
+        device = "/run/media/connor/Games/.code";
+        fsType = "none";
+        options = [
+          "bind"
+          "nofail"
+          "x-systemd.requires-mounts-for=/run/media/connor/Games"
+        ];
       };
       "/run/media/connor/Storage" = {
         device = "/dev/disk/by-uuid/8222BD7522BD6F33";
         fsType = "ntfs";
+        options = [ "nofail" ];
       };
     };
 
@@ -129,14 +141,12 @@ mkHost {
         efi.canTouchEfiVariables = true;
         timeout = 10;
       };
+      # for USB audio interfaces
+      kernelParams = [
+        "preempt=full"
+        "usbcore.autosuspend=-1"
+      ];
     };
-
-    # for USB audio interfaces
-    boot.kernelParams = [
-      "preempt=full"
-      "usbcore.autosuspend=-1"
-    ];
-    # boot.extraModprobeConfig = "options snd-hda-intel enable_msi=1";
 
     system.stateVersion = "25.05";
   };
