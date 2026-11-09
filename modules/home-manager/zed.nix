@@ -127,6 +127,7 @@
 
     mutableUserSettings = true;
     userSettings = {
+      restore_on_startup = "launchpad";
       cli_default_open_behavior = "new_window";
       edit_predictions = {
         mode = "subtle";
