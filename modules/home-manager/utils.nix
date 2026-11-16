@@ -12,7 +12,8 @@ let
 
   scripts = [
     (mkScript "nixrebuild" ''
-      exec ${pkgs.python3}/bin/python ${rebuildScript} "$1" "${hostName}"
+      export NIXOS_HOST="${hostName}"
+      exec ${pkgs.python3}/bin/python ${rebuildScript} "$@"
     '')
 
     (mkScript "nixupdate" ''

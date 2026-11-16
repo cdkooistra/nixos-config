@@ -22,16 +22,7 @@ mkHost {
       secrets.passwd.file = "${secrets}/passwd.age";
     };
 
-    graphics = {
-      amd.enable = true;
-      wayland.enable = true;
-      wayland.xwayland.enable = true;
-    };
-
-    desktops.gnome = {
-      enable = true;
-      mode = "server";
-    };
+    graphics.amd.enable = true;
 
     software = {
       docker.enable = true;
