@@ -1,5 +1,5 @@
 {
-  description = "Nixos config flake";
+  description = "NixOS config flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
@@ -7,6 +7,10 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     agenix.url = "github:ryantm/agenix";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
@@ -20,30 +24,38 @@
     };
     pi = {
       url = "github:earendil-works/pi";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
   outputs =
     {
-      self,
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
+      home-manager-unstable,
       agenix,
       nix-flatpak,
       disko,
-      herdr,
       ...
     }@inputs:
     let
-      lib = nixpkgs.lib;
       modules = import ./modules/nixos;
       network = import ../config/network.nix;
       secrets = ./../secrets;
 
-      # In case we want to, we can override packages from nixpkgs-unstable here using this code snippet.
-      # Some examples: tailscale, devenv, etc.
+      # each host tracks one channel, which decides the nixpkgs and home-manager it is built with.
+      channels = {
+        stable = {
+          nixpkgs = nixpkgs;
+          home-manager = home-manager;
+        };
+        unstable = {
+          nixpkgs = nixpkgs-unstable;
+          home-manager = home-manager-unstable;
+        };
+      };
+
       unstableOverlay = final: prev: {
         unstable = import nixpkgs-unstable {
           system = prev.stdenv.hostPlatform.system;
@@ -55,13 +67,19 @@
         {
           name,
           arch,
+          channel ? "stable",
           system ? { },
           user ? { },
         }:
-        lib.nixosSystem {
+        channels.${channel}.nixpkgs.lib.nixosSystem {
           system = arch;
           specialArgs = {
-            inherit inputs network secrets;
+            inherit
+              inputs
+              network
+              secrets
+              channel
+              ;
 
             hostName = name;
           };
@@ -79,12 +97,12 @@
             nix-flatpak.nixosModules.nix-flatpak
             system
 
-            # Activate unstable overlay for all hosts.
+            # activate unstable overlay for all hosts, so pkgs.unstable works on every channel.
             {
               nixpkgs.overlays = [ unstableOverlay ];
             }
 
-            home-manager.nixosModules.home-manager
+            channels.${channel}.home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -97,7 +115,7 @@
                 ];
               };
               home-manager.extraSpecialArgs = {
-                inherit inputs;
+                inherit inputs channel;
                 hostName = name;
               };
             }
@@ -129,17 +147,14 @@
             inputs
             secrets
             ;
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
         };
         sisyphus = import ./hosts/sisyphus {
           inherit
             mkHost
             network
             inputs
-            lib
             secrets
             ;
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
         };
       };
     };

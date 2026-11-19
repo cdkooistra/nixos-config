@@ -6,252 +6,254 @@
   mkHost,
   network,
   secrets,
-  pkgs,
   ...
 }:
 
 mkHost {
   name = "hermes";
   arch = "x86_64-linux";
+  channel = "stable";
 
-  system = {
-    age = {
-      identityPaths = [
-        "/home/connor/.ssh/id_ed25519"
-      ];
-      secrets.passwd.file = "${secrets}/passwd.age";
-    };
-
-    graphics.amd.enable = true;
-
-    software = {
-      docker.enable = true;
-
-      tailscale = {
-        enable = true;
-        ssh = true;
-
-        auth = {
-          enable = true;
-          file = "${secrets}/tailscale.age";
-          params = {
-            preauthorized = true;
-            ephemeral = false;
-          };
-          tags = [ "tag:server" ];
-        };
-
-        serve = {
-          enable = false;
-          # services = {
-          #   # set up some basic server using: python3 -m http.server 8080
-          #   example-web-server = {
-          #     endpoints = {
-          #       # service endpoint with port 443 linked to local endpoint with port 8080
-          #       "tcp:443" = "http://localhost:8080";
-          #     };
-          #     advertised = true; # this is the default case, understand now, remove later
-          #   };
-          # };
-        };
+  system =
+    { pkgs, ... }:
+    {
+      age = {
+        identityPaths = [
+          "/home/connor/.ssh/id_ed25519"
+        ];
+        secrets.passwd.file = "${secrets}/passwd.age";
       };
 
-      restic = {
-        enable = true;
+      graphics.amd.enable = true;
 
-        repositories = {
-          sisyphus = {
-            url = "sftp:connor@sisyphus:/run/media/connor/Storage/restic-backups";
-            passwordFile = "${secrets}/backup-repos.age";
-            # backup jobs run as root (specify known_hosts, otherwise this errs)
-            extraOptions = [
-              "sftp.command='ssh connor@sisyphus -i /home/connor/.ssh/id_ed25519 -o UserKnownHostsFile=/home/connor/.ssh/known_hosts -s sftp'"
-            ];
-          };
-          s3 = {
-            url = "s3:${network.s3.endpoint}/${network.s3.bucket}/restic";
-            passwordFile = "${secrets}/backup-repos.age";
-            environmentFile = "${secrets}/s3.age";
-          };
-        };
-
-        backups = {
-          immich = {
-            repositories = [
-              "sisyphus"
-              "s3"
-            ];
-            schedule = "18:30";
-            paths = [
-              "/mnt/data/immich"
-              "/run/restic-dumps/immich.sql"
-            ];
-            backupPrepareCommand = ''
-              mkdir -p /run/restic-dumps
-              ${pkgs.util-linux}/bin/runuser -u immich -- ${pkgs.postgresql_16}/bin/pg_dump immich > /run/restic-dumps/immich.sql
-            '';
-            backupCleanupCommand = ''
-              rm -f /run/restic-dumps/immich.sql
-            '';
-          };
-
-          solidtime = {
-            repositories = [
-              "sisyphus"
-              "s3"
-            ];
-            schedule = "18:00";
-            paths = [ "/run/restic-dumps/solidtime.sql" ];
-            backupPrepareCommand = ''
-              mkdir -p /run/restic-dumps
-              ${pkgs.docker}/bin/docker exec solidtime-database sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > /run/restic-dumps/solidtime.sql
-            '';
-            backupCleanupCommand = ''
-              rm -f /run/restic-dumps/solidtime.sql
-            '';
-          };
-        };
-      };
-    };
-
-    services = {
-      solidtime = {
-        enable = true;
-        dir = "/srv/solidtime";
-        port = 8000;
-        secretFile = "${secrets}/solidtime.age";
+      software = {
+        docker.enable = true;
 
         tailscale = {
           enable = true;
-          hostname = "solidtime";
-          tailnet = network.tailnet;
-          magicdns = false;
+          ssh = true;
+
+          auth = {
+            enable = true;
+            file = "${secrets}/tailscale.age";
+            params = {
+              preauthorized = true;
+              ephemeral = false;
+            };
+            tags = [ "tag:server" ];
+          };
+
           serve = {
-            "/" = "http://127.0.0.1:8000";
+            enable = false;
+            # services = {
+            #   # set up some basic server using: python3 -m http.server 8080
+            #   example-web-server = {
+            #     endpoints = {
+            #       # service endpoint with port 443 linked to local endpoint with port 8080
+            #       "tcp:443" = "http://localhost:8080";
+            #     };
+            #     advertised = true; # this is the default case, understand now, remove later
+            #   };
+            # };
           };
         };
-      };
 
-      immich-service = {
-        enable = true;
-        dir = "/srv/immich";
-        dataDir = "/mnt/data/immich";
-        secretFile = "${secrets}/immich.age";
-
-        tailscale = {
+        restic = {
           enable = true;
-          hostname = "immich";
-          tailnet = network.tailnet;
-          serve = {
-            "/" = "http://172.17.0.1:2283";
+
+          repositories = {
+            sisyphus = {
+              url = "sftp:connor@sisyphus:/run/media/connor/Storage/restic-backups";
+              passwordFile = "${secrets}/backup-repos.age";
+              # backup jobs run as root (specify known_hosts, otherwise this errs)
+              extraOptions = [
+                "sftp.command='ssh connor@sisyphus -i /home/connor/.ssh/id_ed25519 -o UserKnownHostsFile=/home/connor/.ssh/known_hosts -s sftp'"
+              ];
+            };
+            s3 = {
+              url = "s3:${network.s3.endpoint}/${network.s3.bucket}/restic";
+              passwordFile = "${secrets}/backup-repos.age";
+              environmentFile = "${secrets}/s3.age";
+            };
           };
-        };
-      };
 
-      stirling = {
-        enable = true;
-        dir = "/srv/stirling";
-        secretFile = "${secrets}/stirling.age";
+          backups = {
+            immich = {
+              repositories = [
+                "sisyphus"
+                "s3"
+              ];
+              schedule = "18:30";
+              paths = [
+                "/mnt/data/immich"
+                "/run/restic-dumps/immich.sql"
+              ];
+              backupPrepareCommand = ''
+                mkdir -p /run/restic-dumps
+                ${pkgs.util-linux}/bin/runuser -u immich -- ${pkgs.postgresql_16}/bin/pg_dump immich > /run/restic-dumps/immich.sql
+              '';
+              backupCleanupCommand = ''
+                rm -f /run/restic-dumps/immich.sql
+              '';
+            };
 
-        tailscale = {
-          enable = true;
-          hostname = "pdf";
-          tailnet = network.tailnet;
-          serve = {
-            "/" = "http://172.17.0.1:8080";
-          };
-        };
-      };
-
-      forgejo-service = {
-        enable = true;
-        port = 8090;
-        dir = "/srv/forgejo";
-        secretFile = "${secrets}/forgejo.age";
-
-        tailscale = {
-          enable = true;
-          hostname = "git";
-          tailnet = network.tailnet;
-          serve = {
-            "/" = "http://172.17.0.1:8090";
-          };
-        };
-      };
-
-      homepage = {
-        enable = true;
-        port = 8100;
-        dir = "/srv/homepage";
-        secretFile = "${secrets}/homepage.age";
-
-        tailscale = {
-          enable = true;
-          hostname = "home";
-          tailnet = network.tailnet;
-          serve = {
-            "/" = "http://172.17.0.1:8100";
-          };
-        };
-      };
-
-      opengym = {
-        enable = true;
-        dir = "/srv/opengym";
-        port = 8110;
-        secretFile = "${secrets}/opengym.age";
-        tailscale = {
-          enable = true;
-          hostname = "opengym";
-          tailnet = network.tailnet;
-          magicdns = false;
-          serve."/" = "http://127.0.0.1:80";
-        };
-      };
-
-      browsers = {
-        enable = false;
-
-        instances = {
-          idleon = {
-            dir = "/srv/browsers/idleon";
-            secretFile = "${secrets}/browsers-idleon.age";
-
-            tailscale = {
-              enable = true;
-              hostname = "idleon";
-              tailnet = network.tailnet;
-              serve = {
-                "/" = "http://127.0.0.1:3000";
-              };
-              magicdns = false;
+            solidtime = {
+              repositories = [
+                "sisyphus"
+                "s3"
+              ];
+              schedule = "18:00";
+              paths = [ "/run/restic-dumps/solidtime.sql" ];
+              backupPrepareCommand = ''
+                mkdir -p /run/restic-dumps
+                ${pkgs.docker}/bin/docker exec solidtime-database sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > /run/restic-dumps/solidtime.sql
+              '';
+              backupCleanupCommand = ''
+                rm -f /run/restic-dumps/solidtime.sql
+              '';
             };
           };
         };
       };
-    };
 
-    system = {
-      openssh = {
-        enable = true;
-        allowTailscale = true;
+      services = {
+        solidtime = {
+          enable = true;
+          dir = "/srv/solidtime";
+          port = 8000;
+          secretFile = "${secrets}/solidtime.age";
+
+          tailscale = {
+            enable = true;
+            hostname = "solidtime";
+            tailnet = network.tailnet;
+            magicdns = false;
+            serve = {
+              "/" = "http://127.0.0.1:8000";
+            };
+          };
+        };
+
+        immich-service = {
+          enable = true;
+          dir = "/srv/immich";
+          dataDir = "/mnt/data/immich";
+          secretFile = "${secrets}/immich.age";
+
+          tailscale = {
+            enable = true;
+            hostname = "immich";
+            tailnet = network.tailnet;
+            serve = {
+              "/" = "http://172.17.0.1:2283";
+            };
+          };
+        };
+
+        stirling = {
+          enable = true;
+          dir = "/srv/stirling";
+          secretFile = "${secrets}/stirling.age";
+
+          tailscale = {
+            enable = true;
+            hostname = "pdf";
+            tailnet = network.tailnet;
+            serve = {
+              "/" = "http://172.17.0.1:8080";
+            };
+          };
+        };
+
+        forgejo-service = {
+          enable = true;
+          port = 8090;
+          dir = "/srv/forgejo";
+          secretFile = "${secrets}/forgejo.age";
+
+          tailscale = {
+            enable = true;
+            hostname = "git";
+            tailnet = network.tailnet;
+            serve = {
+              "/" = "http://172.17.0.1:8090";
+            };
+          };
+        };
+
+        homepage = {
+          enable = true;
+          port = 8100;
+          dir = "/srv/homepage";
+          secretFile = "${secrets}/homepage.age";
+
+          tailscale = {
+            enable = true;
+            hostname = "home";
+            tailnet = network.tailnet;
+            serve = {
+              "/" = "http://172.17.0.1:8100";
+            };
+          };
+        };
+
+        opengym = {
+          enable = true;
+          dir = "/srv/opengym";
+          port = 8110;
+          secretFile = "${secrets}/opengym.age";
+          tailscale = {
+            enable = true;
+            hostname = "opengym";
+            tailnet = network.tailnet;
+            magicdns = false;
+            serve."/" = "http://127.0.0.1:80";
+          };
+        };
+
+        browsers = {
+          enable = false;
+
+          instances = {
+            idleon = {
+              dir = "/srv/browsers/idleon";
+              secretFile = "${secrets}/browsers-idleon.age";
+
+              tailscale = {
+                enable = true;
+                hostname = "idleon";
+                tailnet = network.tailnet;
+                serve = {
+                  "/" = "http://127.0.0.1:3000";
+                };
+                magicdns = false;
+              };
+            };
+          };
+        };
       };
+
+      system = {
+        openssh = {
+          enable = true;
+          allowTailscale = true;
+        };
+      };
+
+      systemd.targets = {
+        sleep.enable = false;
+        suspend.enable = false;
+        hibernate.enable = false;
+        hybrid-sleep.enable = false;
+      };
+
+      boot.loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+      };
+
+      hardware.enableAllFirmware = true;
+
+      system.stateVersion = "25.05";
     };
-
-    systemd.targets = {
-      sleep.enable = false;
-      suspend.enable = false;
-      hibernate.enable = false;
-      hybrid-sleep.enable = false;
-    };
-
-    boot.loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
-
-    hardware.enableAllFirmware = true;
-
-    system.stateVersion = "25.05";
-  };
 }

@@ -12,6 +12,7 @@
 mkHost {
   name = "aegis";
   arch = "x86_64-linux";
+  channel = "stable";
 
   system = {
     age = {

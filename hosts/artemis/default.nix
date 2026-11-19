@@ -12,6 +12,7 @@
 mkHost {
   name = "artemis";
   arch = "x86_64-linux";
+  channel = "unstable";
 
   system =
     { pkgs, ... }:
