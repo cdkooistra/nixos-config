@@ -56,7 +56,6 @@ in
                   dash-to-panel
                   appindicator
                   vitals
-                  (lib.optional (config.networking.hostName == "artemis") battery-health-charging)
                 ];
             in
             gnomePkgs ++ gnomeExts;
