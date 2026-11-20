@@ -1,5 +1,6 @@
 {
   imports = [
+    ./dux
     ./gnome.nix
   ];
 }

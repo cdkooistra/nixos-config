@@ -26,6 +26,11 @@
       url = "github:earendil-works/pi";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    # dux
+    dux-plugin-registry = {
+      url = "github:duxlabs-dev/dux-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =

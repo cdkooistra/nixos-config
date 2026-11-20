@@ -33,8 +33,9 @@ mkHost {
         };
       };
 
+      desktops.dux.enable = true;
       desktops.gnome = {
-        enable = true;
+        enable = false;
         mode = "client";
       };
 
