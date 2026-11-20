@@ -298,5 +298,6 @@
   "blurEnabled": false,
   "blurBorderSeeded": true,
   "blurStrength": 16,
-  "dankLauncherV2Size": "micro"
+  "dankLauncherV2Size": "micro",
+  "batteryCriticalThreshold": 10
 }

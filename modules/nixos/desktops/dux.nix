@@ -2,6 +2,7 @@
   lib,
   config,
   inputs,
+  pkgs,
   ...
 }:
 
@@ -19,11 +20,24 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # greetd greeter
-    services.displayManager.dux-greeter = {
-      enable = true;
-      compositor.name = "niri"; # Or "hyprland" or "sway"
+    services = {
+      # greetd greeter
+      displayManager.dux-greeter = {
+        enable = true;
+        compositor.name = "niri"; # Or "hyprland" or "sway"
+      };
+
+      # battery and power info for the shell
+      upower.enable = true;
     };
+
+    environment.systemPackages = with pkgs; [
+      qt6.qtimageformats
+      kdePackages.kimageformats
+      power-profiles-daemon # for artemis only
+      cups-pk-helper
+      adw-gtk3
+    ];
 
     programs = {
       # compositor used by the greeter
