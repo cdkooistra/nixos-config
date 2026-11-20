@@ -1,0 +1,6 @@
+binds {
+    Mod+Escape repeat=false hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
+    Mod+R hotkey-overlay-title="Launcher" repeat=false { spawn "dms" "ipc" "call" "spotlight" "open"; }
+    Mod+B cooldown-ms=1000 hotkey-overlay-title="Launch Zen Browser" repeat=false { spawn "flatpak" "run" "app.zen_browser.zen"; }
+    Mod+C repeat=false cooldown-ms=1000 hotkey-overlay-title="Launch Zed IDE" { spawn "zeditor"; }
+}
