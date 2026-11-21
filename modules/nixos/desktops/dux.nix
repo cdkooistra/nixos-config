@@ -29,12 +29,16 @@ in
 
       # battery and power info for the shell
       upower.enable = true;
+
+      power-profiles-daemon.enable = config.networking.hostName == "artemis";
     };
+
+    # bluez daemon for the shell's bluetooth widget
+    hardware.bluetooth.enable = config.networking.hostName == "artemis";
 
     environment.systemPackages = with pkgs; [
       qt6.qtimageformats
       kdePackages.kimageformats
-      power-profiles-daemon # for artemis only
       cups-pk-helper
       adw-gtk3
     ];
