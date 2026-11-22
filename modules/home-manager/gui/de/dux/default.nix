@@ -20,6 +20,7 @@
     }
     // lib.optionalAttrs (osConfig.gui.de.dux.compositor == "niri") {
       "niri/dms/binds.kdl" = mkLink "de/dux/binds.kdl";
+      "niri/dms/windowrules.kdl" = mkLink "de/dux/windowrules.kdl";
     };
   };
 }

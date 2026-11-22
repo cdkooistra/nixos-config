@@ -1,0 +1,15 @@
+// DMS Window Rules - Managed by Dux Modular Shell
+// Do not edit manually - changes may be overwritten
+
+// @id=wr_1795281715740507437 @name=me.proton.Mail
+window-rule {
+    match app-id="^me.proton.Mail$"
+    open-floating false
+    open-maximized true
+}
+
+// @id=dms-window-opaque @name=DMS Window Opaque
+window-rule {
+    match app-id="^(dev\\.duxlabs\\.shell|com\\.danklinux\\.dms)$"
+    opacity 1.00
+}
