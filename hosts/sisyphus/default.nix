@@ -31,10 +31,7 @@ mkHost {
         };
       };
 
-      desktops.gnome = {
-        enable = true;
-        mode = "client";
-      };
+      desktops.dux.enable = true;
 
       software = {
         docker.enable = true;
@@ -74,7 +71,7 @@ mkHost {
 
       gaming = {
         utils = {
-          gamescope.enable = false;
+          gamescope.enable = true;
           gamemode.enable = true;
           mangohud.enable = true;
           protonup.enable = true;
@@ -84,9 +81,7 @@ mkHost {
           prism.enable = true;
           bottles.enable = true;
         };
-        controllers = {
-          xone.enable = true;
-        };
+        controllers.xone.enable = true;
       };
 
       system = {

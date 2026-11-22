@@ -16,7 +16,8 @@
       "leftWidgets": [
         {
           "id": "launcherButton",
-          "enabled": true
+          "enabled": true,
+          "launcherLogoMode": "os"
         },
         "workspaceSwitcher",
         "focusedWindow"
@@ -36,7 +37,12 @@
         }
       ],
       "rightWidgets": [
-        "systemTray",
+        {
+          "id": "systemTray",
+          "enabled": true,
+          "trayIconSpacing": 2,
+          "trayUseInlineExpansion": false
+        },
         "clipboard",
         {
           "id": "cpuUsage",
@@ -48,7 +54,7 @@
         "controlCenterButton"
       ],
       "spacing": 0,
-      "innerPadding": -2,
+      "innerPadding": 2,
       "barInsetPadding": -1,
       "barLengthPadding": 0,
       "barLengthMode": "full",
@@ -61,7 +67,7 @@
       "surfaceCustomColor": "#6750A4",
       "widgetFollowInterfaceStyle": false,
       "widgetTransparency": 1,
-      "squareCorners": false,
+      "squareCorners": true,
       "noBackground": false,
       "widgetStyle": "pills",
       "maximizeWidgetIcons": false,
@@ -361,15 +367,6 @@
       "row": 1
     },
     {
-      "id": "volumeSlider",
-      "enabled": true,
-      "w": 3,
-      "h": 1,
-      "small": true,
-      "col": 3,
-      "row": 1
-    },
-    {
       "id": "wifi",
       "enabled": true,
       "w": 3,
@@ -396,10 +393,10 @@
     {
       "id": "diskUsage",
       "enabled": true,
-      "w": 4,
+      "w": 3,
       "h": 1,
-      "col": 4,
-      "row": 3
+      "col": 6,
+      "row": 2
     },
     {
       "id": "runningApps",
@@ -420,15 +417,6 @@
       "row": 3
     },
     {
-      "id": "inputVolumeSlider",
-      "enabled": true,
-      "w": 3,
-      "h": 1,
-      "small": true,
-      "col": 6,
-      "row": 1
-    },
-    {
       "id": "builtin_tailscale",
       "enabled": true,
       "w": 4,
@@ -444,7 +432,32 @@
       "col": 5,
       "row": 0,
       "small": true
+    },
+    {
+      "id": "audioOutput",
+      "enabled": true,
+      "w": 3,
+      "h": 1,
+      "col": 3,
+      "row": 1,
+      "small": true
+    },
+    {
+      "id": "audioInput",
+      "enabled": true,
+      "w": 3,
+      "h": 1,
+      "col": 6,
+      "row": 1,
+      "small": true
     }
   ],
-  "controlCenterColumns": 9
+  "controlCenterColumns": 9,
+  "mouseAccelSpeed": -0.5,
+  "systemTrayIconTintMode": "primary",
+  "systemTrayIconTintStrength": 102,
+  "lockAtStartup": false,
+  "muxType": "herdr",
+  "desktopWidgetInstances": [],
+  "fontFamily": "Inter Display"
 }

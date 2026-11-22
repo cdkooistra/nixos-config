@@ -30,18 +30,27 @@ in
       # battery and power info for the shell
       upower.enable = true;
 
+      # drives and network locations in the file manager
+      udisks2.enable = true;
+      gvfs.enable = true;
+
       power-profiles-daemon.enable = config.networking.hostName == "artemis";
     };
 
     # bluez daemon for the shell's bluetooth widget
     hardware.bluetooth.enable = config.networking.hostName == "artemis";
 
-    environment.systemPackages = with pkgs; [
-      qt6.qtimageformats
-      kdePackages.kimageformats
-      cups-pk-helper
-      adw-gtk3
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        qt6.qtimageformats
+        kdePackages.kimageformats
+        cups-pk-helper
+        adw-gtk3
+        papirus-icon-theme
+      ]
+      # niri has no built-in wayland, so need to enable this
+      ++ lib.optional config.graphics.wayland.xwayland.enable xwayland-satellite;
 
     programs = {
       # compositor used by the greeter
