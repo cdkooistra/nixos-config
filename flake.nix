@@ -109,19 +109,22 @@
 
             channels.${channel}.home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = null;
-              home-manager.users.connor = {
-                imports = [
-                  ./modules/home-manager/default.nix
-                  user
-                  nix-flatpak.homeManagerModules.nix-flatpak
-                ];
-              };
-              home-manager.extraSpecialArgs = {
-                inherit inputs channel;
-                hostName = name;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "bup";
+                overwriteBackup = true;
+                users.connor = {
+                  imports = [
+                    ./modules/home-manager/default.nix
+                    user
+                    nix-flatpak.homeManagerModules.nix-flatpak
+                  ];
+                };
+                extraSpecialArgs = {
+                  inherit inputs channel;
+                  hostName = name;
+                };
               };
             }
           ];
