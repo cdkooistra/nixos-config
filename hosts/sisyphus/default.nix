@@ -31,7 +31,7 @@ mkHost {
         };
       };
 
-      desktops.dux.enable = true;
+      gui.de.dux.enable = true;
 
       software = {
         docker.enable = true;

@@ -33,11 +33,7 @@ mkHost {
         };
       };
 
-      desktops.dux.enable = true;
-      desktops.gnome = {
-        enable = false;
-        mode = "client";
-      };
+      gui.de.dux.enable = true;
 
       software = {
         docker.enable = true;

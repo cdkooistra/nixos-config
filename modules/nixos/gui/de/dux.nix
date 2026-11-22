@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.desktops.dux;
+  cfg = config.gui.de.dux;
 in
 {
   # flake inputs
@@ -15,16 +15,24 @@ in
     inputs.dux-plugin-registry.nixosModules.default
   ];
 
-  options.desktops.dux = {
+  options.gui.de.dux = {
     enable = lib.mkEnableOption "dux Desktop Environment";
+    compositor = lib.mkOption {
+      type = lib.types.enum [ "niri" ]; # could also be hyprland/sway
+      default = "niri";
+      description = "compositor dux runs on";
+    };
   };
 
   config = lib.mkIf cfg.enable {
+    # dux pulls its compositor in; a host can still set it to false explicitly
+    gui.compositor.${cfg.compositor}.enable = lib.mkDefault true;
+
     services = {
       # greetd greeter
       displayManager.dux-greeter = {
         enable = true;
-        compositor.name = "niri"; # Or "hyprland" or "sway"
+        compositor.name = cfg.compositor;
       };
 
       # battery and power info for the shell
@@ -40,22 +48,15 @@ in
     # bluez daemon for the shell's bluetooth widget
     hardware.bluetooth.enable = config.networking.hostName == "artemis";
 
-    environment.systemPackages =
-      with pkgs;
-      [
-        qt6.qtimageformats
-        kdePackages.kimageformats
-        cups-pk-helper
-        adw-gtk3
-        papirus-icon-theme
-      ]
-      # niri has no built-in wayland, so need to enable this
-      ++ lib.optional config.graphics.wayland.xwayland.enable xwayland-satellite;
+    environment.systemPackages = with pkgs; [
+      qt6.qtimageformats
+      kdePackages.kimageformats
+      cups-pk-helper
+      adw-gtk3
+      papirus-icon-theme
+    ];
 
     programs = {
-      # compositor used by the greeter
-      niri.enable = true;
-
       # the Wayland desktop shell
       dux-shell = {
         enable = true;

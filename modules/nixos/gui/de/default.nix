@@ -1,3 +1,4 @@
+# full desktop environments
 {
   imports = [
     ./cosmic.nix

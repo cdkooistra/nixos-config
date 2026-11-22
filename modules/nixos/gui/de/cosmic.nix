@@ -5,11 +5,11 @@
 }:
 
 let
-  cfg = config.desktops.cosmic;
+  cfg = config.gui.de.cosmic;
   wayland = config.graphics.wayland;
 in
 {
-  options.desktops.cosmic = {
+  options.gui.de.cosmic = {
     enable = lib.mkEnableOption "COSMIC Desktop Environment";
   };
 

@@ -7,7 +7,7 @@
 {
   imports = [
     ./apps
-    ./desktops
+    ./gui
     ./dev.nix
     ./zed.nix
     ./utils.nix

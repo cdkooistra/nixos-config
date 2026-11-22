@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.desktops.gnome;
+  cfg = config.gui.de.gnome;
 in
 {
-  options.desktops.gnome = {
+  options.gui.de.gnome = {
     enable = lib.mkEnableOption "GNOME Desktop Environment";
 
     mode = lib.mkOption {

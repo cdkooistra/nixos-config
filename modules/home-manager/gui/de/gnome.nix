@@ -7,7 +7,7 @@
 }:
 
 {
-  config = lib.mkIf osConfig.desktops.gnome.enable {
+  config = lib.mkIf osConfig.gui.de.gnome.enable {
     home.pointerCursor = {
       enable = true;
       package = pkgs.adwaita-icon-theme;

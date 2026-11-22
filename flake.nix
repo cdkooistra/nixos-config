@@ -94,7 +94,7 @@
             modules.system
             modules.graphics
             modules.gaming
-            modules.desktops
+            modules.gui
             modules.software
             modules.services
             agenix.nixosModules.default
