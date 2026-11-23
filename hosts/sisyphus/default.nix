@@ -86,10 +86,6 @@ mkHost {
 
       system = {
         dev.enable = true;
-        openssh = {
-          enable = true;
-          allowTailscale = true;
-        };
         appformats = {
           appimage = {
             enable = true;

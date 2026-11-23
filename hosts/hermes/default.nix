@@ -236,7 +236,7 @@ mkHost {
       system = {
         openssh = {
           enable = true;
-          allowTailscale = true;
+          ports = [ 22 ];
         };
       };
 

@@ -8,7 +8,7 @@
     networkmanager.enable = true;
     enableIPv6 = false;
     nameservers = [
-      "86.54.11.13" # dns4eu
+      "9.9.9.9" # quad9
     ];
 
     hostName = hostName; # auto infer based on flake input
