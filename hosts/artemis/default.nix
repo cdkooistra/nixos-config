@@ -38,7 +38,10 @@ mkHost {
       software = {
         docker.enable = true;
         espanso.enable = true;
-        tailscale.enable = true;
+        tailscale = {
+          enable = true;
+          systray = true;
+        };
         syncthing = {
           enable = true;
           deviceId = network.devices.artemis;

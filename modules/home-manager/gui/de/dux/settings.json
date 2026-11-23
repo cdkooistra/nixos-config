@@ -417,14 +417,6 @@
       "row": 3
     },
     {
-      "id": "builtin_tailscale",
-      "enabled": true,
-      "w": 4,
-      "h": 1,
-      "col": 0,
-      "row": 3
-    },
-    {
       "id": "doNotDisturb",
       "enabled": true,
       "w": 1,

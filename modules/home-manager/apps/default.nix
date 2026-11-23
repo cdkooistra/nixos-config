@@ -10,6 +10,7 @@
     ./slack.nix
     ./signal.nix
     ./spotify.nix
+    ./tailscale.nix
     ./zen.nix
   ];
 }

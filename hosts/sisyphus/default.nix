@@ -41,6 +41,7 @@ mkHost {
         tailscale = {
           enable = true;
           ssh = true;
+          systray = true;
         };
 
         syncthing = {

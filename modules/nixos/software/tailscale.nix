@@ -12,6 +12,7 @@ in
   options.software.tailscale = {
     enable = lib.mkEnableOption "Tailscale";
     ssh = lib.mkEnableOption "Tailscale SSH";
+    systray = lib.mkEnableOption "Tailscale system tray";
 
     auth = {
       enable = lib.mkEnableOption "OAuth";
