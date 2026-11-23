@@ -10,6 +10,7 @@
     ./networking.nix
     ./ssh.nix
     ./user.nix
+    ./xdg.nix
   ];
 
   nix.settings.experimental-features = [

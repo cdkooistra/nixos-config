@@ -93,6 +93,7 @@ mkHost {
           };
           flatpak.enable = true;
         };
+        xdg.enable = true;
       };
 
       fileSystems = {

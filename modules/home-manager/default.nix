@@ -9,8 +9,9 @@
     ./apps
     ./gui
     ./dev.nix
-    ./zed.nix
     ./utils.nix
+    ./xdg.nix
+    ./zed.nix
     ../../../config/ssh.nix
   ];
 

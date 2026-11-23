@@ -18,16 +18,6 @@
     };
     # Add home dirs to sidebar
     xdg = {
-      userDirs = {
-        enable = true;
-        createDirectories = true;
-        extraConfig = {
-          APPLICATIONS = "${config.home.homeDirectory}/Applications";
-          CODE = "${config.home.homeDirectory}/Code";
-        };
-        setSessionVariables = false;
-      };
-
       configFile."gtk-3.0/bookmarks" = {
         text = ''
           file://${config.home.homeDirectory}/Applications Applications

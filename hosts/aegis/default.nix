@@ -57,6 +57,10 @@ mkHost {
         enable = true;
         ports = [ 22 ];
       };
+      xdg = {
+        enable = true;
+        userDirs.enable = false;
+      };
     };
 
     systemd.targets = {

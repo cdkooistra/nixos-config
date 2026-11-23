@@ -52,6 +52,7 @@ mkHost {
           appimage.enable = true;
           flatpak.enable = true;
         };
+        xdg.enable = true;
       };
 
       # saleae logic analyzer (udev rules + app)
