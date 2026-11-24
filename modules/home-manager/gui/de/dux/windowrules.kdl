@@ -8,8 +8,19 @@ window-rule {
     open-maximized true
 }
 
+// @id=wr_1795511452852467383 @name=dev.duxlabs.files
+window-rule {
+    match app-id="^dev.duxlabs.files$"
+}
+
 // @id=dms-window-opaque @name=DMS Window Opaque
 window-rule {
     match app-id="^(dev\\.duxlabs\\.shell|com\\.danklinux\\.dms)$"
     opacity 1.00
+}
+
+window-rule {
+    match app-id=r#"^steam_app_\d+$"#
+    match app-id="^gamescope$"
+    variable-refresh-rate true
 }
