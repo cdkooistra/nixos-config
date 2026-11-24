@@ -46,10 +46,6 @@
 
     bash = {
       enable = true;
-      # temporarily for uni course
-      shellAliases = {
-        nodeman = "ssh -i ${config.home.homeDirectory}/.ssh/hwsec cka550@hwsec nodeman";
-      };
     };
 
     alacritty = {
