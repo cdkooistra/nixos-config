@@ -451,5 +451,15 @@
   "lockAtStartup": false,
   "muxType": "herdr",
   "desktopWidgetInstances": [],
-  "fontFamily": "Inter Display"
+  "fontFamily": "Inter Display",
+  "iconThemeDark": "breeze-dark",
+  "iconThemePerMode": false,
+  "matugenSpec": "2021",
+  "matugenScheme": "scheme-content",
+  "matugenContrast": 0,
+  "windSpeedUnit": "ms",
+  "useAutoLocation": true,
+  "notificationCompactMode": true,
+  "notificationPopupPrivacyMode": false,
+  "powerMenuDefaultAction": "poweroff"
 }

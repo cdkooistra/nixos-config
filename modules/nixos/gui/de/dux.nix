@@ -57,7 +57,13 @@ in
         };
 
         # bluez daemon for the shell's bluetooth widget
-        hardware.bluetooth.enable = config.networking.hostName == "artemis";
+        hardware.bluetooth = {
+          enable = config.networking.hostName == "artemis";
+          powerOnBoot = false;
+        };
+
+        # default gtk font
+        fonts.packages = [ pkgs.adwaita-fonts ];
 
         environment.systemPackages = with pkgs; [
           qt6.qtimageformats
